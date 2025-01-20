@@ -11,15 +11,16 @@ public class GamePanel extends JPanel {
     private KeyHandler keyHandler;
 
     public GamePanel() {
+        //Initialization of player and obstacle
         player = new Player(50, 50, 20, 5);
         obstacle = new Obstacle(new Rectangle(200, 200, 50, 50));
 
+        //Keyhandling methods
         keyHandler = new KeyHandler();
         addKeyListener(keyHandler);
-
         setFocusable(true);
-        setPreferredSize(new Dimension(600, 600));
 
+        //Game loop
         Timer timer = new Timer(16, e -> updateGame());
         timer.start();
     }
