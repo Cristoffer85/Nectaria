@@ -3,6 +3,7 @@ package com.cristoffer85.Entities;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
+import com.cristoffer85.Main.KeyHandler;
 
 import java.awt.*;
 
@@ -14,27 +15,31 @@ public class Player {
     private final int size;
     private final int moveSpeed;
 
-    public void move(int deltaX, int deltaY, Rectangle boundary, Rectangle obstacle) {
-        // Handle horizontal movement - 1st: Checks horizontal boundary, 2nd: Checks horizontal collision, allows it to move vertically
-        if (deltaX != 0) {
-            int newX = x + deltaX;
-            // Check horizontal boundary
+    public void move(KeyHandler keyHandler, Rectangle boundary, Rectangle obstacle) {
+        int moveX = 0;
+        int moveY = 0;
+
+        if (keyHandler.isKeyPressed("moveLeft")) moveX -= moveSpeed;
+        if (keyHandler.isKeyPressed("moveRight")) moveX += moveSpeed;
+        if (keyHandler.isKeyPressed("moveUp")) moveY -= moveSpeed;
+        if (keyHandler.isKeyPressed("moveDown")) moveY += moveSpeed;
+
+        // Handle horizontal movement
+        if (moveX != 0) {
+            int newX = x + moveX;
             if (newX >= 0 && newX <= boundary.width - size) {
                 Rectangle newRectX = new Rectangle(newX, y, size, size);
-                // Check horizontal collision
                 if (!newRectX.intersects(obstacle)) {
                     x = newX;
                 }
             }
         }
 
-        // Handle vertical movement - 1st: Checks vertical boundary, 2nd: Checks vertical collision, allows it to move horizontally
-        if (deltaY != 0) {
-            int newY = y + deltaY;
-            // Check vertical boundary
+        // Handle vertical movement
+        if (moveY != 0) {
+            int newY = y + moveY;
             if (newY >= 0 && newY <= boundary.height - size) {
                 Rectangle newRectY = new Rectangle(x, newY, size, size);
-                // Check vertical collision
                 if (!newRectY.intersects(obstacle)) {
                     y = newY;
                 }
@@ -42,7 +47,7 @@ public class Player {
         }
     }
 
-    public void draw(Graphics g) {
+    public void render(Graphics g) {
         g.setColor(Color.WHITE);
         g.fillRect(x, y, size, size);
     }

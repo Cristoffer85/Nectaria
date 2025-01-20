@@ -9,6 +9,8 @@
 # Ignore Maven wrapper files
 .mvn/
 !/.mvn/wrapper/maven-wrapper.jar
+mvnw
+mvnw.cmd
 
 # Ignore temporary files
 *.log
