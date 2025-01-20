@@ -1,17 +1,16 @@
 package com.cristoffer85.Entities;
 
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.Setter;
+
 import java.awt.*;
 
+@Getter
+@Setter
+@AllArgsConstructor
 public class Obstacle {
     private Rectangle rectangle;
-
-    public Obstacle(Rectangle rectangle) {
-        this.rectangle = rectangle;
-    }
-
-    public Rectangle getRectangle() {
-        return rectangle;
-    }
 
     public void render(Graphics g) {
         g.setColor(Color.RED);

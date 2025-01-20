@@ -23,7 +23,6 @@ public class KeyHandler extends KeyAdapter {
     public void keyPressed(KeyEvent e) {
         keysPressed.add(e.getKeyCode());
     }
-
     @Override
     public void keyReleased(KeyEvent e) {
         keysPressed.remove(e.getKeyCode());

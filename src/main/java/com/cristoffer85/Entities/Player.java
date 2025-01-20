@@ -19,12 +19,10 @@ public class Player {
         int moveX = 0;
         int moveY = 0;
 
+        // ############### HORIZONTAL MOVEMENT ###############
         if (keyHandler.isKeyPressed("moveLeft")) moveX -= moveSpeed;
         if (keyHandler.isKeyPressed("moveRight")) moveX += moveSpeed;
-        if (keyHandler.isKeyPressed("moveUp")) moveY -= moveSpeed;
-        if (keyHandler.isKeyPressed("moveDown")) moveY += moveSpeed;
 
-        // Handle horizontal movement
         if (moveX != 0) {
             int newX = x + moveX;
             if (newX >= 0 && newX <= boundary.width - size) {
@@ -35,7 +33,10 @@ public class Player {
             }
         }
 
-        // Handle vertical movement
+        // ############### VERTICAL MOVEMENT ###############
+        if (keyHandler.isKeyPressed("moveUp")) moveY -= moveSpeed;
+        if (keyHandler.isKeyPressed("moveDown")) moveY += moveSpeed;
+
         if (moveY != 0) {
             int newY = y + moveY;
             if (newY >= 0 && newY <= boundary.height - size) {
