@@ -27,6 +27,7 @@ public class Player {
             int newX = x + moveX;
             if (newX >= 0 && newX <= boundary.width - size) {
                 Rectangle newRectX = new Rectangle(newX, y, size, size);
+                // Collision detection, intersect method
                 if (!newRectX.intersects(obstacle)) {
                     x = newX;
                 }
@@ -41,6 +42,7 @@ public class Player {
             int newY = y + moveY;
             if (newY >= 0 && newY <= boundary.height - size) {
                 Rectangle newRectY = new Rectangle(x, newY, size, size);
+                // Collision detection, intersect method
                 if (!newRectY.intersects(obstacle)) {
                     y = newY;
                 }
