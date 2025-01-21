@@ -36,7 +36,6 @@ public class GamePanel extends JPanel {
     }
 
     private void updateGame() {
-        // Update player movement once
         List<Rectangle> obstacleRectangles = new ArrayList<>();
         for (Obstacle obstacle : obstacles) {
             obstacleRectangles.add(obstacle.getRectangle());
