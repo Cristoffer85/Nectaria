@@ -4,12 +4,14 @@ import com.cristoffer85.Entities.Player;
 import com.cristoffer85.Entities.Obstacle;
 import javax.swing.*;
 import java.awt.*;
+import java.awt.geom.Line2D;
 import java.util.ArrayList;
 import java.util.List;
 
 public class GamePanel extends JPanel {
     private Player player;
     private List<Obstacle> obstacles;
+    private List<Line2D> diagonalObstacles;
     private KeyHandler keyHandler;
 
     public GamePanel() {
@@ -18,6 +20,10 @@ public class GamePanel extends JPanel {
         obstacles = new ArrayList<>();
         obstacles.add(new Obstacle(new Rectangle(200, 200, 10, 50)));
         obstacles.add(new Obstacle(new Rectangle(300, 300, 50, 50))); // Add more obstacles as needed
+
+        // Initialization of diagonal obstacles
+        diagonalObstacles = new ArrayList<>();
+        diagonalObstacles.add(new Line2D.Float(100, 100, 150, 150)); // Add a diagonal line for testing
 
         // Keyhandling methods
         keyHandler = new KeyHandler();
@@ -35,7 +41,7 @@ public class GamePanel extends JPanel {
         for (Obstacle obstacle : obstacles) {
             obstacleRectangles.add(obstacle.getRectangle());
         }
-        player.move(keyHandler, getBounds(), obstacleRectangles);
+        player.move(keyHandler, getBounds(), obstacleRectangles, diagonalObstacles);
 
         repaint();
     }
@@ -49,6 +55,13 @@ public class GamePanel extends JPanel {
         player.render(g);
         for (Obstacle obstacle : obstacles) {
             obstacle.render(g);
+        }
+
+        // Render diagonal obstacles
+        g.setColor(Color.BLUE);
+        for (Line2D line : diagonalObstacles) {
+            Graphics2D g2d = (Graphics2D) g;
+            g2d.draw(line);
         }
     }
 }

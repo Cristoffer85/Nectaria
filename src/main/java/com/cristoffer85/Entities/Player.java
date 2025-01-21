@@ -6,6 +6,7 @@ import lombok.Setter;
 import com.cristoffer85.Main.KeyHandler;
 
 import java.awt.*;
+import java.awt.geom.Line2D;
 import java.util.List;
 
 @Getter
@@ -21,13 +22,13 @@ public class Player {
     private int velocityX = 0;
     private int velocityY = 0;
 
-    public void move(KeyHandler keyHandler, Rectangle boundary, List<Rectangle> obstacles) {
+    public void move(KeyHandler keyHandler, Rectangle boundary, List<Rectangle> obstacles, List<Line2D> diagonalObstacles) {
         handleHorizontalMovement(keyHandler);
         handleVerticalMovement(keyHandler);
 
         // Update the player's position and check for collisions with all obstacles
-        x = processMovement(x, velocityX, boundary.width, obstacles, true);
-        y = processMovement(y, velocityY, boundary.height, obstacles, false);
+        x = processMovement(x, velocityX, boundary.width, obstacles, diagonalObstacles, true);
+        y = processMovement(y, velocityY, boundary.height, obstacles, diagonalObstacles, false);
     }
 
     private void handleHorizontalMovement(KeyHandler keyHandler) {
@@ -60,20 +61,20 @@ public class Player {
         return 0;                                                       // No movement, return zero
     }
 
-    private int processMovement(int currentPosition, int velocity, int boundaryLimit, List<Rectangle> obstacles, boolean isHorizontal) {
+    private int processMovement(int currentPosition, int velocity, int boundaryLimit, List<Rectangle> obstacles, List<Line2D> diagonalObstacles, boolean isHorizontal) {
         int projectedPosition = currentPosition + velocity;             // Calculate the projected position based on velocity
-
+    
         if (projectedPosition < 0) {                                    // Check if the projected position exceeds the boundary
             return 0;                                                   // Snap to the start of the boundary if beyond limit
         }
         if (projectedPosition > boundaryLimit - size) {
             return boundaryLimit - size;                                // Snap to the end of the boundary if beyond limit
         }
-
+    
         Rectangle projectedRect = isHorizontal                          // Create a rectangle representing the player's projected position for collision detection
             ? new Rectangle(projectedPosition, y, size, size)           // Horizontal movement
             : new Rectangle(x, projectedPosition, size, size);          // Vertical movement
-
+    
         for (Rectangle obstacle : obstacles) {
             if (projectedRect.intersects(obstacle)) {                   // Check for collision with each obstacle
                 return isHorizontal                                     // Snap the position to the obstacle boundaries
@@ -81,7 +82,13 @@ public class Player {
                     : (velocity > 0 ? obstacle.y - size : obstacle.y + obstacle.height);    // Snap to top or bottom of obstacle
             }
         }
-
+    
+        for (Line2D diagonalObstacle : diagonalObstacles) {
+            if (projectedRect.intersectsLine(diagonalObstacle)) {       // Check for collision with each diagonal obstacle
+                return currentPosition;
+            }
+        }
+    
         return projectedPosition;                                       // If no collision, return the projected position
     }
 
