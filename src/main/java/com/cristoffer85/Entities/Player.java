@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 import com.cristoffer85.Main.KeyHandler;
+import com.cristoffer85.Entities.Resources.PlayerSprite;
 
 import java.awt.*;
 import java.awt.geom.Line2D;
@@ -22,6 +23,25 @@ public class Player {
     private int velocityX = 0;
     private int velocityY = 0;
 
+    private PlayerSprite playerSprite;
+
+    private int currentFrame = 0;
+    private int frameDelay = 5; // Adjust as needed for animation speed
+    private int frameCounter = 0;
+    private boolean isMoving = false; // Flag to indicate whether the player is moving
+    private int lastDirection = 0; // Track the last direction of movement
+
+    public Player(int x, int y, int size, int moveSpeed, int velocityX, int velocityY) {
+        this.x = x;
+        this.y = y;
+        this.size = size;
+        this.moveSpeed = moveSpeed;
+        this.velocityX = velocityX;
+        this.velocityY = velocityY;
+
+        playerSprite = new PlayerSprite("/Playermove.jpg", 183, 275, 4, 4);
+    }
+
     public void move(KeyHandler keyHandler, Rectangle boundary, List<Rectangle> obstacles, List<Line2D> diagonalObstacles) {
         handleHorizontalMovement(keyHandler);
         handleVerticalMovement(keyHandler);
@@ -29,25 +49,46 @@ public class Player {
         // Update the player's position and check for collisions with all obstacles
         x = processMovement(x, velocityX, boundary.width, obstacles, diagonalObstacles, true);
         y = processMovement(y, velocityY, boundary.height, obstacles, diagonalObstacles, false);
+
+        // Update animation frame if moving
+        if (isMoving) {
+            frameCounter++;
+            if (frameCounter >= frameDelay) {
+                frameCounter = 0;
+                currentFrame = (currentFrame + 1) % 4; // Assuming 4 frames per direction
+            }
+        } else {
+            currentFrame = 0; // Reset to the first frame when not moving
+        }
     }
 
     private void handleHorizontalMovement(KeyHandler keyHandler) {
         if (keyHandler.isKeyPressed("moveLeft")) {
             velocityX = Math.max(velocityX - acceleration, -moveSpeed); // Accelerate left
+            isMoving = true;
+            lastDirection = 2; // Left
         } else if (keyHandler.isKeyPressed("moveRight")) {
             velocityX = Math.min(velocityX + acceleration, moveSpeed);  // Accelerate right
+            isMoving = true;
+            lastDirection = 3; // Right
         } else {
             velocityX = applyDeceleration(velocityX);                   // Apply deceleration when no key is pressed
+            isMoving = false;
         }
     }
 
     private void handleVerticalMovement(KeyHandler keyHandler) {
         if (keyHandler.isKeyPressed("moveUp")) {
             velocityY = Math.max(velocityY - acceleration, -moveSpeed); // Accelerate up
+            isMoving = true;
+            lastDirection = 1; // Up
         } else if (keyHandler.isKeyPressed("moveDown")) {
             velocityY = Math.min(velocityY + acceleration, moveSpeed);  // Accelerate down
+            isMoving = true;
+            lastDirection = 0; // Down
         } else {
             velocityY = applyDeceleration(velocityY);                   // Apply deceleration when no key is pressed
+            isMoving = false;
         }
     }
 
@@ -75,7 +116,6 @@ public class Player {
             ? new Rectangle(projectedPosition, y, size, size)           // Horizontal movement
             : new Rectangle(x, projectedPosition, size, size);          // Vertical movement
     
-        // ######## COLLISION/MOVEMENT AGAINST VERTICAL/HORIZONTAL ########
         for (Rectangle obstacle : obstacles) {
             if (projectedRect.intersects(obstacle)) {                   // Check for collision with each obstacle
                 return isHorizontal                                     // Snap the position to the obstacle boundaries
@@ -84,21 +124,20 @@ public class Player {
             }
         }
     
-        // ######## COLLISION/MOVEMENT AGAINST DIAGONAL ########
         for (Line2D diagonalObstacle : diagonalObstacles) {
             if (projectedRect.intersectsLine(diagonalObstacle)) {       // Check for collision with each diagonal obstacle
-                                                                        // Calculate the angle of the diagonal line
+                // Calculate the angle of the diagonal line
                 double angle = Math.atan2(diagonalObstacle.getY2() - diagonalObstacle.getY1(), diagonalObstacle.getX2() - diagonalObstacle.getX1());
                 double sin = Math.sin(angle);
                 double cos = Math.cos(angle);
 
-                                                                        // Adjust the player's velocity based on the angle of the line
+                // Adjust the player's velocity based on the angle of the line
                 if (isHorizontal) {
                     velocityY = (int) (velocity * sin);
-                    return currentPosition;                             // Stop horizontal movement
+                    return currentPosition; // Stop horizontal movement
                 } else {
                     velocityX = (int) (velocity * cos);
-                    return currentPosition;                             // Stop vertical movement
+                    return currentPosition; // Stop vertical movement
                 }
             }
         }
@@ -109,5 +148,20 @@ public class Player {
     public void render(Graphics g) {
         g.setColor(Color.WHITE);
         g.fillRect(x, y, size, size);
+
+        // Determine the direction of movement
+        int direction = lastDirection; // Default to last direction
+        if (velocityY < 0) {
+            direction = 1; // Up
+        } else if (velocityY > 0) {
+            direction = 0; // Down
+        } else if (velocityX < 0) {
+            direction = 2; // Left
+        } else if (velocityX > 0) {
+            direction = 3; // Right
+        }
+
+        // Render the appropriate sprite
+        playerSprite.render(g, x, y, size, direction, currentFrame, isMoving);
     }
 }
