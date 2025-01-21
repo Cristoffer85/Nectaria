@@ -26,10 +26,10 @@ public class Player {
     private PlayerSprite playerSprite;
 
     private int currentFrame = 0;
-    private int frameDelay = 5; // Adjust as needed for animation speed
-    private int frameCounter = 0;
-    private boolean isMoving = false; // Flag to indicate whether the player is moving
-    private int lastDirection = 0; // Track the last direction of movement
+    private int frameDelay = 5;         // Adjust as needed for player sprite animation speed
+    private int frameCounter = 0;       
+    private boolean isMoving = false;
+    private int lastDirection = 0;
 
     public Player(int x, int y, int size, int moveSpeed, int velocityX, int velocityY) {
         this.x = x;
