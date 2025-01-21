@@ -12,7 +12,7 @@ public class GamePanel extends JPanel {
 
     public GamePanel() {
         //Initialization of player and obstacle
-        player = new Player(50, 50, 20, 5);
+        player = new Player(50, 50, 20, 6, 0, 0);
         obstacle = new Obstacle(new Rectangle(200, 200, 50, 50));
 
         //Keyhandling methods
