@@ -116,6 +116,7 @@ public class Player {
             ? new Rectangle(projectedPosition, y, size, size)           // Horizontal movement
             : new Rectangle(x, projectedPosition, size, size);          // Vertical movement
     
+        // ###### COLLISION HORIZONTAL/VERTICAL OBSTACLES ######
         for (Rectangle obstacle : obstacles) {
             if (projectedRect.intersects(obstacle)) {                   // Check for collision with each obstacle
                 return isHorizontal                                     // Snap the position to the obstacle boundaries
@@ -124,6 +125,7 @@ public class Player {
             }
         }
     
+        // ###### COLLISION DIAGONAL OBSTACLES ######
         for (Line2D diagonalObstacle : diagonalObstacles) {
             if (projectedRect.intersectsLine(diagonalObstacle)) {       // Check for collision with each diagonal obstacle
                 // Calculate the angle of the diagonal line
