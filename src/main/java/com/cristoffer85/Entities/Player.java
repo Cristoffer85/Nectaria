@@ -6,6 +6,7 @@ import lombok.Setter;
 import com.cristoffer85.Main.KeyHandler;
 
 import java.awt.*;
+import java.util.List;
 
 @Getter
 @Setter
@@ -20,15 +21,15 @@ public class Player {
     private int velocityX = 0;
     private int velocityY = 0;
 
-    public void move(KeyHandler keyHandler, Rectangle boundary, Rectangle obstacle) {
+    public void move(KeyHandler keyHandler, Rectangle boundary, List<Rectangle> obstacles) {
         handleHorizontalMovement(keyHandler);
         handleVerticalMovement(keyHandler);
-    
-        // Updating the player's Horizontal and Vertical position and collision
-        x = processMovement(x, velocityX, boundary.width, obstacle, true);
-        y = processMovement(y, velocityY, boundary.height, obstacle, false);
+
+        // Update the player's position and check for collisions with all obstacles
+        x = processMovement(x, velocityX, boundary.width, obstacles, true);
+        y = processMovement(y, velocityY, boundary.height, obstacles, false);
     }
-    
+
     private void handleHorizontalMovement(KeyHandler keyHandler) {
         if (keyHandler.isKeyPressed("moveLeft")) {
             velocityX = Math.max(velocityX - acceleration, -moveSpeed); // Accelerate left
@@ -38,7 +39,7 @@ public class Player {
             velocityX = applyDeceleration(velocityX);                   // Apply deceleration when no key is pressed
         }
     }
-    
+
     private void handleVerticalMovement(KeyHandler keyHandler) {
         if (keyHandler.isKeyPressed("moveUp")) {
             velocityY = Math.max(velocityY - acceleration, -moveSpeed); // Accelerate up
@@ -48,7 +49,7 @@ public class Player {
             velocityY = applyDeceleration(velocityY);                   // Apply deceleration when no key is pressed
         }
     }
-    
+
     private int applyDeceleration(int velocity) {
         if (velocity > 0) {                                             // If moving in positive direction, gradually slow down to zero
             return Math.max(velocity - deceleration, 0);
@@ -58,32 +59,32 @@ public class Player {
         }
         return 0;                                                       // No movement, return zero
     }
-    
-    private int processMovement(int currentPosition, int velocity, int boundaryLimit, Rectangle obstacle, boolean isHorizontal) {
 
+    private int processMovement(int currentPosition, int velocity, int boundaryLimit, List<Rectangle> obstacles, boolean isHorizontal) {
         int projectedPosition = currentPosition + velocity;             // Calculate the projected position based on velocity
-    
+
         if (projectedPosition < 0) {                                    // Check if the projected position exceeds the boundary
             return 0;                                                   // Snap to the start of the boundary if beyond limit
         }
         if (projectedPosition > boundaryLimit - size) {
             return boundaryLimit - size;                                // Snap to the end of the boundary if beyond limit
         }
-    
+
         Rectangle projectedRect = isHorizontal                          // Create a rectangle representing the player's projected position for collision detection
             ? new Rectangle(projectedPosition, y, size, size)           // Horizontal movement
             : new Rectangle(x, projectedPosition, size, size);          // Vertical movement
-    
-        if (projectedRect.intersects(obstacle)) {                       // Check for collision with the obstacle
-                                
-            return isHorizontal                                         // Snap the position to the obstacle boundaries
-                ? (velocity > 0 ? obstacle.x - size : obstacle.x + obstacle.width)      // Snap to left or right of obstacle
-                : (velocity > 0 ? obstacle.y - size : obstacle.y + obstacle.height);    // Snap to top or bottom of obstacle
+
+        for (Rectangle obstacle : obstacles) {
+            if (projectedRect.intersects(obstacle)) {                   // Check for collision with each obstacle
+                return isHorizontal                                     // Snap the position to the obstacle boundaries
+                    ? (velocity > 0 ? obstacle.x - size : obstacle.x + obstacle.width)      // Snap to left or right of obstacle
+                    : (velocity > 0 ? obstacle.y - size : obstacle.y + obstacle.height);    // Snap to top or bottom of obstacle
+            }
         }
-    
+
         return projectedPosition;                                       // If no collision, return the projected position
     }
-    
+
     public void render(Graphics g) {
         g.setColor(Color.WHITE);
         g.fillRect(x, y, size, size);
