@@ -85,7 +85,19 @@ public class Player {
     
         for (Line2D diagonalObstacle : diagonalObstacles) {
             if (projectedRect.intersectsLine(diagonalObstacle)) {       // Check for collision with each diagonal obstacle
-                return currentPosition;
+                                                                        // Calculate the angle of the diagonal line
+                double angle = Math.atan2(diagonalObstacle.getY2() - diagonalObstacle.getY1(), diagonalObstacle.getX2() - diagonalObstacle.getX1());
+                double sin = Math.sin(angle);
+                double cos = Math.cos(angle);
+
+                                                                        // Adjust the player's velocity based on the angle of the line
+                if (isHorizontal) {
+                    velocityY = (int) (velocity * sin);
+                    return currentPosition;                             // Stop horizontal movement
+                } else {
+                    velocityX = (int) (velocity * cos);
+                    return currentPosition;                             // Stop vertical movement
+                }
             }
         }
     
