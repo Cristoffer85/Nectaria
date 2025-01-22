@@ -28,7 +28,7 @@ public class Player {
     private boolean isMoving = false;
     private int lastDirection = 0;
 
-    private final int scale = 1; // Scale factor for rendering
+    private final int scale = 1; // Scale factor for rendering (note: if changing, adjust render method (offset) accordingly)
 
     public Player(int x, int y, int size, int moveSpeed, int velocityX, int velocityY) {
         this.x = x;
@@ -145,7 +145,7 @@ public class Player {
         g.setColor(Color.RED);
         g.drawRect(x - (scaledSize - size) / 2, y - (scaledSize - size) / 2, size, size);   
     
-        // Adjust for scaling to center the sprite (num value is the offset)
+        // OFFSET: Adjust for scaling to center the sprite (num value is the offset)
         int renderX = x - scaledSize - 1;
         int renderY = y - scaledSize - 16;
     
