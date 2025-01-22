@@ -28,6 +28,8 @@ public class Player {
     private boolean isMoving = false;
     private int lastDirection = 0;
 
+    private final int scale = 1; // Scale factor for rendering
+
     public Player(int x, int y, int size, int moveSpeed, int velocityX, int velocityY) {
         this.x = x;
         this.y = y;
@@ -40,7 +42,7 @@ public class Player {
     }
 
     private void initializePlayerSprite() {
-        playerSprite = new PlayerSprite("/Playermove.jpg", 183, 275, 4, 4);
+        playerSprite = new PlayerSprite("/TestCharx9.png", 64, 64, 4, 9);
     }
 
     public void move(KeyHandler keyHandler, Rectangle boundary, List<Rectangle> straightObstacles, List<Line2D> diagonalObstacles) {
@@ -51,41 +53,31 @@ public class Player {
         x = processMovement(x, velocityX, boundary.width, straightObstacles, diagonalObstacles, true);
         y = processMovement(y, velocityY, boundary.height, straightObstacles, diagonalObstacles, false);
 
-        // Set isMoving flag based on both horizontal and vertical velocities (Makes sprite animation work in all directions. Check PlayerSprite class for ref.)
+        // Set isMoving flag based on both horizontal and vertical velocities
         isMoving = (velocityX != 0 || velocityY != 0);
     }
 
     private void handleHorizontalMovement(KeyHandler keyHandler) {
         if (keyHandler.isKeyPressed("moveLeft")) {
             velocityX = Math.max(velocityX - acceleration, -moveSpeed); // Accelerate left
-            isMoving = true;
             lastDirection = 2; // Left
         } else if (keyHandler.isKeyPressed("moveRight")) {
             velocityX = Math.min(velocityX + acceleration, moveSpeed);  // Accelerate right
-            isMoving = true;
             lastDirection = 3; // Right
         } else {
             velocityX = applyDeceleration(velocityX);                   // Apply deceleration when no key is pressed
-            if (velocityX == 0) {
-                isMoving = false;
-            }
         }
     }
 
     private void handleVerticalMovement(KeyHandler keyHandler) {
         if (keyHandler.isKeyPressed("moveUp")) {
             velocityY = Math.max(velocityY - acceleration, -moveSpeed); // Accelerate up
-            isMoving = true;
             lastDirection = 1; // Up
         } else if (keyHandler.isKeyPressed("moveDown")) {
             velocityY = Math.min(velocityY + acceleration, moveSpeed);  // Accelerate down
-            isMoving = true;
             lastDirection = 0; // Down
         } else {
             velocityY = applyDeceleration(velocityY);                   // Apply deceleration when no key is pressed
-            if (velocityY == 0) {
-                isMoving = false;
-            }
         }
     }
 
@@ -101,24 +93,25 @@ public class Player {
 
     private int processMovement(int currentPosition, int velocity, int boundaryLimit, List<Rectangle> straightObstacles, List<Line2D> diagonalObstacles, boolean isHorizontal) {
         int projectedPosition = currentPosition + velocity;             // Calculate the projected position based on velocity
-    
+        int scaledSize = size * scale;                                  // Use scaled size for collision detection
+        
         if (projectedPosition < 0) {                                    // Check if the projected position exceeds the boundary
             return 0;                                                   // Snap to the start of the boundary if beyond limit
         }
-        if (projectedPosition > boundaryLimit - size) {
-            return boundaryLimit - size;                                // Snap to the end of the boundary if beyond limit
+        if (projectedPosition > boundaryLimit - scaledSize) {
+            return boundaryLimit - scaledSize;                          // Snap to the end of the boundary if beyond limit
         }
-    
+        
         Rectangle projectedRect = isHorizontal                          // Create a rectangle representing the player's projected position for collision detection
-            ? new Rectangle(projectedPosition, y, size, size)           // Horizontal movement
-            : new Rectangle(x, projectedPosition, size, size);          // Vertical movement
+            ? new Rectangle(projectedPosition, y, scaledSize, scaledSize) // Horizontal movement
+            : new Rectangle(x, projectedPosition, scaledSize, scaledSize); // Vertical movement
     
         // ## Collision straight obstacles ##
         for (Rectangle straightObstacle : straightObstacles) {
             if (projectedRect.intersects(straightObstacle)) {           // Check for collision with each obstacle
                 return isHorizontal                                     // Snap the position to the obstacle boundaries
-                    ? (velocity > 0 ? straightObstacle.x - size : straightObstacle.x + straightObstacle.width)      // Snap to left or right of obstacle
-                    : (velocity > 0 ? straightObstacle.y - size : straightObstacle.y + straightObstacle.height);    // Snap to top or bottom of obstacle
+                    ? (velocity > 0 ? straightObstacle.x - scaledSize : straightObstacle.x + straightObstacle.width) // Snap to left or right of obstacle
+                    : (velocity > 0 ? straightObstacle.y - scaledSize : straightObstacle.y + straightObstacle.height); // Snap to top or bottom of obstacle
             }
         }
     
@@ -145,9 +138,20 @@ public class Player {
     }
 
     public void render(Graphics g) {
-        // Determine direction of movement
+        // Determine the scaled size of the sprite
+        int scaledSize = size * scale;
+
+        // Draw out collision box
+        g.setColor(Color.RED);
+        g.drawRect(x - (scaledSize - size) / 2, y - (scaledSize - size) / 2, scaledSize, scaledSize);   
+
+        // Adjust for scaling to center the sprite
+        int renderX = x - (scaledSize - size) / 2;
+        int renderY = y - (scaledSize - size) / 2;
+    
+        // Determine direction of movement and render the sprite
         int direction = playerSprite.determineDirection(velocityX, velocityY, lastDirection);
-        // Render appropriate sprite
-        playerSprite.render(g, x, y, size, direction, playerSprite.getCurrentFrame(), isMoving);
+        playerSprite.render(g, renderX, renderY, size, direction, isMoving, scale);
     }
+    
 }

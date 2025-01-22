@@ -9,7 +9,7 @@ public class PlayerSprite {
     private BufferedImage spritesheet;
     private BufferedImage[][] sprites;
     private int currentFrame = 0;
-    private int frameDelay = 5;                                                     // Adjust animation speed, lower = faster and reverse
+    private int frameDelay = 1;                                                     // Adjust animation speed, lower = faster and reverse
     private int frameCounter = 0;
 
     public PlayerSprite(String spritePath, int spriteWidth, int spriteHeight, int rows, int cols) {
@@ -35,10 +35,10 @@ public class PlayerSprite {
             frameCounter++;
             if (frameCounter >= frameDelay) {
                 frameCounter = 0;
-                currentFrame = (currentFrame + 1) % 4;                              // Assuming 4 frames per direction
+                currentFrame = (currentFrame + 1) % 9;                              // Assuming 9 frames per direction
             }
         } else {
-            currentFrame = 0;                                                       // Reset to the first frame when not moving
+            currentFrame = 0;                                                       // Reset to the first frame, of last row pressed (on key) when not moving
         }
     }
 
@@ -47,16 +47,19 @@ public class PlayerSprite {
     }
 
     public int determineDirection(int velocityX, int velocityY, int lastDirection) {
-        int direction = (velocityY < 0) ? 1 :      // Up
-                        (velocityY > 0) ? 0 :      // Down
-                        (velocityX < 0) ? 2 :      // Left
+        int direction = (velocityY < 0) ? 0 :      // Up
+                        (velocityX < 0) ? 1 :      // Left
+                        (velocityY > 0) ? 2 :      // Down
                         (velocityX > 0) ? 3 :      // Right
                         lastDirection;
         return direction;
     }
 
-    public void render(Graphics g, int x, int y, int size, int direction, int currentFrame, boolean isMoving) {
+    public void render(Graphics g, int x, int y, int size, int direction, boolean isMoving, int scale) {
         updateFrame(isMoving);
-        g.drawImage(getSprite(direction, currentFrame), x, y, size, size, null);
+        BufferedImage sprite = getSprite(direction, currentFrame);
+        int scaledWidth = sprite.getWidth() * scale;
+        int scaledHeight = sprite.getHeight() * scale;
+        g.drawImage(sprite, x, y, scaledWidth, scaledHeight, null);
     }
 }
