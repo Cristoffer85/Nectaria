@@ -36,6 +36,10 @@ public class Player {
         this.velocityX = velocityX;
         this.velocityY = velocityY;
 
+        initializePlayerSprite();
+    }
+
+    private void initializePlayerSprite() {
         playerSprite = new PlayerSprite("/Playermove.jpg", 183, 275, 4, 4);
     }
 
@@ -46,6 +50,9 @@ public class Player {
         // Update player's position and check for collisions with all obstacles
         x = processMovement(x, velocityX, boundary.width, straightObstacles, diagonalObstacles, true);
         y = processMovement(y, velocityY, boundary.height, straightObstacles, diagonalObstacles, false);
+
+        // Set isMoving flag based on both horizontal and vertical velocities (Makes sprite animation work in all directions. Check PlayerSprite class for ref.)
+        isMoving = (velocityX != 0 || velocityY != 0);
     }
 
     private void handleHorizontalMovement(KeyHandler keyHandler) {

@@ -9,7 +9,7 @@ public class PlayerSprite {
     private BufferedImage spritesheet;
     private BufferedImage[][] sprites;
     private int currentFrame = 0;
-    private int frameDelay = 5;                                                     // Adjust animation speed, lower = faster and reverse
+    private int frameDelay = 5;                                     // Adjust animation speed, lower = faster and reverse
     private int frameCounter = 0;
 
     public PlayerSprite(String spritePath, int spriteWidth, int spriteHeight, int rows, int cols) {
@@ -35,10 +35,9 @@ public class PlayerSprite {
             frameCounter++;
             if (frameCounter >= frameDelay) {
                 frameCounter = 0;
-                currentFrame = (currentFrame + 1) % 4;                              // Assuming: 4 frames per direction
             }
         } else {
-            currentFrame = 0;                                                       // Reset to the first frame when not moving
+            currentFrame = 0;                                       // Reset to the first frame -> on last used sprite row, when not moving
         }
     }
 
@@ -46,12 +45,13 @@ public class PlayerSprite {
         return currentFrame;
     }
 
-    public int determineDirection(int velocityX, int velocityY, int lastDirection) { // Determines direction for which sprite to render
-        return (velocityY < 0) ? 1 :      // Up
-               (velocityY > 0) ? 0 :      // Down
-               (velocityX < 0) ? 2 :      // Left
-               (velocityX > 0) ? 3 :      // Right
-               lastDirection;
+    public int determineDirection(int velocityX, int velocityY, int lastDirection) {
+        int direction = (velocityY < 0) ? 1 :      // Up
+                        (velocityY > 0) ? 0 :      // Down
+                        (velocityX < 0) ? 2 :      // Left
+                        (velocityX > 0) ? 3 :      // Right
+                        lastDirection;
+        return direction;
     }
 
     public void render(Graphics g, int x, int y, int size, int direction, int currentFrame, boolean isMoving) {
