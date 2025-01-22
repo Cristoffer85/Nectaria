@@ -1,8 +1,10 @@
 package com.cristoffer85.Main;
 
-import com.cristoffer85.Entities.Player;
-import com.cristoffer85.Entities.Obstacle;
 import javax.swing.*;
+
+import com.cristoffer85.Entity.Obstacle;
+import com.cristoffer85.Entity.Player;
+
 import java.awt.*;
 import java.awt.geom.Line2D;
 import java.util.ArrayList;
