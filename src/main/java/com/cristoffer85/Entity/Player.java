@@ -145,9 +145,6 @@ public class Player {
     }
 
     public void render(Graphics g) {
-        g.setColor(Color.WHITE);
-        g.fillRect(x, y, size, size);
-
         // Determine direction of movement
         int direction = playerSprite.determineDirection(velocityX, velocityY, lastDirection);
         // Render appropriate sprite

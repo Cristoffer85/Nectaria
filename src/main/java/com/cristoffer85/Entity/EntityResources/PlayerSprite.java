@@ -9,7 +9,7 @@ public class PlayerSprite {
     private BufferedImage spritesheet;
     private BufferedImage[][] sprites;
     private int currentFrame = 0;
-    private int frameDelay = 5;                                     // Adjust animation speed, lower = faster and reverse
+    private int frameDelay = 5;                                                     // Adjust animation speed, lower = faster and reverse
     private int frameCounter = 0;
 
     public PlayerSprite(String spritePath, int spriteWidth, int spriteHeight, int rows, int cols) {
@@ -35,9 +35,10 @@ public class PlayerSprite {
             frameCounter++;
             if (frameCounter >= frameDelay) {
                 frameCounter = 0;
+                currentFrame = (currentFrame + 1) % 4;                              // Assuming 4 frames per direction
             }
         } else {
-            currentFrame = 0;                                       // Reset to the first frame -> on last used sprite row, when not moving
+            currentFrame = 0;                                                       // Reset to the first frame when not moving
         }
     }
 
