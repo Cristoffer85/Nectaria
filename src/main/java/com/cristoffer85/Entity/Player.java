@@ -60,7 +60,7 @@ public class Player {
     private void handleHorizontalMovement(KeyHandler keyHandler) {
         if (keyHandler.isKeyPressed("moveLeft")) {
             velocityX = Math.max(velocityX - acceleration, -moveSpeed); // Accelerate left
-            lastDirection = 2; // Left
+            lastDirection = 1; // Left
         } else if (keyHandler.isKeyPressed("moveRight")) {
             velocityX = Math.min(velocityX + acceleration, moveSpeed);  // Accelerate right
             lastDirection = 3; // Right
@@ -72,10 +72,10 @@ public class Player {
     private void handleVerticalMovement(KeyHandler keyHandler) {
         if (keyHandler.isKeyPressed("moveUp")) {
             velocityY = Math.max(velocityY - acceleration, -moveSpeed); // Accelerate up
-            lastDirection = 1; // Up
+            lastDirection = 0; // Up
         } else if (keyHandler.isKeyPressed("moveDown")) {
             velocityY = Math.min(velocityY + acceleration, moveSpeed);  // Accelerate down
-            lastDirection = 0; // Down
+            lastDirection = 2; // Down
         } else {
             velocityY = applyDeceleration(velocityY);                   // Apply deceleration when no key is pressed
         }
