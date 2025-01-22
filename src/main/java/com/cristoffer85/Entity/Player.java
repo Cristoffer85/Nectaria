@@ -140,18 +140,17 @@ public class Player {
     public void render(Graphics g) {
         // Determine the scaled size of the sprite
         int scaledSize = size * scale;
-
-        // Draw out collision box
+    
+        // Draw out collision box/Debug
         g.setColor(Color.RED);
-        g.drawRect(x - (scaledSize - size) / 2, y - (scaledSize - size) / 2, scaledSize, scaledSize);   
-
-        // Adjust for scaling to center the sprite
-        int renderX = x - (scaledSize - size) / 2;
-        int renderY = y - (scaledSize - size) / 2;
+        g.drawRect(x - (scaledSize - size) / 2, y - (scaledSize - size) / 2, size, size);   
+    
+        // Adjust for scaling to center the sprite (num value is the offset)
+        int renderX = x - scaledSize - 1;
+        int renderY = y - scaledSize - 16;
     
         // Determine direction of movement and render the sprite
         int direction = playerSprite.determineDirection(velocityX, velocityY, lastDirection);
-        playerSprite.render(g, renderX, renderY, size, direction, isMoving, scale);
+        playerSprite.render(g, renderX, renderY, scaledSize, direction, isMoving, scale);
     }
-    
 }
