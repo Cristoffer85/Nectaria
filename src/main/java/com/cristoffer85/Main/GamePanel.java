@@ -19,10 +19,11 @@ public class GamePanel extends JPanel {
     private BufferedImage gameImage;
     private int scaleFactor = 2; // Scale factor for pixel doubling entire game == change this value and up/downscale entire game (Couldnt figure out any other way to not have to manually draw 128x128px sprite and tiles)? 
                                  // Scale factor: 2 (with 64px sprites and tiles) makes the game viewable and playable on 1920x1080 resolution.
+                                 // Combined with gameImage below.
 
     public GamePanel() {
         // Initialization of player and obstacles
-        player = new Player(30, 30, 64, 6, 0, 0); // Use 32x32 size for player
+        player = new Player(30, 30, 64, 6, 0, 0);           // Use 64x64 size for player
         Obstacle.addObstacles();
 
         // Keyhandling methods
@@ -31,13 +32,13 @@ public class GamePanel extends JPanel {
         setFocusable(true);
 
         // Load tilesheet
-        Tile.loadTilesheet("/Overworld640x576-16pxtile.png", 16, 16); // Use 32x32 tiles
+        Tile.loadTilesheet("/Overworld640x576-16pxtile.png", 16, 16);   // Use 16x16 tiles (shall be 64x64)
 
         // Initialize tiles from file
-        Tile.initializeTiles("/MainWorld.txt", 16, 16); // Use 32x32 tiles
+        Tile.initializeTiles("/MainWorld.txt", 16, 16);             // Use 16x16 tiles (shall be 64x64)
 
         // Create the game image with the lower resolution
-        gameImage = new BufferedImage(960, 540, BufferedImage.TYPE_INT_ARGB); // Half of 1920x1080
+        gameImage = new BufferedImage(960, 540, BufferedImage.TYPE_INT_ARGB);        // Half of 1920x1080
 
         // Game loop
         Timer timer = new Timer(16, e -> updateGame());
