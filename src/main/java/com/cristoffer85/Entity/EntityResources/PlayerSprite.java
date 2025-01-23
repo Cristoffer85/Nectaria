@@ -47,12 +47,7 @@ public class PlayerSprite {
     }
 
     public int determineDirection(int velocityX, int velocityY, int lastDirection) {
-        int direction = (velocityY < 0) ? 0 :      // Up
-                        (velocityX < 0) ? 1 :      // Left
-                        (velocityY > 0) ? 2 :      // Down
-                        (velocityX > 0) ? 3 :      // Right
-                        lastDirection;
-        return direction;
+        return lastDirection;
     }
 
     public void render(Graphics g, int x, int y, int size, int direction, boolean isMoving, int scale) {
