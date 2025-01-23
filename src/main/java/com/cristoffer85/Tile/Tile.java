@@ -11,6 +11,7 @@ public class Tile {
     private final BufferedImage image;
     private final int tileId;
     private static Map<Integer, Tile> tileMap = new HashMap<>();
+    private static Map<Point, Integer> tilePositions = new HashMap<>();
 
     public Tile(BufferedImage image, int tileId) {
         this.image = image;
@@ -47,5 +48,27 @@ public class Tile {
 
     public static Tile getTileById(int tileId) {
         return tileMap.get(tileId);
+    }
+
+    public static void addTile(int tileId, int x, int y) {
+        tilePositions.put(new Point(x, y), tileId);
+    }
+
+    public static void initializeTiles() {
+        // Add specific tiles at specified positions
+        addTile(1, 50, 50); // Add tile with tileId 1 at (50, 50)
+        addTile(2, 100, 50); // Add tile with tileId 2 at (100, 50)
+        addTile(3, 150, 50); // Add tile with tileId 3 at (150, 50)
+    }
+
+    public static void renderAll(Graphics g) {
+        for (Map.Entry<Point, Integer> entry : tilePositions.entrySet()) {
+            Point point = entry.getKey();
+            int tileId = entry.getValue();
+            Tile tile = getTileById(tileId);
+            if (tile != null) {
+                tile.render(g, point.x, point.y);
+            }
+        }
     }
 }
