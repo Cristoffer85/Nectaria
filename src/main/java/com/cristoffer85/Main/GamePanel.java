@@ -14,8 +14,10 @@ public class GamePanel extends JPanel {
     private KeyHandler keyHandler;
 
     public GamePanel() {
-        // Initialization of player and obstacles
+        // Initialize player
         player = new Player(50, 50, 20, 6, 0, 0);
+        
+        // Initialize obstacles
         Obstacle.addObstacles();
 
         // Keyhandling methods
@@ -24,10 +26,9 @@ public class GamePanel extends JPanel {
         setFocusable(true);
 
         // Load tilesheet
-        Tile.loadTilesheet("/Overworld640x576-16pxtile.png", 32, 32);
-        
+        Tile.loadTilesheet("/Overworld640x576-16pxtile.png", 16, 16);
         // Initialize tiles
-        Tile.initializeTiles();
+        Tile.initializeTiles("/MainWorld.txt", 16, 16);
 
         // Game loop
         Timer timer = new Timer(16, e -> updateGame());

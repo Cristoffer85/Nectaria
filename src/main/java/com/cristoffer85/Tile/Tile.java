@@ -2,7 +2,9 @@ package com.cristoffer85.Tile;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.HashMap;
 import java.util.Map;
 import javax.imageio.ImageIO;
@@ -54,11 +56,21 @@ public class Tile {
         tilePositions.put(new Point(x, y), tileId);
     }
 
-    public static void initializeTiles() {
-        // Add specific tiles at specified positions
-        addTile(1, 50, 50); // Add tile with tileId 1 at (50, 50)
-        addTile(2, 100, 50); // Add tile with tileId 2 at (100, 50)
-        addTile(3, 150, 50); // Add tile with tileId 3 at (150, 50)
+    public static void initializeTiles(String filePath, int tileWidth, int tileHeight) {
+        try (BufferedReader br = new BufferedReader(new InputStreamReader(Tile.class.getResourceAsStream(filePath)))) {
+            String line;
+            int y = 0;
+            while ((line = br.readLine()) != null) {
+                String[] parts = line.split(" ");
+                for (int x = 0; x < parts.length; x++) {
+                    int tileId = Integer.parseInt(parts[x]);
+                    addTile(tileId, x * tileWidth, y * tileHeight);
+                }
+                y++;
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     public static void renderAll(Graphics g) {
