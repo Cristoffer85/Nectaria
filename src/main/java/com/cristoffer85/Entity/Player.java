@@ -17,8 +17,8 @@ public class Player {
     private int x, y;
     private final int size;
     private final int moveSpeed;
-    private final int acceleration = 1;
-    private final int deceleration = 1;
+    private final int acceleration = 2;     // Acceleration for player movement. Higher number = faster acceleration
+    private final int deceleration = 1;     // Deceleration for player movement
 
     private int velocityX = 0;
     private int velocityY = 0;
@@ -28,7 +28,7 @@ public class Player {
     private boolean isMoving = false;
     private int lastDirection = 0;
 
-    private final int scale = 1; // Scale factor for rendering (note: if changing, adjust render method (offset) accordingly)
+    private final int scale = 1;            // Scale factor for render size of player (note, if change: adjust render method (OFFSET) below accordingly)
 
     public Player(int x, int y, int size, int moveSpeed, int velocityX, int velocityY) {
         this.x = x;
@@ -103,8 +103,8 @@ public class Player {
         }
         
         Rectangle projectedRect = isHorizontal                          // Create a rectangle representing the player's projected position for collision detection
-            ? new Rectangle(projectedPosition, y, scaledSize, scaledSize) // Horizontal movement
-            : new Rectangle(x, projectedPosition, scaledSize, scaledSize); // Vertical movement
+            ? new Rectangle(projectedPosition, y, scaledSize, scaledSize)   // Horizontal movement
+            : new Rectangle(x, projectedPosition, scaledSize, scaledSize);  // Vertical movement
     
         // ## Collision straight obstacles ##
         for (Rectangle straightObstacle : straightObstacles) {
@@ -118,18 +118,18 @@ public class Player {
         // ## Collision diagonal obstacles ##
         for (Line2D diagonalObstacle : diagonalObstacles) {
             if (projectedRect.intersectsLine(diagonalObstacle)) {       // Check for collision with each diagonal obstacle
-                // Calculate the angle of the diagonal line
+                                                                        // Calculate the angle of the diagonal line
                 double angle = Math.atan2(diagonalObstacle.getY2() - diagonalObstacle.getY1(), diagonalObstacle.getX2() - diagonalObstacle.getX1());
                 double sin = Math.sin(angle);
                 double cos = Math.cos(angle);
 
-                // Adjust the player's velocity based on the angle of the line
+                                                                        // Adjust the player's velocity based on the angle of the line
                 if (isHorizontal) {
                     velocityY = (int) (velocity * sin);
-                    return currentPosition; // Stop horizontal movement
+                    return currentPosition;                             // Stop horizontal movement
                 } else {
                     velocityX = (int) (velocity * cos);
-                    return currentPosition; // Stop vertical movement
+                    return currentPosition;                             // Stop vertical movement
                 }
             }
         }
