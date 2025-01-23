@@ -1,0 +1,1 @@
+1. Decide screen size (for steam: 1920x1080) aspect ratio 16:9, NO scaling! to avoid blur. Decide pixel size of sprites/tiles after that.
