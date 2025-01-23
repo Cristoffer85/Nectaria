@@ -30,8 +30,6 @@ public class Player {
     private boolean isMoving = false;
     private int lastDirection = 0;
 
-    private final int scale = 1; // Scale factor for rendering (note: if changing, adjust render method (offset) accordingly)
-
     private PlayerMovement playerMovement;
 
     public Player(int x, int y, int size, int moveSpeed, int velocityX, int velocityY) {
@@ -55,19 +53,12 @@ public class Player {
     }
 
     public void render(Graphics g) {
-        // Determine the scaled size of the sprite
-        int scaledSize = size * scale;
-    
         // Draw out collision box/Debug
         g.setColor(Color.RED);
-        g.drawRect(x - (scaledSize - size) / 2, y - (scaledSize - size) / 2, size, size);   
-    
-        // OFFSET: Adjust for scaling to center the sprite (num value is the offset)
-        int renderX = x - scaledSize - 1;
-        int renderY = y - scaledSize - 16;
+        g.drawRect(x, y, size, size);   
     
         // Determine direction of movement and render the sprite
         int direction = playerSprite.determineDirection(velocityX, velocityY, lastDirection);
-        playerSprite.render(g, renderX, renderY, scaledSize, direction, isMoving, scale);
+        playerSprite.render(g, x, y, size, direction, isMoving);
     }
 }

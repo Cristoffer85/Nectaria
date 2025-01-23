@@ -50,11 +50,9 @@ public class PlayerSprite {
         return lastDirection;
     }
 
-    public void render(Graphics g, int x, int y, int size, int direction, boolean isMoving, int scale) {
+    public void render(Graphics g, int x, int y, int size, int direction, boolean isMoving) {
         updateFrame(isMoving);
         BufferedImage sprite = getSprite(direction, currentFrame);
-        int scaledWidth = sprite.getWidth() * scale;
-        int scaledHeight = sprite.getHeight() * scale;
-        g.drawImage(sprite, x, y, scaledWidth, scaledHeight, null);
+        g.drawImage(sprite, x, y, size, size, null);
     }
 }
