@@ -58,7 +58,7 @@ public class GamePanel extends JPanel {
 
         // Calculate camera position
         int cameraX = player.getX() - baseWidth / 2;
-        int cameraY = player.getY() - baseHeight / 2;
+        int cameraY = player.getY() - baseHeight / 3;
 
         // Clamp camera position to map boundaries
         int maxCameraX = Tile.getMapWidth() * Tile.getTileWidth() - baseWidth;
