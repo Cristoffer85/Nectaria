@@ -43,20 +43,6 @@ public class GamePanel extends JPanel {
         // Game loop
         Timer timer = new Timer(16, e -> updateGame());
         timer.start();
-
-        // Add key listener for resolution change
-        addKeyListener(new KeyAdapter() {
-            @Override
-            public void keyPressed(KeyEvent e) {
-                if (e.getKeyCode() == KeyEvent.VK_F1) {
-                    Game.changeResolution(1280, 720); // Switch to 1280x720
-                } else if (e.getKeyCode() == KeyEvent.VK_F2) {
-                    Game.changeResolution(1920, 1080); // Switch to 1920x1080
-                } else if (e.getKeyCode() == KeyEvent.VK_F3) {
-                    Game.changeResolution(2560, 1440); // Switch to 2560x1440
-                }
-            }
-        });
     }
 
     @Override
@@ -77,6 +63,7 @@ public class GamePanel extends JPanel {
         // Render player on top of obstacles
         player.render(g2d);
 
+        // Dispose of the Graphics2D object == cleanup of resources
         g2d.dispose();
 
         // Draw the BufferedImage scaled up to the panel size
