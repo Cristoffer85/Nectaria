@@ -20,8 +20,8 @@ public class Player {
     private int x, y;
     private final int size;
     private final int moveSpeed;
-    private final int acceleration = 1;
-    private final int deceleration = 1;
+    private int acceleration;
+    private int deceleration;
     private int velocityX = 0;
     private int velocityY = 0;
     private boolean isMoving = false;
@@ -30,9 +30,9 @@ public class Player {
 
     // Player's sprite and collision properties
     private PlayerSprite playerSprite;
-    private final int collisionBoxSize;
-    private final int collisionBoxOffsetX = 21;
-    private final int collisionBoxOffsetY = 40;
+    private int collisionBoxSize;
+    private int collisionBoxOffsetX;
+    private int collisionBoxOffsetY;
 
     public Player(int x, int y, int size, int moveSpeed, int velocityX, int velocityY) {
         this.x = x;
@@ -42,14 +42,21 @@ public class Player {
         this.velocityX = velocityX;
         this.velocityY = velocityY;
 
-        // Set Collision box size
-        this.collisionBoxSize = size / 3;
-
-        initializePlayerSprite();
+        initializePlayer();
         playerMovement = new PlayerMovement(this, acceleration, deceleration);
     }
 
-    private void initializePlayerSprite() {
+    private void initializePlayer() {
+        // Set Collision box size and offsets
+        this.collisionBoxSize = size / 3;
+        this.collisionBoxOffsetX = 21;
+        this.collisionBoxOffsetY = 40;
+
+        // Set acceleration and deceleration values
+        this.acceleration = 1;
+        this.deceleration = 1;
+
+        // Initialize player sprite
         playerSprite = new PlayerSprite("/TestCharx9.png", 64, 64, 4, 9);
     }
 
@@ -60,7 +67,7 @@ public class Player {
     public void render(Graphics g) {
         // Draw out collision box/Debug
         g.setColor(Color.RED);
-        g.drawRect(x + collisionBoxOffsetX, y + collisionBoxOffsetY, collisionBoxSize, collisionBoxSize);    
+        g.drawRect(x + collisionBoxOffsetX, y + collisionBoxOffsetY, collisionBoxSize, collisionBoxSize);   
     
         // Determine direction of movement and render the sprite
         int direction = playerSprite.determineDirection(velocityX, velocityY, lastDirection);
