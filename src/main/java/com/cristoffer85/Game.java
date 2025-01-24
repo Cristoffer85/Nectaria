@@ -9,10 +9,14 @@ public class Game {
     private static GamePanel gamePanel;
 
     public static void main(String[] args) {
+        int baseWidth = 960;  // Base resolution width
+        int baseHeight = 540; // Base resolution height
+        int scaleFactor = 2;  // Scale factor
+
         frame = new JFrame("New proper 2D collision game");
-        gamePanel = new GamePanel();
+        gamePanel = new GamePanel(baseWidth, baseHeight, scaleFactor);
         frame.add(gamePanel);
-        frame.setSize(1920, 1080); // Set initial window size
+        frame.pack(); // Set the window size based on the GamePanel's preferred size
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setLocationRelativeTo(null);
         frame.setVisible(true);
