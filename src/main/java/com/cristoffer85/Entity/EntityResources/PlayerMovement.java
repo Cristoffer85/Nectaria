@@ -66,25 +66,27 @@ public class PlayerMovement {
 
     private int processMovement(int currentPosition, int velocity, int boundaryLimit, List<Rectangle> straightObstacles, List<Line2D> diagonalObstacles, boolean isHorizontal) {
         int projectedPosition = currentPosition + velocity;             // Calculate the projected position based on velocity
-        int playerSize = player.getSize();                              // Use player's size for collision detection
+        int collisionBoxSize = player.getCollisionBoxSize();            // Use player's collision box size for collision detection
+        int collisionBoxOffsetX = player.getCollisionBoxOffsetX();      // Get the collision box offset X
+        int collisionBoxOffsetY = player.getCollisionBoxOffsetY();      // Get the collision box offset Y
         
         if (projectedPosition < 0) {                                    // Check if the projected position exceeds the boundary
             return 0;                                                   // Snap to the start of the boundary if beyond limit
         }
-        if (projectedPosition > boundaryLimit - playerSize) {
-            return boundaryLimit - playerSize;                          // Snap to the end of the boundary if beyond limit
+        if (projectedPosition > boundaryLimit - collisionBoxSize) {
+            return boundaryLimit - collisionBoxSize;                    // Snap to the end of the boundary if beyond limit
         }
         
         Rectangle projectedRect = isHorizontal                          // Create a rectangle representing the player's projected position for collision detection
-            ? new Rectangle(projectedPosition, player.getY(), playerSize, playerSize)   // Horizontal movement
-            : new Rectangle(player.getX(), projectedPosition, playerSize, playerSize);  // Vertical movement
+            ? new Rectangle(projectedPosition + collisionBoxOffsetX, player.getY() + collisionBoxOffsetY, collisionBoxSize, collisionBoxSize)   // Horizontal movement
+            : new Rectangle(player.getX() + collisionBoxOffsetX, projectedPosition + collisionBoxOffsetY, collisionBoxSize, collisionBoxSize);  // Vertical movement
     
         // ## Collision straight obstacles ##
         for (Rectangle straightObstacle : straightObstacles) {
             if (projectedRect.intersects(straightObstacle)) {           // Check for collision with each obstacle
                 return isHorizontal                                     // Snap the position to the obstacle boundaries
-                    ? (velocity > 0 ? straightObstacle.x - playerSize : straightObstacle.x + straightObstacle.width) // Snap to left or right of obstacle
-                    : (velocity > 0 ? straightObstacle.y - playerSize : straightObstacle.y + straightObstacle.height); // Snap to top or bottom of obstacle
+                    ? (velocity > 0 ? straightObstacle.x - collisionBoxSize - collisionBoxOffsetX : straightObstacle.x + straightObstacle.width - collisionBoxOffsetX) // Snap to left or right of obstacle
+                    : (velocity > 0 ? straightObstacle.y - collisionBoxSize - collisionBoxOffsetY : straightObstacle.y + straightObstacle.height - collisionBoxOffsetY); // Snap to top or bottom of obstacle
             }
         }
     

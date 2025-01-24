@@ -16,21 +16,23 @@ import java.util.List;
 @Setter
 @AllArgsConstructor
 public class Player {
+    // Player's position and movement properties
     private int x, y;
     private final int size;
     private final int moveSpeed;
     private final int acceleration = 1;
     private final int deceleration = 1;
-
     private int velocityX = 0;
     private int velocityY = 0;
-
-    private PlayerSprite playerSprite;
-
     private boolean isMoving = false;
     private int lastDirection = 0;
-
     private PlayerMovement playerMovement;
+
+    // Player's sprite and collision properties
+    private PlayerSprite playerSprite;
+    private final int collisionBoxSize;
+    private final int collisionBoxOffsetX = 21;
+    private final int collisionBoxOffsetY = 40;
 
     public Player(int x, int y, int size, int moveSpeed, int velocityX, int velocityY) {
         this.x = x;
@@ -39,6 +41,9 @@ public class Player {
         this.moveSpeed = moveSpeed;
         this.velocityX = velocityX;
         this.velocityY = velocityY;
+
+        // Set Collision box size
+        this.collisionBoxSize = size / 3;
 
         initializePlayerSprite();
         playerMovement = new PlayerMovement(this, acceleration, deceleration);
@@ -55,7 +60,7 @@ public class Player {
     public void render(Graphics g) {
         // Draw out collision box/Debug
         g.setColor(Color.RED);
-        g.drawRect(x, y, size, size);   
+        g.drawRect(x + collisionBoxOffsetX, y + collisionBoxOffsetY, collisionBoxSize, collisionBoxSize);    
     
         // Determine direction of movement and render the sprite
         int direction = playerSprite.determineDirection(velocityX, velocityY, lastDirection);

@@ -12,7 +12,7 @@ public class Game {
         frame = new JFrame("New proper 2D collision game");
         gamePanel = new GamePanel();
         frame.add(gamePanel);
-        frame.setSize(1920, 1080); // Set initial window size
+        frame.setSize(600, 600); // Set initial window size
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setLocationRelativeTo(null);
         frame.setVisible(true);
