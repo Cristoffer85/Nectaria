@@ -33,10 +33,10 @@ public class GamePanel extends JPanel {
         setFocusable(true);
 
         // Load tilesheet
-        Tile.loadTilesheet("/Overworld640x576-16pxtile.png", 16, 16); // Use 16x16 tiles (shall be 64x64)
+        Tile.loadTilesheet("/TileSheet.png", 64, 64);           // Use 64x64 tiles
 
         // Initialize tiles from file
-        Tile.initializeTiles("/MainWorld.txt", 16, 16); // Use 16x16 tiles (shall be 64x64)
+        Tile.initializeTiles("/MainWorld.txt", 64, 64);     // Use 64x64 tiles
 
         // Create the game image with the base resolution
         gameImage = new BufferedImage(baseWidth, baseHeight, BufferedImage.TYPE_INT_ARGB);
