@@ -68,9 +68,17 @@ public class Obstacle {
         return diagonalObstacles;
     }
 
-    public static void renderAll(Graphics g) {
-        for (Obstacle obstacle : obstacles) {
-            obstacle.render(g);
+    public static void renderAll(Graphics2D g2d, int cameraX, int cameraY) {
+        // Render all straight obstacles with camera offset
+        g2d.setColor(Color.RED);
+        for (Rectangle obstacle : straightObstacles) {
+            g2d.drawRect(obstacle.x - cameraX, obstacle.y - cameraY, obstacle.width, obstacle.height);
+        }
+
+        // Render all diagonal obstacles with camera offset
+        g2d.setColor(Color.BLUE);
+        for (Line2D obstacle : diagonalObstacles) {
+            g2d.drawLine((int) obstacle.getX1() - cameraX, (int) obstacle.getY1() - cameraY, (int) obstacle.getX2() - cameraX, (int) obstacle.getY2() - cameraY);
         }
     }
 }

@@ -52,21 +52,28 @@ public class GamePanel extends JPanel {
         timer.start();
     }
 
-    // ## Overriding the JavaX Swing paintComponent method to render the game ##
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
+
+        // Calculate camera position
+        int cameraX = player.getX() - baseWidth / 2;
+        int cameraY = player.getY() - baseHeight / 2;
+
+        // Clamp camera position to map boundaries
+        cameraX = Math.max(0, Math.min(cameraX, Tile.getMapWidth() * Tile.getTileWidth() - baseWidth));
+        cameraY = Math.max(0, Math.min(cameraY, Tile.getMapHeight() * Tile.getTileHeight() - baseHeight));
 
         // Render the game to the BufferedImage
         Graphics2D g2d = gameImage.createGraphics();
         g2d.setColor(Color.BLACK);
         g2d.fillRect(0, 0, gameImage.getWidth(), gameImage.getHeight());
 
-        // Render all tiles
-        Tile.renderAll(g2d);
+        // Render all tiles with camera offset
+        Tile.renderAll(g2d, cameraX, cameraY);
 
-        // Render all obstacles
-        Obstacle.renderAll(g2d);
+        // Render all obstacles with camera offset
+        Obstacle.renderAll(g2d, cameraX, cameraY);
 
         // Render player on top of obstacles
         player.render(g2d);

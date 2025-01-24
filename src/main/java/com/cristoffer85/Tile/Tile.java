@@ -10,10 +10,15 @@ import java.util.Map;
 import javax.imageio.ImageIO;
 
 public class Tile {
+    private static BufferedImage tilesheet;
+    private static int tileWidth;
+    private static int tileHeight;
     private final BufferedImage image;
     private final int tileId;
     private static Map<Integer, Tile> tileMap = new HashMap<>();
     private static Map<Point, Integer> tilePositions = new HashMap<>();
+    private static int mapWidth;
+    private static int mapHeight;
 
     public Tile(BufferedImage image, int tileId) {
         this.image = image;
@@ -30,9 +35,12 @@ public class Tile {
 
     public static void loadTilesheet(String path, int tileWidth, int tileHeight) {
         try {
-            BufferedImage tilesheet = ImageIO.read(Tile.class.getResource(path));
-            int rows = tilesheet.getHeight() / tileWidth;
-            int cols = tilesheet.getWidth() / tileHeight;
+            tilesheet = ImageIO.read(Tile.class.getResource(path));
+            Tile.tileWidth = tileWidth;
+            Tile.tileHeight = tileHeight;
+
+            int rows = tilesheet.getHeight() / tileHeight;
+            int cols = tilesheet.getWidth() / tileWidth;
 
             int tileId = 0;
             for (int row = 0; row < rows; row++) {
@@ -60,27 +68,49 @@ public class Tile {
         try (BufferedReader br = new BufferedReader(new InputStreamReader(Tile.class.getResourceAsStream(filePath)))) {
             String line;
             int y = 0;
+            int width = 0;
             while ((line = br.readLine()) != null) {
                 String[] parts = line.split(" ");
+                width = parts.length; // Update width for each line
                 for (int x = 0; x < parts.length; x++) {
                     int tileId = Integer.parseInt(parts[x]);
-                    addTile(tileId, x * tileWidth, y * tileHeight);
+                    addTile(tileId, x, y); // Store tile positions in tile coordinates
                 }
                 y++;
             }
+            mapWidth = width;
+            mapHeight = y;
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
-    public static void renderAll(Graphics g) {
+    public static void renderAll(Graphics2D g2d, int cameraX, int cameraY) {
         for (Map.Entry<Point, Integer> entry : tilePositions.entrySet()) {
-            Point point = entry.getKey();
+            Point position = entry.getKey();
             int tileId = entry.getValue();
             Tile tile = getTileById(tileId);
             if (tile != null) {
-                tile.render(g, point.x, point.y);
+                int renderX = position.x * tileWidth - cameraX;
+                int renderY = position.y * tileHeight - cameraY;
+                tile.render(g2d, renderX, renderY);
             }
         }
+    }
+
+    public static int getTileWidth() {
+        return tileWidth;
+    }
+
+    public static int getTileHeight() {
+        return tileHeight;
+    }
+
+    public static int getMapWidth() {
+        return mapWidth;
+    }
+
+    public static int getMapHeight() {
+        return mapHeight;
     }
 }
