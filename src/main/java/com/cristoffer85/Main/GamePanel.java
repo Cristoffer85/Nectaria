@@ -61,8 +61,10 @@ public class GamePanel extends JPanel {
         int cameraY = player.getY() - baseHeight / 2;
 
         // Clamp camera position to map boundaries
-        cameraX = Math.max(0, Math.min(cameraX, Tile.getMapWidth() * Tile.getTileWidth() - baseWidth));
-        cameraY = Math.max(0, Math.min(cameraY, Tile.getMapHeight() * Tile.getTileHeight() - baseHeight));
+        int maxCameraX = Tile.getMapWidth() * Tile.getTileWidth() - baseWidth;
+        int maxCameraY = Tile.getMapHeight() * Tile.getTileHeight() - baseHeight;
+        cameraX = Math.max(0, Math.min(cameraX, maxCameraX));
+        cameraY = Math.max(0, Math.min(cameraY, maxCameraY));
 
         // Render the game to the BufferedImage
         Graphics2D g2d = gameImage.createGraphics();
@@ -76,9 +78,9 @@ public class GamePanel extends JPanel {
         Obstacle.renderAll(g2d, cameraX, cameraY);
 
         // Render player on top of obstacles
-        player.render(g2d);
+        player.render(g2d, cameraX, cameraY);
 
-        // Dispose of the Graphics2D object == cleanup of resources
+        // Dispose of the Graphics2D object
         g2d.dispose();
 
         // Draw the BufferedImage scaled up to the panel size

@@ -64,13 +64,17 @@ public class Player {
         playerMovement.move(keyHandler, boundary, straightObstacles, diagonalObstacles);
     }
 
-    public void render(Graphics g) {
+    public void render(Graphics g, int cameraX, int cameraY) {
+        // Calculate the render position based on the camera offset
+        int renderX = x - cameraX;
+        int renderY = y - cameraY;
+    
         // Draw out collision box/Debug
         g.setColor(Color.RED);
-        g.drawRect(x + collisionBoxOffsetX, y + collisionBoxOffsetY, collisionBoxSize, collisionBoxSize);   
+        g.drawRect(renderX + collisionBoxOffsetX, renderY + collisionBoxOffsetY, collisionBoxSize, collisionBoxSize);   
     
         // Determine direction of movement and render the sprite
         int direction = playerSprite.determineDirection(velocityX, velocityY, lastDirection);
-        playerSprite.render(g, x, y, size, direction, isMoving);
+        playerSprite.render(g, renderX, renderY, size, direction, isMoving);
     }
 }
