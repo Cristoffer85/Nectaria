@@ -3,12 +3,9 @@ package com.cristoffer85.Main;
 import com.cristoffer85.Entity.Obstacle;
 import com.cristoffer85.Tile.Tile;
 import com.cristoffer85.Entity.Player;
-import com.cristoffer85.Game;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.KeyAdapter;
-import java.awt.event.KeyEvent;
 import java.awt.geom.Line2D;
 import java.awt.image.BufferedImage;
 import java.util.List;
