@@ -9,10 +9,13 @@ public class PlayerSprite {
     private BufferedImage spritesheet;
     private BufferedImage[][] sprites;
     private int currentFrame = 0;
-    private int frameDelay = 1;                                                     // Adjust animation speed, lower = faster and reverse
+    private int frameDelay;
     private int frameCounter = 0;
+    private int framesPerDirection;
 
-    public PlayerSprite(String spritePath, int spriteWidth, int spriteHeight, int rows, int cols) {
+    public PlayerSprite(String spritePath, int spriteWidth, int spriteHeight, int rows, int cols, int framesPerDirection, int frameDelay) {
+        this.framesPerDirection = framesPerDirection;
+        this.frameDelay = frameDelay;
         try {
             spritesheet = ImageIO.read(getClass().getResource(spritePath));
             sprites = new BufferedImage[rows][cols];
@@ -35,7 +38,7 @@ public class PlayerSprite {
             frameCounter++;
             if (frameCounter >= frameDelay) {
                 frameCounter = 0;
-                currentFrame = (currentFrame + 1) % 9;                              // Assuming 9 frames per direction
+                currentFrame = (currentFrame + 1) % framesPerDirection;             // Use framesPerDirection
             }
         } else {
             currentFrame = 0;                                                       // Reset to the first frame, of last row pressed (on key) when not moving
