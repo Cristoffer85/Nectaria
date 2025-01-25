@@ -1,4 +1,4 @@
-1. Introducing states?
+1. Introduce triangle collidable tiles
 
 
 
