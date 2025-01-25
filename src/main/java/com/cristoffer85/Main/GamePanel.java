@@ -46,7 +46,7 @@ public class GamePanel extends JPanel {
             // Update game state
             List<Rectangle> straightObstacles = Obstacle.getStraightObstacles();
             List<Line2D> diagonalObstacles = Obstacle.getDiagonalObstacles();
-            player.move(keyHandler, getBounds(), straightObstacles, diagonalObstacles);
+            player.move(keyHandler, straightObstacles, diagonalObstacles);
             repaint();
         });
         timer.start();

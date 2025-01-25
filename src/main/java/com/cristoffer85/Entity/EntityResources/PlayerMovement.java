@@ -2,6 +2,7 @@ package com.cristoffer85.Entity.EntityResources;
 
 import com.cristoffer85.Entity.Player;
 import com.cristoffer85.Main.KeyHandler;
+import com.cristoffer85.Tile.Tile;
 
 import java.awt.*;
 import java.awt.geom.Line2D;
@@ -21,13 +22,17 @@ public class PlayerMovement {
         this.collisionChecker = new CollisionChecker(player);
     }
 
-    public void move(KeyHandler keyHandler, Rectangle boundary, List<Rectangle> straightObstacles, List<Line2D> diagonalObstacles) {
+    public void move(KeyHandler keyHandler, List<Rectangle> straightObstacles, List<Line2D> diagonalObstacles) {
         handleHorizontalMovement(keyHandler);
         handleVerticalMovement(keyHandler);
 
+        // Get map dimensions
+        int mapWidth = Tile.getMapWidth() * Tile.getTileWidth();
+        int mapHeight = Tile.getMapHeight() * Tile.getTileHeight();
+
         // Update player's position and check for collisions with all obstacles
-        player.setX(collisionChecker.playerCollision(player.getX(), player.getVelocityX(), boundary.width, straightObstacles, diagonalObstacles, true));
-        player.setY(collisionChecker.playerCollision(player.getY(), player.getVelocityY(), boundary.height, straightObstacles, diagonalObstacles, false));
+        player.setX(collisionChecker.playerCollision(player.getX(), player.getVelocityX(), mapWidth, straightObstacles, diagonalObstacles, true));
+        player.setY(collisionChecker.playerCollision(player.getY(), player.getVelocityY(), mapHeight, straightObstacles, diagonalObstacles, false));
 
         // Set isMoving flag based on both horizontal and vertical velocities
         player.setMoving(player.getVelocityX() != 0 || player.getVelocityY() != 0);

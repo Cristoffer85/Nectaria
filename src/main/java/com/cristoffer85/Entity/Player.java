@@ -60,8 +60,8 @@ public class Player {
         playerSprite = new PlayerSprite("/TestCharx9.png", 64, 64, 4, 9, 9, 1);
     }
 
-    public void move(KeyHandler keyHandler, Rectangle boundary, List<Rectangle> straightObstacles, List<Line2D> diagonalObstacles) {
-        playerMovement.move(keyHandler, boundary, straightObstacles, diagonalObstacles);
+    public void move(KeyHandler keyHandler, List<Rectangle> straightObstacles, List<Line2D> diagonalObstacles) {
+        playerMovement.move(keyHandler, straightObstacles, diagonalObstacles);
     }
 
     public void render(Graphics g, int cameraX, int cameraY) {
