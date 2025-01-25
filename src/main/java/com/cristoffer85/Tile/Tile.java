@@ -67,19 +67,19 @@ public class Tile {
     public static void initializeTiles(String filePath, int tileWidth, int tileHeight) {
         try (BufferedReader br = new BufferedReader(new InputStreamReader(Tile.class.getResourceAsStream(filePath)))) {
             String line;
-            int y = 0;
+            int height = 0;
             int width = 0;
             while ((line = br.readLine()) != null) {
                 String[] parts = line.split(" ");
                 width = parts.length; // Update width for each line
                 for (int x = 0; x < parts.length; x++) {
                     int tileId = Integer.parseInt(parts[x]);
-                    addTile(tileId, x, y); // Store tile positions in tile coordinates
+                    addTile(tileId, x, height); // Store tile positions in tile coordinates
                 }
-                y++;
+                height++;
             }
             mapWidth = width;
-            mapHeight = y;
+            mapHeight = height;
         } catch (IOException e) {
             e.printStackTrace();
         }
