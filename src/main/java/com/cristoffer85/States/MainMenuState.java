@@ -11,18 +11,20 @@ public class MainMenuState extends JPanel {
 
     public MainMenuState(GamePanel gamePanel) {
         setLayout(new GridBagLayout());
+        // Sets a layout manager/Grid to position the components, GridBagLayout() is used to position the components in a grid of rows and columns
         GridBagConstraints gbc = new GridBagConstraints();
         gbc.insets = new Insets(10, 10, 10, 10);
 
-        // Load logo image
+        // Load and scale logo image
         try {
-            logoImage = new ImageIcon(getClass().getResource("/Logo.png")).getImage();
+            ImageIcon logoIcon = new ImageIcon(getClass().getResource("/Logo.png"));
+            logoImage = scaleImage(logoIcon.getImage(), 1.5); // Adjust the scaling factor as needed
         } catch (Exception e) {
             e.printStackTrace();
         }
 
         // Create and style the "New Game" button
-        JButton newGameButton = new JButton("New Game");
+        JButton newGameButton = new JButton("NEW GAME");
         newGameButton.addActionListener(e -> gamePanel.setGameState(StatesDefinitions.GAME));
         styleButton(newGameButton);
 
@@ -35,16 +37,24 @@ public class MainMenuState extends JPanel {
         add(newGameButton, gbc);
     }
 
+    private Image scaleImage(Image image, double scale) {
+        int width = (int) (image.getWidth(null) * scale);
+        int height = (int) (image.getHeight(null) * scale);
+        return image.getScaledInstance(width, height, Image.SCALE_SMOOTH);
+    }
+
     private void styleButton(JButton button) {
         try {
-            Font retroFont = Font.createFont(Font.TRUETYPE_FONT, getClass().getResourceAsStream("/Retro-pixelfont.ttf")).deriveFont(52f);
+            Font retroFont = Font.createFont(Font.TRUETYPE_FONT, getClass().getResourceAsStream("/Retro-pixelfont.ttf")).deriveFont(44f);
             button.setFont(retroFont);
         } catch (FontFormatException | IOException e) {
             e.printStackTrace();
         }
         button.setForeground(Color.BLACK);
+        button.setBackground(Color.ORANGE);
         button.setFocusPainted(false);
-        button.setBorder(BorderFactory.createLineBorder(Color.ORANGE, 1));
+        button.setBorder(BorderFactory.createLineBorder(Color.ORANGE, 0));
+        button.setMargin(new Insets(5, 10, 5, 10)); // Adjust the padding around the text
     }
 
     @Override
