@@ -11,7 +11,7 @@ public class Game {
     public static void main(String[] args) {
         int baseWidth = 960;  // Base resolution width
         int baseHeight = 540; // Base resolution height
-        int scaleFactor = 2;  // Scale factor
+        final int scaleFactor = 2;  // Scale factor
 
         frame = new JFrame("New proper 2D collision game");
         gamePanel = new GamePanel(baseWidth, baseHeight, scaleFactor);

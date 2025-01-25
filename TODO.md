@@ -1,4 +1,4 @@
-1. Fix early boundary down, right when player moving on map. Boundary occurs sooner than map size
+1. Early boundary issue found == because of the boundary calculated on resolution size set in Game.java (baseWidth + baseHeight) it should be calculated on map size instead
 
 
 
