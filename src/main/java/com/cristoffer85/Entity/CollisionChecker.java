@@ -1,8 +1,12 @@
 package com.cristoffer85.Entity;
 
+import com.cristoffer85.Tile.Tile;
+import com.cristoffer85.Tile.TileManager;
+
 import java.awt.*;
 import java.awt.geom.Line2D;
 import java.util.List;
+import java.util.Map;
 
 public class CollisionChecker {
     private final Player player;
@@ -64,6 +68,27 @@ public class CollisionChecker {
                 } else {
                     player.setVelocityX((int) (velocity * cos));
                     return currentPosition; // Stop vertical movement
+                }
+            }
+        }
+
+        // ## Collision collidable tiles ##
+        int tileWidth = TileManager.getTileWidth();
+        int tileHeight = TileManager.getTileHeight();
+        int mapWidth = TileManager.getMapWidth();
+        int mapHeight = TileManager.getMapHeight();
+        Map<Point, Integer> tilePositions = TileManager.getTilePositions();
+
+        for (int y = 0; y < mapHeight; y++) {
+            for (int x = 0; x < mapWidth; x++) {
+                Tile tile = TileManager.getTile(tilePositions.get(new Point(x, y)));
+                if (tile != null && tile.isCollidable()) {
+                    Rectangle tileRect = new Rectangle(x * tileWidth, y * tileHeight, tileWidth, tileHeight);
+                    if (projectedRect.intersects(tileRect)) {
+                        return isHorizontal
+                            ? (velocity > 0 ? tileRect.x - collisionBoxSize - collisionBoxOffsetX : tileRect.x + tileRect.width - collisionBoxOffsetX)   // Snap to left or right of tile
+                            : (velocity > 0 ? tileRect.y - collisionBoxSize - collisionBoxOffsetY : tileRect.y + tileRect.height - collisionBoxOffsetY); // Snap to top or bottom of tile
+                    }
                 }
             }
         }

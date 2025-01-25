@@ -1,7 +1,7 @@
 package com.cristoffer85.Main;
 
 import com.cristoffer85.Entity.Obstacle;
-import com.cristoffer85.Tile.Tile;
+import com.cristoffer85.Tile.TileManager;
 import com.cristoffer85.Entity.Player;
 import com.cristoffer85.States.StatesDefinitions;
 import com.cristoffer85.States.MainMenuState;
@@ -46,10 +46,10 @@ public class GamePanel extends JPanel {
         setFocusable(true);
 
         // Load tilesheet
-        Tile.loadTilesheet("/TileSheet.png", 64, 64);           // Use 64x64 tiles
+        TileManager.loadTilesheet("/TileSheet.png", 64, 64);           // Use 64x64 tiles
 
         // Initialize tiles from file
-        Tile.initializeTiles("/MainWorld.txt", 64, 64);     // Use 64x64 tiles
+        TileManager.initializeTiles("/MainWorld.txt", 64, 64);     // Use 64x64 tiles
 
         // Create the game image with the base resolution
         gameImage = new BufferedImage(baseWidth, baseHeight, BufferedImage.TYPE_INT_ARGB);
@@ -91,8 +91,8 @@ public class GamePanel extends JPanel {
             int cameraY = player.getY() - baseHeight / 2 + player.getSize() / 2 + 24;
 
             // Clamp camera position to map boundaries, makes you know when you are near the map boundary, also neat huh? :)
-            int maxCameraX = Tile.getMapWidth() * Tile.getTileWidth() - baseWidth;
-            int maxCameraY = Tile.getMapHeight() * Tile.getTileHeight() - baseHeight;
+            int maxCameraX = TileManager.getMapWidth() * TileManager.getTileWidth() - baseWidth;
+            int maxCameraY = TileManager.getMapHeight() * TileManager.getTileHeight() - baseHeight;
             cameraX = Math.max(0, Math.min(cameraX, maxCameraX));
             cameraY = Math.max(0, Math.min(cameraY, maxCameraY));
 
@@ -102,7 +102,7 @@ public class GamePanel extends JPanel {
             g2d.fillRect(0, 0, gameImage.getWidth(), gameImage.getHeight());
 
             // Render all tiles with camera offset
-            Tile.renderAll(g2d, cameraX, cameraY);
+            TileManager.renderAll(g2d, cameraX, cameraY);
 
             // Render all obstacles with camera offset
             Obstacle.renderAll(g2d, cameraX, cameraY);
