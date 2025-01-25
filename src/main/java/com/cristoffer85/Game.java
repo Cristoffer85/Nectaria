@@ -25,7 +25,7 @@ public class Game {
         frame.setVisible(true);
     }
 
-    // Base super simple and not very good or worked through method to change resolution, yet
+    // Base super simple and not very good or worked through method to change resolution, yet, change by clicking f1, f2 or f3, check KeyHandler.java and GamePanel.java to follow common KeyHandler logic
     public static void changeResolution(int width, int height) {
         frame.setSize(width, height);
         frame.setLocationRelativeTo(null);
