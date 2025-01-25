@@ -15,15 +15,15 @@ public class MainMenuState extends JPanel {
         GridBagConstraints gbc = new GridBagConstraints();
         gbc.insets = new Insets(10, 10, 10, 10);
 
-        // Load and scale logo image
+        // Load and scale logo image, scaled relatively to base image keeping its aspect ratio/proprtions
         try {
             ImageIcon logoIcon = new ImageIcon(getClass().getResource("/Logo.png"));
-            logoImage = scaleImage(logoIcon.getImage(), 1.5); // Adjust the scaling factor as needed
+            logoImage = scaleImage(logoIcon.getImage(), 1.5);
         } catch (Exception e) {
             e.printStackTrace();
         }
 
-        // Create and style the "New Game" button
+        // Create and style the "New Game" button - JButton() has built in support for using mouse clicks on it
         JButton newGameButton = new JButton("NEW GAME");
         newGameButton.addActionListener(e -> gamePanel.setGameState(StatesDefinitions.GAME));
         styleButton(newGameButton);
@@ -37,6 +37,7 @@ public class MainMenuState extends JPanel {
         add(newGameButton, gbc);
     }
 
+    // The acual method to scale the image
     private Image scaleImage(Image image, double scale) {
         int width = (int) (image.getWidth(null) * scale);
         int height = (int) (image.getHeight(null) * scale);
@@ -50,14 +51,14 @@ public class MainMenuState extends JPanel {
         } catch (FontFormatException | IOException e) {
             e.printStackTrace();
         }
+        // set the button properties here
         button.setForeground(Color.BLACK);
         button.setBackground(Color.ORANGE);
-        button.setFocusPainted(false);
-        button.setBorder(BorderFactory.createLineBorder(Color.ORANGE, 0));
-        button.setMargin(new Insets(5, 10, 5, 10)); // Adjust the padding around the text
+        button.setMargin(new Insets(5, 5, 1, 2)); // Adjust the padding around the text in button
     }
 
     @Override
+    // Usual overriding of the JavaX Swing paintcomponent, to render out the components
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
         g.setColor(Color.ORANGE);
