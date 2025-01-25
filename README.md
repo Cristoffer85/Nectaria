@@ -1,3 +1,3 @@
-New try of a cleaner, good code 2D RPG game in Java Swing.
+New try of a cleaner, good code 2D RPG game in Java, using Java Swing.
 
-Using @Lombok now right in projectstart - In order to keep better overview and eagleview of code, for better logic writing.
+Use of @Lombok right now - In order to keep better overviewable logic of code, and understand whats happening and easier debug and implementation. All for scalability.
