@@ -16,19 +16,21 @@ import java.util.List;
 @Setter
 @AllArgsConstructor
 public class Player {
-    // Player's position and movement properties
+    // ## Player's position and movement properties ##
     private int x, y;
     private final int size;
     private final int moveSpeed;
     private int acceleration;
     private int deceleration;
+    // Values needed for acceleration and deceleration calculations
     private int velocityX = 0;
     private int velocityY = 0;
+    
     private boolean isMoving = false;
     private int lastDirection = 0;
     private PlayerMovement playerMovement;
 
-    // Player's sprite and collision properties
+    // ## Player's sprite and collision properties ##
     private PlayerSprite playerSprite;
     private int collisionBoxSize;
     private int collisionBoxOffsetX;

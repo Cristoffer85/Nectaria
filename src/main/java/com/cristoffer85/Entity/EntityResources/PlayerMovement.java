@@ -26,7 +26,7 @@ public class PlayerMovement {
         handleHorizontalMovement(keyHandler);
         handleVerticalMovement(keyHandler);
 
-        // Get map dimensions
+        // Get map dimensions automatically, based on tile size and map size (look in Tile.java, for reference)
         int mapWidth = Tile.getMapWidth() * Tile.getTileWidth();
         int mapHeight = Tile.getMapHeight() * Tile.getTileHeight();
 
@@ -46,7 +46,7 @@ public class PlayerMovement {
             player.setVelocityX(Math.min(player.getVelocityX() + acceleration, player.getMoveSpeed()));  // Accelerate right
             player.setLastDirection(3); // Right
         } else {
-            player.setVelocityX(applyDeceleration(player.getVelocityX()));                   // Apply deceleration when no key is pressed
+            player.setVelocityX(applyDeceleration(player.getVelocityX()));                               // Apply deceleration when no key is pressed
         }
     }
 
@@ -58,7 +58,7 @@ public class PlayerMovement {
             player.setVelocityY(Math.min(player.getVelocityY() + acceleration, player.getMoveSpeed()));  // Accelerate down
             player.setLastDirection(2); // Down
         } else {
-            player.setVelocityY(applyDeceleration(player.getVelocityY()));                   // Apply deceleration when no key is pressed
+            player.setVelocityY(applyDeceleration(player.getVelocityY()));                               // Apply deceleration when no key is pressed
         }
     }
 
