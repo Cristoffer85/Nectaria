@@ -36,8 +36,8 @@ public class GamePanel extends JPanel {
         this.scaleFactor = scaleFactor;
         this.statesDefinitions = StatesDefinitions.MAIN_MENU;
 
-        // Initialization of player and obstacles
-        player = new Player(30, 30, 64, 6, 0, 0); // Use 64x64 size for player
+        // Initialize player and obstacles
+        player = new Player(30, 30, 64, 6, 0, 0); // Use 64x64 size for player, velocityY and velocityX are dummy values for now required for acceleration and deceleration
         Obstacle.addObstacles();
 
         // Keyhandling methods
@@ -46,18 +46,18 @@ public class GamePanel extends JPanel {
         setFocusable(true);
 
         // Load tilesheet
-        TileManager.loadTilesheet("/TileSheet.png", 64, 64);           // Use 64x64 tiles
-
-        // Initialize tiles from file
-        TileManager.initializeTiles("/MainWorld.txt", 64, 64);     // Use 64x64 tiles
+        TileManager.loadTilesheet("/TileSheet.png", 64, 64);  // sets the tile size to 64x64
+        
+        // Load map
+        TileManager.tilesByMapSize("/MainWorld.txt");
 
         // Create the game image with the base resolution
         gameImage = new BufferedImage(baseWidth, baseHeight, BufferedImage.TYPE_INT_ARGB);
 
-        // Initialize main menu panel
+        // Initialize Main menu
         mainMenuState = new MainMenuState(this);
 
-        // Initialize game content panel
+        // Initialize game content
         gameContentPanel = new JPanel() {
             @Override
             protected void paintComponent(Graphics g) {
