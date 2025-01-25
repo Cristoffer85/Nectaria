@@ -34,7 +34,7 @@ public class CollisionChecker {
             }
         }
         
-        // ## Extra 'Snap'-collision method created to calculate the players projected position, and then check for collision with obstacles to provide more accurate collision detection for player ##
+        // ## Extra 'Snap'-collision method created to calculate the players projected position, and then "snap" player against obstacles, removing the "fault"-parameter of not having a full on intersect with obstacle/no extra gap. ##
         Rectangle projectedRect = isHorizontal
             ? new Rectangle(projectedPosition + collisionBoxOffsetX, player.getY() + collisionBoxOffsetY, collisionBoxSize, collisionBoxSize)   // Horizontal movement
             : new Rectangle(player.getX() + collisionBoxOffsetX, projectedPosition + collisionBoxOffsetY, collisionBoxSize, collisionBoxSize);  // Vertical movement
@@ -44,7 +44,7 @@ public class CollisionChecker {
         for (Rectangle straightObstacle : straightObstacles) {
             if (projectedRect.intersects(straightObstacle)) {           // Check for collision with each obstacle
                 return isHorizontal                                     // Snap the position to the obstacle boundaries
-                    ? (velocity > 0 ? straightObstacle.x - collisionBoxSize - collisionBoxOffsetX : straightObstacle.x + straightObstacle.width - collisionBoxOffsetX) // Snap to left or right of obstacle
+                    ? (velocity > 0 ? straightObstacle.x - collisionBoxSize - collisionBoxOffsetX : straightObstacle.x + straightObstacle.width - collisionBoxOffsetX)   // Snap to left or right of obstacle
                     : (velocity > 0 ? straightObstacle.y - collisionBoxSize - collisionBoxOffsetY : straightObstacle.y + straightObstacle.height - collisionBoxOffsetY); // Snap to top or bottom of obstacle
             }
         }
