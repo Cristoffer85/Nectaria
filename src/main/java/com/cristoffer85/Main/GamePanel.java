@@ -53,14 +53,15 @@ public class GamePanel extends JPanel {
     }
 
     @Override
+    // Overrides JavaX Swing paintComponent method, in order to write/render our own rendering logic, neat huh? :)
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
 
-        // Calculate camera position
-        int cameraX = player.getX() - baseWidth / 2;
-        int cameraY = player.getY() - baseHeight / 3;
+        // Calculate position for Camera following player, keeps player centered on map when not near map boundary
+        int cameraX = player.getX() - baseWidth / 2 + player.getSize() / 2;
+        int cameraY = player.getY() - baseHeight / 2 + player.getSize() / 2 + 24;
 
-        // Clamp camera position to map boundaries
+        // Clamp camera position to map boundaries, makes you know when you are near the map boundary, also neat huh? :)
         int maxCameraX = Tile.getMapWidth() * Tile.getTileWidth() - baseWidth;
         int maxCameraY = Tile.getMapHeight() * Tile.getTileHeight() - baseHeight;
         cameraX = Math.max(0, Math.min(cameraX, maxCameraX));
@@ -80,7 +81,7 @@ public class GamePanel extends JPanel {
         // Render player on top of obstacles
         player.render(g2d, cameraX, cameraY);
 
-        // Dispose of the Graphics2D object
+        // Dispose of the Graphics2D object, in order to free up resources/save memory/optimization
         g2d.dispose();
 
         // Draw the BufferedImage scaled up to the panel size

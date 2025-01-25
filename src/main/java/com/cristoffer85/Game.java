@@ -9,9 +9,9 @@ public class Game {
     private static GamePanel gamePanel;
 
     public static void main(String[] args) {
-        int baseWidth = 260;  // Base resolution width
-        int baseHeight = 240; // Base resolution height
-        final int scaleFactor = 1;  // Scale factor
+        int baseWidth = 960;  // Base resolution width
+        int baseHeight = 540; // Base resolution height
+        final int scaleFactor = 2;  // Scale factor
 
         frame = new JFrame("New proper 2D collision game");
         gamePanel = new GamePanel(baseWidth, baseHeight, scaleFactor);
