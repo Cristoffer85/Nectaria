@@ -42,9 +42,15 @@ public class Obstacle {
 
     public static void addObstacles() {
         // Add obstacles
-        obstacles.add(new Obstacle(new Rectangle(200, 200, 10, 50), Color.RED));
-        obstacles.add(new Obstacle(new Rectangle(300, 300, 50, 50), Color.RED));    // Add more obstacles as needed
-        obstacles.add(new Obstacle(new Line2D.Float(100, 100, 150, 150), Color.BLUE));   // Add a diagonal line for testing
+        // Base rectangle obstacle
+        obstacles.add(new Obstacle(new Rectangle(300, 300, 50, 64), Color.RED));
+
+        // Toy around with diagonal + vertical obstacle combined
+        obstacles.add(new Obstacle(new Rectangle(192, 192, 1, 64), Color.RED));
+        obstacles.add(new Obstacle(new Line2D.Float(194, 193, 258, 257), Color.BLUE));
+
+        // Horizontal obstacle
+        obstacles.add(new Obstacle(new Rectangle(400, 200, 64, 1), Color.RED));
 
         // Separate obstacles into straight and diagonal lists
         for (Obstacle obstacle : obstacles) {

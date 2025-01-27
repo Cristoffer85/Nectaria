@@ -47,9 +47,19 @@ public class CollisionChecker {
         // ## Collision straight obstacles ##
         for (Rectangle straightObstacle : straightObstacles) {
             if (projectedRect.intersects(straightObstacle)) {           // Check for collision with each obstacle
-                return isHorizontal                                     // Snap the position to the obstacle boundaries
-                    ? (velocity > 0 ? straightObstacle.x - collisionBoxSize - collisionBoxOffsetX : straightObstacle.x + straightObstacle.width - collisionBoxOffsetX)   // Snap to left or right of obstacle
-                    : (velocity > 0 ? straightObstacle.y - collisionBoxSize - collisionBoxOffsetY : straightObstacle.y + straightObstacle.height - collisionBoxOffsetY); // Snap to top or bottom of obstacle
+                if (isHorizontal) {
+                    if (velocity > 0) {
+                        return straightObstacle.x - collisionBoxSize - collisionBoxOffsetX; // Snap to left of obstacle
+                    } else {
+                        return straightObstacle.x + straightObstacle.width - collisionBoxOffsetX; // Snap to right of obstacle
+                    }
+                } else {
+                    if (velocity > 0) {
+                        return straightObstacle.y - collisionBoxSize - collisionBoxOffsetY; // Snap to top of obstacle
+                    } else {
+                        return straightObstacle.y + straightObstacle.height - collisionBoxOffsetY; // Snap to bottom of obstacle
+                    }
+                }
             }
         }
 
