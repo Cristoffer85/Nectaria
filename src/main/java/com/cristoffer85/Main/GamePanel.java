@@ -62,16 +62,18 @@ public class GamePanel extends JPanel {
     }
 
     // ## Helper Methods ##
-    // Change between different game states. Creates the different states as a card, and can later switch between them 
+
+    // Change between different states.
     public void setGameState(StatesDefinitions newState) {
         if (newState == StatesDefinitions.PAUSE_MENU) {
-            // Capture the current GameState image
+            // Capture the current GameState image, in order to display it in the PauseState behind menu.
             BufferedImage gameStateImage = new BufferedImage(getWidth(), getHeight(), BufferedImage.TYPE_INT_ARGB);
             Graphics2D g2d = gameStateImage.createGraphics();
             gameState.paint(g2d);
             g2d.dispose();
             pauseState.setGameStateImage(gameStateImage);
         }
+        //Creates the different states as cards, and can later switch between them.
         this.statesDefinitions = newState;
         CardLayout cl = (CardLayout) getLayout();
         cl.show(this, newState.name());
