@@ -21,8 +21,15 @@ public class GamePanel extends JPanel {
     private MainMenuState mainMenuState;
     private GameState gameState;
     private PauseState pauseState;
+    private int baseWidth;
+    private int baseHeight;
+    private int scaleFactor;
 
+        // Initialize player
     public GamePanel(int baseWidth, int baseHeight, int scaleFactor) {
+        this.baseWidth = baseWidth;
+        this.baseHeight = baseHeight;
+        this.scaleFactor = scaleFactor;
 
         // Initialize player
         player = new Player(30, 30, 64, 6);
@@ -63,6 +70,11 @@ public class GamePanel extends JPanel {
 
     // ## Helper Methods ##
 
+    // Get current game state
+    public StatesDefinitions getCurrentState() {
+        return statesDefinitions;
+    }
+
     // Change between different states.
     public void setGameState(StatesDefinitions newState) {
         if (newState == StatesDefinitions.PAUSE_MENU) {
@@ -79,8 +91,12 @@ public class GamePanel extends JPanel {
         cl.show(this, newState.name());
     }
 
-    // Get current game state
-    public StatesDefinitions getCurrentState() {
-        return statesDefinitions;
+    public void resetGame() {
+        // Reset player position, score, and other game-related states
+        player = new Player(30, 30, 64, 6);
+        Obstacle.addObstacles();
+        TileManager.tilesByMapSize("/MainWorld.txt");
+        gameState = new GameState(player, baseWidth, baseHeight, scaleFactor);
+        add(gameState, StatesDefinitions.GAME.name());
     }
 }

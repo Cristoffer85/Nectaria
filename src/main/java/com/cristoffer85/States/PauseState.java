@@ -19,10 +19,18 @@ public class PauseState extends JPanel {
         resumeButton.addActionListener(e -> gamePanel.setGameState(StatesDefinitions.GAME));
         styleButton(resumeButton);
 
+        // Create and style the "Quit Game" button
+        JButton quitButton = new JButton("QUIT GAME");
+        quitButton.addActionListener(e -> gamePanel.setGameState(StatesDefinitions.MAIN_MENU));
+        styleButton(quitButton);
+
         // Add components to the layout
         gbc.gridx = 0;
         gbc.gridy = 0;
         add(resumeButton, gbc);
+
+        gbc.gridy = 1;
+        add(quitButton, gbc);
     }
 
     public void setGameStateImage(Image gameStateImage) {

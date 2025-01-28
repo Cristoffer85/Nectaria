@@ -26,7 +26,10 @@ public class MainMenuState extends JPanel {
 
         // Create and style the "New Game" button - JButton() has built in support for using mouse clicks on it
         JButton newGameButton = new JButton("NEW GAME");
-        newGameButton.addActionListener(e -> gamePanel.setGameState(StatesDefinitions.GAME));
+        newGameButton.addActionListener(e -> {
+            gamePanel.resetGame();
+            gamePanel.setGameState(StatesDefinitions.GAME);
+        });
         styleButton(newGameButton);
 
         // Add components to the layout
