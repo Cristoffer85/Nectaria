@@ -7,17 +7,12 @@ import com.cristoffer85.States.MainMenuState;
 import com.cristoffer85.States.StatesResources.StatesDefinitions;
 import com.cristoffer85.States.GameState;
 import com.cristoffer85.States.PauseState;
-import com.cristoffer85.Main.MainResources.GameSaveData;
+import com.cristoffer85.Main.MainResources.SaveLoadReset;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.geom.Line2D;
 import java.awt.image.BufferedImage;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
 import java.util.List;
 
 public class GamePanel extends JPanel {
@@ -31,7 +26,7 @@ public class GamePanel extends JPanel {
     private int baseHeight;
     private int scaleFactor;
 
-        // Initialize player
+    // Initialize player
     public GamePanel(int baseWidth, int baseHeight, int scaleFactor) {
         this.baseWidth = baseWidth;
         this.baseHeight = baseHeight;
@@ -59,6 +54,7 @@ public class GamePanel extends JPanel {
         add(mainMenuState, StatesDefinitions.MAIN_MENU.name());
         add(gameState, StatesDefinitions.GAME.name());
         add(pauseState, StatesDefinitions.PAUSE_MENU.name());
+
         //----------------------------------------------
 
         // Main Game loop
@@ -98,34 +94,22 @@ public class GamePanel extends JPanel {
     }
 
     public void resetGame() {
-        // Reset player position, score, and other game-related states
-        player = new Player(30, 30, 64, 6);
-        Obstacle.addObstacles();
-        TileManager.tilesByMapSize("/MainWorld.txt");
-        gameState = new GameState(player, baseWidth, baseHeight, scaleFactor);
-        add(gameState, StatesDefinitions.GAME.name());
+        SaveLoadReset.resetGame(this, baseWidth, baseHeight, scaleFactor);
     }
 
     public void saveGame() {
-        GameSaveData saveData = new GameSaveData(player.getX(), player.getY());
-        try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream("savegame.dat"))) {
-            oos.writeObject(saveData);
-            System.out.println("Game saved successfully.");
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        SaveLoadReset.saveGame(player);
     }
 
     public void loadGame() {
-        try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream("savegame.dat"))) {
-            GameSaveData saveData = (GameSaveData) ois.readObject();
-            player.setX(saveData.getPlayerX());
-            player.setY(saveData.getPlayerY());
-            // Update other game state fields if needed
-            System.out.println("Game loaded successfully.");
-            setGameState(StatesDefinitions.GAME); // Switch to the game state
-        } catch (IOException | ClassNotFoundException e) {
-            e.printStackTrace();
-        }
+        SaveLoadReset.loadGame(player, this);
+    }
+
+    public void setPlayer(Player player) {
+        this.player = player;
+    }
+
+    public void setGameState(GameState gameState) {
+        this.gameState = gameState;
     }
 }
