@@ -16,73 +16,92 @@ public class CollisionChecker {
     }
 
     public int playerCollision(int currentPosition, int velocity, int boundaryLimit, List<Rectangle> straightObstacles, List<Line2D> diagonalObstacles, boolean isHorizontal) {
-        int projectedPosition = currentPosition + velocity;             // Calculate the projected position based on velocity
-        int collisionBoxSize = player.getCollisionBoxSize();            // Use player's collision box size for collision detection
-        int collisionBoxOffsetX = player.getCollisionBoxOffsetX();      // Get the collision box offset X
-        int collisionBoxOffsetY = player.getCollisionBoxOffsetY();      // Get the collision box offset Y
-        
-        // ## Boundary collision ##
-        if (isHorizontal) {
-            if (projectedPosition + collisionBoxOffsetX < 0) {          // Check if the projected position exceeds the boundary
-                return -collisionBoxOffsetX;                            // Snap to the start of the boundary if beyond limit
-            }
-            if (projectedPosition + collisionBoxOffsetX > boundaryLimit - collisionBoxSize) {
-                return boundaryLimit - collisionBoxSize - collisionBoxOffsetX; // Snap to the end of the boundary if beyond limit
-            }
-        } else {
-            if (projectedPosition + collisionBoxOffsetY < 0) {          // Check if the projected position exceeds the boundary
-                return -collisionBoxOffsetY;                            // Snap to the start of the boundary if beyond limit
-            }
-            if (projectedPosition + collisionBoxOffsetY > boundaryLimit - collisionBoxSize) {
-                return boundaryLimit - collisionBoxSize - collisionBoxOffsetY; // Snap to the end of the boundary if beyond limit
-            }
-        }
-        
-        // ## Extra 'Snap'-collision method created to calculate the players projected position, and then "snap" player against obstacles, removing the "fault"-parameter of not having a full on intersect with obstacle/no extra gap. ##
-        Rectangle projectedRect = isHorizontal
-            ? new Rectangle(projectedPosition + collisionBoxOffsetX, player.getY() + collisionBoxOffsetY, collisionBoxSize, collisionBoxSize)   // Horizontal movement
-            : new Rectangle(player.getX() + collisionBoxOffsetX, projectedPosition + collisionBoxOffsetY, collisionBoxSize, collisionBoxSize);  // Vertical movement
-        //
+        int projectedPosition = currentPosition + velocity;
+        Rectangle projectedRect = calculateProjectedPosition(projectedPosition, isHorizontal);
 
-        // ## Collision straight obstacles ##
+        int boundaryCollision = checkBoundaryCollision(projectedPosition, boundaryLimit, isHorizontal);
+        if (boundaryCollision != Integer.MIN_VALUE) {
+            return boundaryCollision;
+        }
+
+        int straightCollision = checkStraightObstacleCollision(projectedRect, straightObstacles, velocity, isHorizontal);
+        if (straightCollision != Integer.MIN_VALUE) {
+            return straightCollision;
+        }
+
+        int diagonalCollision = checkDiagonalObstacleCollision(projectedRect, diagonalObstacles, velocity, isHorizontal);
+        if (diagonalCollision != Integer.MIN_VALUE) {
+            return diagonalCollision;
+        }
+
+        int tileCollision = checkTileCollision(projectedRect, velocity, isHorizontal);
+        if (tileCollision != Integer.MIN_VALUE) {
+            return tileCollision;
+        }
+
+        return projectedPosition;
+    }
+
+    // Method where the boundaries are located in the map, and player is stopped from moving outside them
+    private int checkBoundaryCollision(int projectedPosition, int boundaryLimit, boolean isHorizontal) {
+        int collisionBoxSize = player.getCollisionBoxSize();
+        int collisionBoxOffset = isHorizontal ? player.getCollisionBoxOffsetX() : player.getCollisionBoxOffsetY();
+
+        if (projectedPosition + collisionBoxOffset < 0) {
+            return -collisionBoxOffset;
+        }
+
+        if (projectedPosition + collisionBoxOffset > boundaryLimit - collisionBoxSize) {
+            return boundaryLimit - collisionBoxSize - collisionBoxOffset;
+        }
+
+        return Integer.MIN_VALUE;
+    }
+
+    // Method to check straight obstacle collision
+    private int checkStraightObstacleCollision(Rectangle projectedRect, List<Rectangle> straightObstacles, int velocity, boolean isHorizontal) {
         for (Rectangle straightObstacle : straightObstacles) {
-            if (projectedRect.intersects(straightObstacle)) {           // Check for collision with each obstacle
+            if (projectedRect.intersects(straightObstacle)) {
+                int collisionBoxSize = player.getCollisionBoxSize();
+                int collisionBoxOffsetX = player.getCollisionBoxOffsetX();
+                int collisionBoxOffsetY = player.getCollisionBoxOffsetY();
+
                 if (isHorizontal) {
-                    if (velocity > 0) {
-                        return straightObstacle.x - collisionBoxSize - collisionBoxOffsetX; // Snap to left of obstacle
-                    } else {
-                        return straightObstacle.x + straightObstacle.width - collisionBoxOffsetX; // Snap to right of obstacle
-                    }
+                    return velocity > 0
+                        ? straightObstacle.x - collisionBoxSize - collisionBoxOffsetX
+                        : straightObstacle.x + straightObstacle.width - collisionBoxOffsetX;
                 } else {
-                    if (velocity > 0) {
-                        return straightObstacle.y - collisionBoxSize - collisionBoxOffsetY; // Snap to top of obstacle
-                    } else {
-                        return straightObstacle.y + straightObstacle.height - collisionBoxOffsetY; // Snap to bottom of obstacle
-                    }
+                    return velocity > 0
+                        ? straightObstacle.y - collisionBoxSize - collisionBoxOffsetY
+                        : straightObstacle.y + straightObstacle.height - collisionBoxOffsetY;
                 }
             }
         }
+        return Integer.MIN_VALUE;
+    }
 
-        // ## Collision diagonal obstacles ##
+    // Method to check diagonal obstacle collision
+    private int checkDiagonalObstacleCollision(Rectangle projectedRect, List<Line2D> diagonalObstacles, int velocity, boolean isHorizontal) {
         for (Line2D diagonalObstacle : diagonalObstacles) {
-            if (projectedRect.intersectsLine(diagonalObstacle)) {       // Check for collision with each diagonal obstacle
-                // Calculate the angle of the diagonal line
+            if (projectedRect.intersectsLine(diagonalObstacle)) {
                 double angle = Math.atan2(diagonalObstacle.getY2() - diagonalObstacle.getY1(), diagonalObstacle.getX2() - diagonalObstacle.getX1());
                 double sin = Math.sin(angle);
                 double cos = Math.cos(angle);
-    
-                // Adjust the player's velocity based on the angle of the line
+
                 if (isHorizontal) {
                     player.setVelocityY((int) (velocity * sin));
-                    return currentPosition; // Stop horizontal movement
                 } else {
                     player.setVelocityX((int) (velocity * cos));
-                    return currentPosition; // Stop vertical movement
                 }
+
+                return isHorizontal ? player.getX() : player.getY();
             }
         }
+        return Integer.MIN_VALUE;
+    }
 
-        // ## Collision collidable tiles ##
+    // Method to check tile collision, calculates the entire map and checks for collision with each tile
+    private int checkTileCollision(Rectangle projectedRect, int velocity, boolean isHorizontal) {
         int tileWidth = TileManager.getTileWidth();
         int tileHeight = TileManager.getTileHeight();
         int mapWidth = TileManager.getMapWidth();
@@ -95,14 +114,34 @@ public class CollisionChecker {
                 if (tile != null && tile.isCollidable()) {
                     Rectangle tileRect = new Rectangle(x * tileWidth, y * tileHeight, tileWidth, tileHeight);
                     if (projectedRect.intersects(tileRect)) {
-                        return isHorizontal
-                            ? (velocity > 0 ? tileRect.x - collisionBoxSize - collisionBoxOffsetX : tileRect.x + tileRect.width - collisionBoxOffsetX)   // Snap to left or right of tile
-                            : (velocity > 0 ? tileRect.y - collisionBoxSize - collisionBoxOffsetY : tileRect.y + tileRect.height - collisionBoxOffsetY); // Snap to top or bottom of tile
+                        int collisionBoxSize = player.getCollisionBoxSize();
+                        int collisionBoxOffsetX = player.getCollisionBoxOffsetX();
+                        int collisionBoxOffsetY = player.getCollisionBoxOffsetY();
+
+                        if (isHorizontal) {
+                            return velocity > 0
+                                ? tileRect.x - collisionBoxSize - collisionBoxOffsetX
+                                : tileRect.x + tileRect.width - collisionBoxOffsetX;
+                        } else {
+                            return velocity > 0
+                                ? tileRect.y - collisionBoxSize - collisionBoxOffsetY
+                                : tileRect.y + tileRect.height - collisionBoxOffsetY;
+                        }
                     }
                 }
             }
         }
-    
-        return projectedPosition;                                       // If no collision, return the projected position
+        return Integer.MIN_VALUE;
+    }
+
+    // Method to calculate the projected position of the player (Snap (to grid)) to provide more accurate collision detection by the intersect method etc 
+    private Rectangle calculateProjectedPosition(int projectedPosition, boolean isHorizontal) {
+        int collisionBoxSize = player.getCollisionBoxSize();
+        int collisionBoxOffsetX = player.getCollisionBoxOffsetX();
+        int collisionBoxOffsetY = player.getCollisionBoxOffsetY();
+
+        return isHorizontal
+            ? new Rectangle(projectedPosition + collisionBoxOffsetX, player.getY() + collisionBoxOffsetY, collisionBoxSize, collisionBoxSize)
+            : new Rectangle(player.getX() + collisionBoxOffsetX, projectedPosition + collisionBoxOffsetY, collisionBoxSize, collisionBoxSize);
     }
 }
