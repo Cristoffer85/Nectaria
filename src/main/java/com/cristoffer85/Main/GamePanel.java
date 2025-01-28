@@ -37,7 +37,7 @@ public class GamePanel extends JPanel {
         this.statesDefinitions = StatesDefinitions.MAIN_MENU;
 
         // Initialize player and obstacles
-        player = new Player(30, 30, 64, 6, 0, 0); // Use 64x64 size for player, velocityY and velocityX are dummy values for now required for acceleration and deceleration
+        player = new Player(30, 30, 64, 6); // Startposition X and Y - size of playersprite - movespeed
         Obstacle.addObstacles();
 
         // Keyhandling methods
@@ -46,7 +46,7 @@ public class GamePanel extends JPanel {
         setFocusable(true);
 
         // Load tilesheet
-        TileManager.loadTilesheet("/TileSheet.png", 64, 64);  // sets the tile size to 64x64
+        TileManager.loadTilesheet("/TileSheet.png", 64, 64);  // Sets tile size to 64 Height and 64 Width
         
         // Load map
         TileManager.tilesByMapSize("/MainWorld.txt");

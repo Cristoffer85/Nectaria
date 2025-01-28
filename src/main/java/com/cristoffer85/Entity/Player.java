@@ -36,13 +36,11 @@ public class Player {
     private int collisionBoxOffsetX;
     private int collisionBoxOffsetY;
 
-    public Player(int x, int y, int size, int moveSpeed, int velocityX, int velocityY) {
+    public Player(int x, int y, int size, int moveSpeed) {
         this.x = x;
         this.y = y;
         this.size = size;
         this.moveSpeed = moveSpeed;
-        this.velocityX = velocityX;
-        this.velocityY = velocityY;
 
         initializePlayer();
         playerMovement = new PlayerMovement(this, acceleration, deceleration);

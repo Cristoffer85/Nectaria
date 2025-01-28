@@ -32,13 +32,22 @@ public class Obstacle {
     }
 
     public static void addObstacles() {
-        // Add obstacles
+        // Straight obstacles
         obstacles.add(new Obstacle(new Rectangle(300, 300, 50, 64), Color.RED));
         obstacles.add(new Obstacle(new Rectangle(192, 192, 1, 64), Color.RED));
-        obstacles.add(new Obstacle(new Line2D.Float(194, 193, 258, 257), Color.BLUE));
         obstacles.add(new Obstacle(new Rectangle(400, 200, 64, 1), Color.RED));
 
-        // Separate obstacles into straight and diagonal lists
+        // Diagonal obstacles
+        obstacles.add(new Obstacle(new Line2D.Float(194, 193, 258, 257), Color.BLUE));
+
+        
+        categorizeObstacles();
+    }
+
+    // Divide obstacles into straight and diagonal obstacles, since Rectangle and Line2D are different types from different libraries
+    private static void categorizeObstacles() {
+        straightObstacles.clear();
+        diagonalObstacles.clear();
         for (Obstacle obstacle : obstacles) {
             if (obstacle.getRectangle() != null) {
                 straightObstacles.add(obstacle.getRectangle());
@@ -49,6 +58,11 @@ public class Obstacle {
     }
 
     public static void paintObstacles(Graphics2D g2d, int cameraX, int cameraY) {
+        // Ensure obstacles are added before painting
+        if (obstacles.isEmpty()) {
+            addObstacles();
+        }
+
         // Render all straight obstacles with camera offset
         g2d.setColor(Color.RED);
         for (Rectangle obstacle : straightObstacles) {
