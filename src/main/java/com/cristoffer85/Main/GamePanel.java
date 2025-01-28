@@ -60,13 +60,15 @@ public class GamePanel extends JPanel {
         timer.start();
     }
 
-    // Helper Method to change between different game states. Creates the different states as a card, and can later switch between them 
+    // ## Helper Methods ##
+    // Change between different game states. Creates the different states as a card, and can later switch between them 
     public void setGameState(StatesDefinitions newState) {
         this.statesDefinitions = newState;
         CardLayout cl = (CardLayout) getLayout();
         cl.show(this, newState.name());
     }
 
+    // Get current game state
     public StatesDefinitions getCurrentState() {
         return statesDefinitions;
     }
