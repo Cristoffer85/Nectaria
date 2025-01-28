@@ -21,6 +21,9 @@ Features right now include:
 ## States
 - Basic start implementation of different states (Have different states = Main menu-state, Game-state, Pause-state etc) implemented in what i would call a very easy and logic followed solution 
 
+## Save/Load/Reset
+- Basic Save and Load implemented to save to a local savegame.dat file in root folder. Needs to be heavily refactored and niced up before adding ability to CRUD different individual players, where the savegame.dat each specific per user will be saved in a "Saved games" folder named by username instead.
+
 
 
 
