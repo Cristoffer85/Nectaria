@@ -3,8 +3,8 @@ package com.cristoffer85.Main;
 import com.cristoffer85.Entity.Obstacle;
 import com.cristoffer85.Tile.TileManager;
 import com.cristoffer85.Entity.Player;
-import com.cristoffer85.States.StatesDefinitions;
 import com.cristoffer85.States.MainMenuState;
+import com.cristoffer85.States.StatesResources.StatesDefinitions;
 import com.cristoffer85.States.GameState;
 
 import javax.swing.*;

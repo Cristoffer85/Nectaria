@@ -1,6 +1,7 @@
 package com.cristoffer85.States;
 
 import com.cristoffer85.Main.GamePanel;
+import com.cristoffer85.States.StatesResources.StatesDefinitions;
 
 import javax.swing.*;
 import java.io.IOException;
