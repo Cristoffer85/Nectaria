@@ -7,6 +7,8 @@ import javax.swing.*;
 import java.awt.*;
 
 public class PauseState extends JPanel {
+    private Image gameStateImage;
+
     public PauseState(GamePanel gamePanel) {
         setLayout(new GridBagLayout());
         GridBagConstraints gbc = new GridBagConstraints();
@@ -23,6 +25,10 @@ public class PauseState extends JPanel {
         add(resumeButton, gbc);
     }
 
+    public void setGameStateImage(Image gameStateImage) {
+        this.gameStateImage = gameStateImage;
+    }
+
     private void styleButton(JButton button) {
         button.setForeground(Color.BLACK);
         button.setBackground(Color.ORANGE);
@@ -32,7 +38,10 @@ public class PauseState extends JPanel {
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
-        g.setColor(Color.GRAY);
+        if (gameStateImage != null) {
+            g.drawImage(gameStateImage, 0, 0, getWidth(), getHeight(), this);
+        }
+        g.setColor(new Color(0, 0, 0, 150)); // Semi-transparent overlay
         g.fillRect(0, 0, getWidth(), getHeight());
     }
 }
