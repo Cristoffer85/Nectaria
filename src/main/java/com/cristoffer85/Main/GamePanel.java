@@ -22,7 +22,6 @@ public class GamePanel extends JPanel {
     private PauseState pauseState;
 
     public GamePanel(int baseWidth, int baseHeight, int scaleFactor) {
-        this.statesDefinitions = StatesDefinitions.MAIN_MENU;
 
         // Initialize player
         player = new Player(30, 30, 64, 6);
@@ -30,12 +29,10 @@ public class GamePanel extends JPanel {
         // Initialize obstacles
         Obstacle.addObstacles();
 
-        // Keyhandling methods
+        // Initialize key handler
         keyHandler = new KeyHandler(this);
-        addKeyListener(keyHandler);
-        setFocusable(true);
 
-        // Load tilesheet and map
+        // Initialize tilesheet and map
         TileManager.loadTilesheet("/TileSheet.png", 64, 64);
         TileManager.tilesByMapSize("/MainWorld.txt");
 
@@ -48,8 +45,9 @@ public class GamePanel extends JPanel {
         add(mainMenuState, StatesDefinitions.MAIN_MENU.name());
         add(gameState, StatesDefinitions.GAME.name());
         add(pauseState, StatesDefinitions.PAUSE_MENU.name());
+        //----------------------------------------------
 
-        // Game loop
+        // Main Game loop
         Timer timer = new Timer(16, e -> {
             if (statesDefinitions == StatesDefinitions.GAME) {
                 // Update game state

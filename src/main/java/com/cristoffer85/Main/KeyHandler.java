@@ -26,6 +26,13 @@ public class KeyHandler extends KeyAdapter {
             "resolution1440p", KeyEvent.VK_F3,
             "pause", KeyEvent.VK_ESCAPE
         );
+        initialize();
+    }
+
+    // Initialize necessary key handling methods
+    private void initialize() {
+        gamePanel.addKeyListener(this);
+        gamePanel.setFocusable(true);
     }
 
     @Override
@@ -44,6 +51,7 @@ public class KeyHandler extends KeyAdapter {
         return keysPressed.contains(keyBindings.get(action));
     }
 
+    // Specific individual key handling methods below
     private void handleResolutionChange(KeyEvent e) {
         if (e.getKeyCode() == keyBindings.get("resolution720p")) {
             Game.changeResolution(1280, 720);
