@@ -19,13 +19,6 @@ public class GamePanel extends JPanel {
     private MainMenuState mainMenuState;
     private GameState gameState;
 
-    // Method to change between different game states. Creates the different states as a card, and can later switch between them 
-    public void setGameState(StatesDefinitions newState) {
-        this.statesDefinitions = newState;
-        CardLayout cl = (CardLayout) getLayout();
-        cl.show(this, newState.name());
-    }
-
     public GamePanel(int baseWidth, int baseHeight, int scaleFactor) {
         this.statesDefinitions = StatesDefinitions.MAIN_MENU;
 
@@ -40,20 +33,18 @@ public class GamePanel extends JPanel {
         addKeyListener(keyHandler);
         setFocusable(true);
 
-        // Load tilesheet
+        // Load tilesheet and map
         TileManager.loadTilesheet("/TileSheet.png", 64, 64);  // Sets tile size to 64 Height and 64 Width
-        
-        // Load map
         TileManager.tilesByMapSize("/MainWorld.txt");
 
-        // Initialize the different states
+        // #### Initialize different states, and add them to a "card" layout ####
         mainMenuState = new MainMenuState(this);
         gameState = new GameState(player, baseWidth, baseHeight, scaleFactor);
 
-        // Add state panels to card layout
         setLayout(new CardLayout());
         add(mainMenuState, StatesDefinitions.MAIN_MENU.name());
         add(gameState, StatesDefinitions.GAME.name());
+        //----------------------------------------------------------
 
         // Game loop
         Timer timer = new Timer(16, e -> {
@@ -66,5 +57,12 @@ public class GamePanel extends JPanel {
             }
         });
         timer.start();
+    }
+
+      // Helper Method to change between different game states. Creates the different states as a card, and can later switch between them 
+      public void setGameState(StatesDefinitions newState) {
+        this.statesDefinitions = newState;
+        CardLayout cl = (CardLayout) getLayout();
+        cl.show(this, newState.name());
     }
 }
