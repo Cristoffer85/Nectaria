@@ -1,10 +1,10 @@
 package com.cristoffer85.States;
 
-import javax.swing.*;
-import java.awt.*;
-import java.io.IOException;
-
 import com.cristoffer85.Main.GamePanel;
+
+import javax.swing.*;
+import java.io.IOException;
+import java.awt.*;
 
 public class MainMenuState extends JPanel {
     private Image logoImage;
@@ -37,7 +37,7 @@ public class MainMenuState extends JPanel {
         add(newGameButton, gbc);
     }
 
-    // The acual method to scale the image
+    // The actual method to scale the image
     private Image scaleImage(Image image, double scale) {
         int width = (int) (image.getWidth(null) * scale);
         int height = (int) (image.getHeight(null) * scale);
