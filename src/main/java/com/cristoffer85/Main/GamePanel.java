@@ -102,13 +102,13 @@ public class GamePanel extends JPanel {
             g2d.fillRect(0, 0, gameImage.getWidth(), gameImage.getHeight());
 
             // Render all tiles with camera offset
-            TileManager.renderAll(g2d, cameraX, cameraY);
+            TileManager.paintTiles(g2d, cameraX, cameraY);
 
             // Render all obstacles with camera offset
-            Obstacle.renderAll(g2d, cameraX, cameraY);
+            Obstacle.paintObstacles(g2d, cameraX, cameraY);
 
             // Render player on top of obstacles
-            player.render(g2d, cameraX, cameraY);
+            player.paintPlayer(g2d, cameraX, cameraY);
 
             // Dispose of the Graphics2D object, in order to free up resources/save memory/optimization
             g2d.dispose();

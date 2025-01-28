@@ -31,25 +31,11 @@ public class Obstacle {
         this.color = color;
     }
 
-    public void render(Graphics g) {
-        g.setColor(color);
-        if (rectangle != null) {
-            g.fillRect(rectangle.x, rectangle.y, rectangle.width, rectangle.height);
-        } else if (diagonalLine != null) {
-            ((Graphics2D) g).draw(diagonalLine);
-        }
-    }
-
     public static void addObstacles() {
         // Add obstacles
-        // Base rectangle obstacle
         obstacles.add(new Obstacle(new Rectangle(300, 300, 50, 64), Color.RED));
-
-        // Toy around with diagonal + vertical obstacle combined
         obstacles.add(new Obstacle(new Rectangle(192, 192, 1, 64), Color.RED));
         obstacles.add(new Obstacle(new Line2D.Float(194, 193, 258, 257), Color.BLUE));
-
-        // Horizontal obstacle
         obstacles.add(new Obstacle(new Rectangle(400, 200, 64, 1), Color.RED));
 
         // Separate obstacles into straight and diagonal lists
@@ -62,19 +48,7 @@ public class Obstacle {
         }
     }
 
-    public static List<Obstacle> getObstacles() {
-        return obstacles;
-    }
-
-    public static List<Rectangle> getStraightObstacles() {
-        return straightObstacles;
-    }
-
-    public static List<Line2D> getDiagonalObstacles() {
-        return diagonalObstacles;
-    }
-
-    public static void renderAll(Graphics2D g2d, int cameraX, int cameraY) {
+    public static void paintObstacles(Graphics2D g2d, int cameraX, int cameraY) {
         // Render all straight obstacles with camera offset
         g2d.setColor(Color.RED);
         for (Rectangle obstacle : straightObstacles) {
@@ -86,5 +60,18 @@ public class Obstacle {
         for (Line2D obstacle : diagonalObstacles) {
             g2d.drawLine((int) obstacle.getX1() - cameraX, (int) obstacle.getY1() - cameraY, (int) obstacle.getX2() - cameraX, (int) obstacle.getY2() - cameraY);
         }
+    }
+
+    // Helper methods for other classes to access the obstacle data
+    public static List<Obstacle> getObstacles() {
+        return obstacles;
+    }
+
+    public static List<Rectangle> getStraightObstacles() {
+        return straightObstacles;
+    }
+
+    public static List<Line2D> getDiagonalObstacles() {
+        return diagonalObstacles;
     }
 }

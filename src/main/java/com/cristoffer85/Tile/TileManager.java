@@ -49,7 +49,7 @@ public class TileManager {
         tileMap.put(tileId, tile);
     }
 
-    // Read map file and define tiles by map size
+    // Read map file, and then define tiles automagically by map size defined in "MainWorld.txt" for example
     public static void tilesByMapSize(String path) {
         try (BufferedReader br = new BufferedReader(new InputStreamReader(TileManager.class.getResourceAsStream(path)))) {
             readMapRow(br);
@@ -81,7 +81,7 @@ public class TileManager {
     }
 
     // Render all tiles
-    public static void renderAll(Graphics2D g2d, int cameraX, int cameraY) {
+    public static void paintTiles(Graphics2D g2d, int cameraX, int cameraY) {
         for (Map.Entry<Point, Integer> entry : tilePositions.entrySet()) {
             Point point = entry.getKey();
             int tileId = entry.getValue();
@@ -99,6 +99,7 @@ public class TileManager {
         return ImageIO.read(TileManager.class.getResource(path));
     }
 
+    // Helper methods for other classes be able to access the tile data
     public static Tile getTile(int tileId) {
         return tileMap.get(tileId);
     }

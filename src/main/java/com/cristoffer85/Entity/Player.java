@@ -66,7 +66,7 @@ public class Player {
         playerMovement.move(keyHandler, straightObstacles, diagonalObstacles);
     }
 
-    public void render(Graphics g, int cameraX, int cameraY) {
+    public void paintPlayer(Graphics g, int cameraX, int cameraY) {
         // Calculate the render position based on the camera offset
         int renderX = x - cameraX;
         int renderY = y - cameraY;
