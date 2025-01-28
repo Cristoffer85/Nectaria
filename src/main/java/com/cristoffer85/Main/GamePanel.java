@@ -6,6 +6,7 @@ import com.cristoffer85.Entity.Player;
 import com.cristoffer85.States.MainMenuState;
 import com.cristoffer85.States.StatesResources.StatesDefinitions;
 import com.cristoffer85.States.GameState;
+import com.cristoffer85.States.PauseState;
 
 import javax.swing.*;
 import java.awt.*;
@@ -18,33 +19,35 @@ public class GamePanel extends JPanel {
     private StatesDefinitions statesDefinitions;
     private MainMenuState mainMenuState;
     private GameState gameState;
+    private PauseState pauseState;
 
     public GamePanel(int baseWidth, int baseHeight, int scaleFactor) {
         this.statesDefinitions = StatesDefinitions.MAIN_MENU;
 
         // Initialize player
-        player = new Player(30, 30, 64, 6); // Startposition X and Y - size of playersprite - movespeed
-        
+        player = new Player(30, 30, 64, 6);
+
         // Initialize obstacles
         Obstacle.addObstacles();
 
         // Keyhandling methods
-        keyHandler = new KeyHandler();
+        keyHandler = new KeyHandler(this);
         addKeyListener(keyHandler);
         setFocusable(true);
 
         // Load tilesheet and map
-        TileManager.loadTilesheet("/TileSheet.png", 64, 64);  // Sets tile size to 64 Height and 64 Width
+        TileManager.loadTilesheet("/TileSheet.png", 64, 64);
         TileManager.tilesByMapSize("/MainWorld.txt");
 
-        // #### Initialize different states, and add them to a "card" layout ####
+        // Initialize different states, and add them to a "card" layout
         mainMenuState = new MainMenuState(this);
         gameState = new GameState(player, baseWidth, baseHeight, scaleFactor);
+        pauseState = new PauseState(this);
 
         setLayout(new CardLayout());
         add(mainMenuState, StatesDefinitions.MAIN_MENU.name());
         add(gameState, StatesDefinitions.GAME.name());
-        //----------------------------------------------------------
+        add(pauseState, StatesDefinitions.PAUSE_MENU.name());
 
         // Game loop
         Timer timer = new Timer(16, e -> {
@@ -59,10 +62,14 @@ public class GamePanel extends JPanel {
         timer.start();
     }
 
-      // Helper Method to change between different game states. Creates the different states as a card, and can later switch between them 
-      public void setGameState(StatesDefinitions newState) {
+    // Helper Method to change between different game states. Creates the different states as a card, and can later switch between them 
+    public void setGameState(StatesDefinitions newState) {
         this.statesDefinitions = newState;
         CardLayout cl = (CardLayout) getLayout();
         cl.show(this, newState.name());
+    }
+
+    public StatesDefinitions getCurrentState() {
+        return statesDefinitions;
     }
 }
