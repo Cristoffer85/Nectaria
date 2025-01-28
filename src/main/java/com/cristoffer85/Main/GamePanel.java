@@ -7,11 +7,17 @@ import com.cristoffer85.States.MainMenuState;
 import com.cristoffer85.States.StatesResources.StatesDefinitions;
 import com.cristoffer85.States.GameState;
 import com.cristoffer85.States.PauseState;
+import com.cristoffer85.Main.MainResources.GameSaveData;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.geom.Line2D;
 import java.awt.image.BufferedImage;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.util.List;
 
 public class GamePanel extends JPanel {
@@ -98,5 +104,28 @@ public class GamePanel extends JPanel {
         TileManager.tilesByMapSize("/MainWorld.txt");
         gameState = new GameState(player, baseWidth, baseHeight, scaleFactor);
         add(gameState, StatesDefinitions.GAME.name());
+    }
+
+    public void saveGame() {
+        GameSaveData saveData = new GameSaveData(player.getX(), player.getY());
+        try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream("savegame.dat"))) {
+            oos.writeObject(saveData);
+            System.out.println("Game saved successfully.");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void loadGame() {
+        try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream("savegame.dat"))) {
+            GameSaveData saveData = (GameSaveData) ois.readObject();
+            player.setX(saveData.getPlayerX());
+            player.setY(saveData.getPlayerY());
+            // Update other game state fields if needed
+            System.out.println("Game loaded successfully.");
+            setGameState(StatesDefinitions.GAME); // Switch to the game state
+        } catch (IOException | ClassNotFoundException e) {
+            e.printStackTrace();
+        }
     }
 }

@@ -19,6 +19,16 @@ public class PauseState extends JPanel {
         resumeButton.addActionListener(e -> gamePanel.setGameState(StatesDefinitions.GAME));
         styleButton(resumeButton);
 
+        // Create and style the "Save Game" button
+        JButton saveButton = new JButton("SAVE GAME");
+        saveButton.addActionListener(e -> gamePanel.saveGame());
+        styleButton(saveButton);
+
+        // Create and style the "Load Game" button
+        JButton loadButton = new JButton("LOAD GAME");
+        loadButton.addActionListener(e -> gamePanel.loadGame());
+        styleButton(loadButton);
+
         // Create and style the "Quit Game" button
         JButton quitButton = new JButton("QUIT GAME");
         quitButton.addActionListener(e -> gamePanel.setGameState(StatesDefinitions.MAIN_MENU));
@@ -30,6 +40,12 @@ public class PauseState extends JPanel {
         add(resumeButton, gbc);
 
         gbc.gridy = 1;
+        add(saveButton, gbc);
+
+        gbc.gridy = 2;
+        add(loadButton, gbc);
+
+        gbc.gridy = 3;
         add(quitButton, gbc);
     }
 
