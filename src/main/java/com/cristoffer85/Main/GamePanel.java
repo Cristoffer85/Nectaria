@@ -8,7 +8,7 @@ import com.cristoffer85.States.StatesResources.StatesDefinitions;
 import com.cristoffer85.States.GameState;
 import com.cristoffer85.States.InitialState;
 import com.cristoffer85.States.PauseState;
-import com.cristoffer85.Main.MainResources.SaveLoadReset;
+import com.cristoffer85.Main.MainResources.CRUDPlayer;
 
 import javax.swing.*;
 import java.awt.*;
@@ -48,7 +48,7 @@ public class GamePanel extends JPanel {
         TileManager.loadTilesheet("/TileSheet.png", 64, 64);
         TileManager.tilesByMapSize("/MainWorld.txt");
 
-        // Initialize different states
+        // ---------- Initialize different states ----------
         initialState = new InitialState(this);
         mainMenuState = new MainMenuState(this);
         gameState = new GameState(player, baseWidth, baseHeight, scaleFactor);
@@ -60,11 +60,12 @@ public class GamePanel extends JPanel {
         add(mainMenuState, StatesDefinitions.MAIN_MENU.name());
         add(gameState, StatesDefinitions.GAME.name());
         add(pauseState, StatesDefinitions.PAUSE_MENU.name());
+        //---------------------------------------------------
 
         // Main Game loop
         Timer timer = new Timer(16, e -> {
+                // IF GameState: Update game state
             if (currentState == StatesDefinitions.GAME) {
-                // Update game state
                 List<Rectangle> straightObstacles = Obstacle.getStraightObstacles();
                 List<Line2D> diagonalObstacles = Obstacle.getDiagonalObstacles();
                 player.move(keyHandler, straightObstacles, diagonalObstacles);
@@ -88,27 +89,26 @@ public class GamePanel extends JPanel {
             pauseState.freezeGameBackground(this, gameState);
         }
         currentState = newState;
-        CardLayout cl = (CardLayout) getLayout();
-        cl.show(this, newState.name());
+        ((CardLayout) getLayout()).show(this, newState.name());
     }
 
-    public void resetGame() {
-        SaveLoadReset.resetGame(this, baseWidth, baseHeight, scaleFactor, profileName);
-    }
-
-    public void saveGame() {
-        SaveLoadReset.saveGame(player, profileName);
-    }
-
-    public void loadGame() {
-        SaveLoadReset.loadGame(player, this, profileName);
+    public void setProfileName(String profileName) {
+        this.profileName = profileName;
     }
 
     public void setPlayer(Player player) {
         this.player = player;
     }
 
-    public void setProfileName(String profileName) {
-        this.profileName = profileName;
+    public void saveGame() {
+        CRUDPlayer.saveGame(player, profileName);
+    }
+
+    public void loadGame() {
+        CRUDPlayer.loadGame(player, this, profileName);
+    }
+
+    public void resetGame() {
+        CRUDPlayer.resetGame(this, baseWidth, baseHeight, scaleFactor, profileName);
     }
 }

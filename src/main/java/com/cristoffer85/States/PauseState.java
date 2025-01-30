@@ -55,10 +55,6 @@ public class PauseState extends JPanel {
         Graphics2D g2d = gameStateImage.createGraphics();
         gameState.paint(g2d);
         g2d.dispose();
-        setFreezedGameBackground(gameStateImage);
-    }
-
-    public void setFreezedGameBackground(Image gameStateImage) {
         this.gameStateImage = gameStateImage;
     }
 

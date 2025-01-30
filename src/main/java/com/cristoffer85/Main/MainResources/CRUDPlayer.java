@@ -11,13 +11,13 @@ import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 
-public class SaveLoadReset implements Serializable {
+public class CRUDPlayer implements Serializable {
     private static final long serialVersionUID = 1L;
 
     private int playerX;
     private int playerY;
 
-    public SaveLoadReset(int playerX, int playerY) {
+    public CRUDPlayer(int playerX, int playerY) {
         this.playerX = playerX;
         this.playerY = playerY;
     }
@@ -31,7 +31,7 @@ public class SaveLoadReset implements Serializable {
     }
 
     public static void saveGame(Player player, String profileName) {
-        SaveLoadReset saveData = new SaveLoadReset(player.getX(), player.getY());
+        CRUDPlayer saveData = new CRUDPlayer(player.getX(), player.getY());
         String filePath = "profiles/" + profileName + ".dat";
         try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(filePath))) {
             oos.writeObject(saveData);
@@ -44,7 +44,7 @@ public class SaveLoadReset implements Serializable {
     public static void loadGame(Player player, GamePanel gamePanel, String profileName) {
         String filePath = "profiles/" + profileName + ".dat";
         try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(filePath))) {
-            SaveLoadReset saveData = (SaveLoadReset) ois.readObject();
+            CRUDPlayer saveData = (CRUDPlayer) ois.readObject();
             player.setX(saveData.getPlayerX());
             player.setY(saveData.getPlayerY());
             System.out.println("Game loaded successfully from " + filePath);
