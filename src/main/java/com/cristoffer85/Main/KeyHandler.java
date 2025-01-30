@@ -65,9 +65,9 @@ public class KeyHandler extends KeyAdapter {
     private void handlePause(KeyEvent e) {
         if (e.getKeyCode() == keyBindings.get("pause")) {
             if (gamePanel.getCurrentState() == StatesDefinitions.GAME) {
-                gamePanel.setGameState(StatesDefinitions.PAUSE_MENU);
+                gamePanel.changeGameState(StatesDefinitions.PAUSE_MENU);
             } else if (gamePanel.getCurrentState() == StatesDefinitions.PAUSE_MENU) {
-                gamePanel.setGameState(StatesDefinitions.GAME);
+                gamePanel.changeGameState(StatesDefinitions.GAME);
             }
         }
     }

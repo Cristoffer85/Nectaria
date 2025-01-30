@@ -5,6 +5,7 @@ import com.cristoffer85.States.StatesResources.StatesDefinitions;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.image.BufferedImage;
 
 public class PauseState extends JPanel {
     private Image gameStateImage;
@@ -16,7 +17,7 @@ public class PauseState extends JPanel {
 
         // Create and style the "Resume Game" button
         JButton resumeButton = new JButton("RESUME GAME");
-        resumeButton.addActionListener(e -> gamePanel.setGameState(StatesDefinitions.GAME));
+        resumeButton.addActionListener(e -> gamePanel.changeGameState(StatesDefinitions.GAME));
         styleButton(resumeButton);
 
         // Create and style the "Save Game" button
@@ -31,7 +32,7 @@ public class PauseState extends JPanel {
 
         // Create and style the "Quit Game" button
         JButton quitButton = new JButton("QUIT GAME");
-        quitButton.addActionListener(e -> gamePanel.setGameState(StatesDefinitions.MAIN_MENU));
+        quitButton.addActionListener(e -> gamePanel.changeGameState(StatesDefinitions.MAIN_MENU));
         styleButton(quitButton);
 
         // Add components to the layout
@@ -49,7 +50,15 @@ public class PauseState extends JPanel {
         add(quitButton, gbc);
     }
 
-    public void setGameStateImage(Image gameStateImage) {
+    public void freezeGameBackground(GamePanel gamePanel, GameState gameState) {
+        BufferedImage gameStateImage = new BufferedImage(gamePanel.getWidth(), gamePanel.getHeight(), BufferedImage.TYPE_INT_ARGB);
+        Graphics2D g2d = gameStateImage.createGraphics();
+        gameState.paint(g2d);
+        g2d.dispose();
+        setFreezedGameBackground(gameStateImage);
+    }
+
+    public void setFreezedGameBackground(Image gameStateImage) {
         this.gameStateImage = gameStateImage;
     }
 

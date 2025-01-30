@@ -48,7 +48,7 @@ public class SaveLoadReset implements Serializable {
             player.setX(saveData.getPlayerX());
             player.setY(saveData.getPlayerY());
             System.out.println("Game loaded successfully from " + filePath);
-            gamePanel.setGameState(StatesDefinitions.GAME);
+            gamePanel.changeGameState(StatesDefinitions.GAME);
         } catch (IOException | ClassNotFoundException e) {
             e.printStackTrace();
         }
@@ -61,7 +61,7 @@ public class SaveLoadReset implements Serializable {
         GameState gameState = new GameState(player, baseWidth, baseHeight, scaleFactor);
         gamePanel.add(gameState, StatesDefinitions.GAME.name());
         gamePanel.setPlayer(player);
-        gamePanel.setGameState(gameState);
+        gamePanel.initializeGameState(gameState);
     }
 
     public static void createProfile(String profileName) {

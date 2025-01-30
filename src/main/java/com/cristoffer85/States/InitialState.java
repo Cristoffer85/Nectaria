@@ -23,7 +23,7 @@ public class InitialState extends JPanel {
                 SaveLoadReset.createProfile(profileName); 
                 gamePanel.setProfileName(profileName); 
                 gamePanel.resetGame();
-                gamePanel.setGameState(StatesDefinitions.GAME);
+                gamePanel.changeGameState(StatesDefinitions.GAME);
             }
         });
         styleButton(newProfileButton);
@@ -43,7 +43,7 @@ public class InitialState extends JPanel {
                 );
                 if (selectedProfile != null) {
                     gamePanel.setProfileName(selectedProfile);
-                    gamePanel.setGameState(StatesDefinitions.MAIN_MENU);
+                    gamePanel.changeGameState(StatesDefinitions.MAIN_MENU);
                 }
             } else {
                 JOptionPane.showMessageDialog(this, "No profiles found.", "Error", JOptionPane.ERROR_MESSAGE);

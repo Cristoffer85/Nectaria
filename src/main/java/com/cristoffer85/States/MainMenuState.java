@@ -18,7 +18,7 @@ public class MainMenuState extends JPanel {
         topRightPanel.setBackground(Color.ORANGE); // Set background color
         JButton switchUserButton = new JButton("Switch User");
         switchUserButton.addActionListener(e -> {
-            gamePanel.setGameState(StatesDefinitions.INITIAL_STATE); // Switch to initial state
+            gamePanel.changeGameState(StatesDefinitions.INITIAL_STATE); // Switch to initial state
         });
         styleMinimalButton(switchUserButton);
         topRightPanel.add(switchUserButton);
@@ -58,7 +58,7 @@ public class MainMenuState extends JPanel {
             if (response == JOptionPane.YES_OPTION) {
                 gamePanel.resetGame();
                 gamePanel.saveGame();
-                gamePanel.setGameState(StatesDefinitions.GAME);
+                gamePanel.changeGameState(StatesDefinitions.GAME);
             }
         });
         styleButton(newGameButton);

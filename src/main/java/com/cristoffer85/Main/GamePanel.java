@@ -4,7 +4,6 @@ import com.cristoffer85.Entity.Obstacle;
 import com.cristoffer85.Tile.TileManager;
 import com.cristoffer85.Entity.Player;
 import com.cristoffer85.States.MainMenuState;
-import com.cristoffer85.States.StatesResources.CurrentState;
 import com.cristoffer85.States.StatesResources.StatesDefinitions;
 import com.cristoffer85.States.GameState;
 import com.cristoffer85.States.InitialState;
@@ -20,7 +19,6 @@ public class GamePanel extends JPanel {
     private Player player;
     private KeyHandler keyHandler;
 
-    private CurrentState currentState;
     private MainMenuState mainMenuState;
     private GameState gameState;
     private PauseState pauseState;
@@ -30,8 +28,8 @@ public class GamePanel extends JPanel {
     private int baseHeight;
     private int scaleFactor;
     private String profileName;
+    private StatesDefinitions currentState;
 
-    // Initialize player
     public GamePanel(int baseWidth, int baseHeight, int scaleFactor) {
         this.baseWidth = baseWidth;
         this.baseHeight = baseHeight;
@@ -50,8 +48,7 @@ public class GamePanel extends JPanel {
         TileManager.loadTilesheet("/TileSheet.png", 64, 64);
         TileManager.tilesByMapSize("/MainWorld.txt");
 
-        // ------ Initialize different states ------
-        currentState = new CurrentState();
+        // Initialize different states
         initialState = new InitialState(this);
         mainMenuState = new MainMenuState(this);
         gameState = new GameState(player, baseWidth, baseHeight, scaleFactor);
@@ -63,11 +60,10 @@ public class GamePanel extends JPanel {
         add(mainMenuState, StatesDefinitions.MAIN_MENU.name());
         add(gameState, StatesDefinitions.GAME.name());
         add(pauseState, StatesDefinitions.PAUSE_MENU.name());
-        // --------------------------------------------
 
         // Main Game loop
         Timer timer = new Timer(16, e -> {
-            if (currentState.getCurrentState() == StatesDefinitions.GAME) {
+            if (currentState == StatesDefinitions.GAME) {
                 // Update game state
                 List<Rectangle> straightObstacles = Obstacle.getStraightObstacles();
                 List<Line2D> diagonalObstacles = Obstacle.getDiagonalObstacles();
@@ -80,11 +76,20 @@ public class GamePanel extends JPanel {
 
     // ## Helper Methods ##
     public StatesDefinitions getCurrentState() {
-        return currentState.getCurrentState();
+        return currentState;
     }
 
-    public void setGameState(StatesDefinitions newState) {
-        currentState.setGameState(this, newState, gameState, pauseState);
+    public void initializeGameState(GameState gameState) {
+        this.gameState = gameState;
+    }
+
+    public void changeGameState(StatesDefinitions newState) {
+        if (newState == StatesDefinitions.PAUSE_MENU) {
+            pauseState.freezeGameBackground(this, gameState);
+        }
+        currentState = newState;
+        CardLayout cl = (CardLayout) getLayout();
+        cl.show(this, newState.name());
     }
 
     public void resetGame() {
@@ -101,10 +106,6 @@ public class GamePanel extends JPanel {
 
     public void setPlayer(Player player) {
         this.player = player;
-    }
-
-    public void setGameState(GameState gameState) {
-        this.gameState = gameState;
     }
 
     public void setProfileName(String profileName) {
