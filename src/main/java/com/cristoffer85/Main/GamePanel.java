@@ -45,23 +45,23 @@ public class GamePanel extends JPanel {
         TileManager.loadTilesheet("/TileSheet.png", 64, 64);
         TileManager.tilesByMapSize("/MainWorld.txt");
 
-        // Initialize different states, and add them to a "card" layout
+        // Initialize different states..
         currentState = new CurrentState();
         mainMenuState = new MainMenuState(this);
         gameState = new GameState(player, baseWidth, baseHeight, scaleFactor);
         pauseState = new PauseState(this);
 
+                // ..and add them to the "card" layout.
         setLayout(new CardLayout());
         add(mainMenuState, StatesDefinitions.MAIN_MENU.name());
         add(gameState, StatesDefinitions.GAME.name());
         add(pauseState, StatesDefinitions.PAUSE_MENU.name());
-
         //----------------------------------------------
 
         // Main Game loop
         Timer timer = new Timer(16, e -> {
             if (currentState.getCurrentState() == StatesDefinitions.GAME) {
-                // Update game state
+                // Update game state, whats happening in the loop?
                 List<Rectangle> straightObstacles = Obstacle.getStraightObstacles();
                 List<Line2D> diagonalObstacles = Obstacle.getDiagonalObstacles();
                 player.move(keyHandler, straightObstacles, diagonalObstacles);
@@ -72,13 +72,10 @@ public class GamePanel extends JPanel {
     }
 
     // ## Helper Methods ##
-
-    // Get current game state
     public StatesDefinitions getCurrentState() {
         return currentState.getCurrentState();
     }
 
-    // Change between different states.
     public void setGameState(StatesDefinitions newState) {
         currentState.setGameState(this, newState, gameState, pauseState);
     }
