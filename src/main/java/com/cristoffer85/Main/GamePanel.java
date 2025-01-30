@@ -4,6 +4,7 @@ import com.cristoffer85.Entity.Obstacle;
 import com.cristoffer85.Tile.TileManager;
 import com.cristoffer85.Entity.Player;
 import com.cristoffer85.States.MainMenuState;
+import com.cristoffer85.States.StatesResources.CurrentState;
 import com.cristoffer85.States.StatesResources.StatesDefinitions;
 import com.cristoffer85.States.GameState;
 import com.cristoffer85.States.PauseState;
@@ -12,13 +13,12 @@ import com.cristoffer85.Main.MainResources.SaveLoadReset;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.geom.Line2D;
-import java.awt.image.BufferedImage;
 import java.util.List;
 
 public class GamePanel extends JPanel {
     private Player player;
     private KeyHandler keyHandler;
-    private StatesDefinitions statesDefinitions;
+    private CurrentState currentState;
     private MainMenuState mainMenuState;
     private GameState gameState;
     private PauseState pauseState;
@@ -46,6 +46,7 @@ public class GamePanel extends JPanel {
         TileManager.tilesByMapSize("/MainWorld.txt");
 
         // Initialize different states, and add them to a "card" layout
+        currentState = new CurrentState();
         mainMenuState = new MainMenuState(this);
         gameState = new GameState(player, baseWidth, baseHeight, scaleFactor);
         pauseState = new PauseState(this);
@@ -59,7 +60,7 @@ public class GamePanel extends JPanel {
 
         // Main Game loop
         Timer timer = new Timer(16, e -> {
-            if (statesDefinitions == StatesDefinitions.GAME) {
+            if (currentState.getCurrentState() == StatesDefinitions.GAME) {
                 // Update game state
                 List<Rectangle> straightObstacles = Obstacle.getStraightObstacles();
                 List<Line2D> diagonalObstacles = Obstacle.getDiagonalObstacles();
@@ -74,23 +75,12 @@ public class GamePanel extends JPanel {
 
     // Get current game state
     public StatesDefinitions getCurrentState() {
-        return statesDefinitions;
+        return currentState.getCurrentState();
     }
 
     // Change between different states.
     public void setGameState(StatesDefinitions newState) {
-        if (newState == StatesDefinitions.PAUSE_MENU) {
-            // Capture the current GameState image, in order to display it in the PauseState behind menu.
-            BufferedImage gameStateImage = new BufferedImage(getWidth(), getHeight(), BufferedImage.TYPE_INT_ARGB);
-            Graphics2D g2d = gameStateImage.createGraphics();
-            gameState.paint(g2d);
-            g2d.dispose();
-            pauseState.setGameStateImage(gameStateImage);
-        }
-        //Creates the different states as cards, and can later switch between them.
-        this.statesDefinitions = newState;
-        CardLayout cl = (CardLayout) getLayout();
-        cl.show(this, newState.name());
+        currentState.setGameState(this, newState, gameState, pauseState);
     }
 
     public void resetGame() {
