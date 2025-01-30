@@ -1,7 +1,6 @@
 package com.cristoffer85.States;
 
 import com.cristoffer85.Main.GamePanel;
-import com.cristoffer85.States.StatesResources.StatesDefinitions;
 
 import javax.swing.*;
 import java.io.IOException;
@@ -12,11 +11,10 @@ public class MainMenuState extends JPanel {
 
     public MainMenuState(GamePanel gamePanel) {
         setLayout(new GridBagLayout());
-        // Sets a layout manager/Grid to position the components, GridBagLayout() is used to position the components in a grid of rows and columns
         GridBagConstraints gbc = new GridBagConstraints();
         gbc.insets = new Insets(10, 10, 10, 10);
 
-        // Load and scale logo image, scaled relatively to base image keeping its aspect ratio/proprtions
+        // Load and scale logo image
         try {
             ImageIcon logoIcon = new ImageIcon(getClass().getResource("/Logo.png"));
             logoImage = scaleImage(logoIcon.getImage(), 1.5);
@@ -24,11 +22,10 @@ public class MainMenuState extends JPanel {
             e.printStackTrace();
         }
 
-        // Create and style the "New Game" button - JButton() has built in support for using mouse clicks on it
+        // Create and style the "New Game" button
         JButton newGameButton = new JButton("NEW GAME");
         newGameButton.addActionListener(e -> {
-            gamePanel.resetGame();
-            gamePanel.setGameState(StatesDefinitions.GAME);
+            gamePanel.loadGame(); // Load the game for the selected profile
         });
         styleButton(newGameButton);
 
@@ -41,7 +38,6 @@ public class MainMenuState extends JPanel {
         add(newGameButton, gbc);
     }
 
-    // The actual method to scale the image
     private Image scaleImage(Image image, double scale) {
         int width = (int) (image.getWidth(null) * scale);
         int height = (int) (image.getHeight(null) * scale);
@@ -55,14 +51,12 @@ public class MainMenuState extends JPanel {
         } catch (FontFormatException | IOException e) {
             e.printStackTrace();
         }
-        // set the button properties here
         button.setForeground(Color.BLACK);
         button.setBackground(Color.ORANGE);
-        button.setMargin(new Insets(5, 5, 1, 2)); // Adjust the padding around the text in button
+        button.setMargin(new Insets(5, 5, 1, 2));
     }
 
     @Override
-    // Usual overriding of the JavaX Swing paintcomponent, to render out the components
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
         g.setColor(Color.ORANGE);

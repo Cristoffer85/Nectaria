@@ -6,6 +6,9 @@ import com.cristoffer85.States.StatesResources.StatesDefinitions;
 
 import javax.swing.*;
 import java.awt.*;
+import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
 
 public class InitialState extends JPanel {
     public InitialState(GamePanel gamePanel) {
@@ -29,7 +32,24 @@ public class InitialState extends JPanel {
         // Create and style the "Select Existing Profile" button
         JButton existingProfileButton = new JButton("SELECT EXISTING PROFILE");
         existingProfileButton.addActionListener(e -> {
-            gamePanel.setGameState(StatesDefinitions.MAIN_MENU); // Transition to main menu for existing profiles
+            String[] profiles = getProfiles();
+            if (profiles.length > 0) {
+                String selectedProfile = (String) JOptionPane.showInputDialog(
+                        this,
+                        "Select a profile:",
+                        "Select Profile",
+                        JOptionPane.PLAIN_MESSAGE,
+                        null,
+                        profiles,
+                        profiles[0]
+                );
+                if (selectedProfile != null) {
+                    gamePanel.setProfileName(selectedProfile);
+                    gamePanel.setGameState(StatesDefinitions.MAIN_MENU); // Go to main menu state
+                }
+            } else {
+                JOptionPane.showMessageDialog(this, "No profiles found.", "Error", JOptionPane.ERROR_MESSAGE);
+            }
         });
         styleButton(existingProfileButton);
 
@@ -49,6 +69,22 @@ public class InitialState extends JPanel {
         button.setForeground(Color.BLACK);
         button.setBackground(Color.ORANGE);
         button.setMargin(new Insets(5, 5, 1, 2));
+    }
+
+    private String[] getProfiles() {
+        File profilesDir = new File("profiles");
+        if (!profilesDir.exists() || !profilesDir.isDirectory()) {
+            return new String[0];
+        }
+        File[] profileFiles = profilesDir.listFiles((dir, name) -> name.endsWith(".dat"));
+        if (profileFiles == null) {
+            return new String[0];
+        }
+        List<String> profiles = new ArrayList<>();
+        for (File file : profileFiles) {
+            profiles.add(file.getName().replace(".dat", ""));
+        }
+        return profiles.toArray(new String[0]);
     }
 
     @Override
