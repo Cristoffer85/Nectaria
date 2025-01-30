@@ -32,7 +32,7 @@ public class CRUDPlayer implements Serializable {
 
     public static void saveGame(Player player, String profileName) {
         CRUDPlayer saveData = new CRUDPlayer(player.getX(), player.getY());
-        String filePath = "profiles/" + profileName + ".dat";
+        String filePath = "SavedGames/" + profileName + ".dat";
         try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(filePath))) {
             oos.writeObject(saveData);
             System.out.println("Game saved successfully to " + filePath);
@@ -42,7 +42,7 @@ public class CRUDPlayer implements Serializable {
     }
 
     public static void loadGame(Player player, GamePanel gamePanel, String profileName) {
-        String filePath = "profiles/" + profileName + ".dat";
+        String filePath = "SavedGames/" + profileName + ".dat";
         try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(filePath))) {
             CRUDPlayer saveData = (CRUDPlayer) ois.readObject();
             player.setX(saveData.getPlayerX());
@@ -65,7 +65,7 @@ public class CRUDPlayer implements Serializable {
     }
 
     public static void createProfile(String profileName) {
-        String filePath = "profiles/" + profileName + ".dat";
+        String filePath = "SavedGames/" + profileName + ".dat";
         try {
             Files.createFile(Paths.get(filePath));
             System.out.println("Profile created: " + profileName);
