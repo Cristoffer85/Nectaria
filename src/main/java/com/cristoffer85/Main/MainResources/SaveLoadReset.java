@@ -48,7 +48,7 @@ public class SaveLoadReset implements Serializable {
             player.setX(saveData.getPlayerX());
             player.setY(saveData.getPlayerY());
             System.out.println("Game loaded successfully from " + filePath);
-            gamePanel.setGameState(StatesDefinitions.GAME); // Switch to the game state
+            gamePanel.setGameState(StatesDefinitions.GAME);
         } catch (IOException | ClassNotFoundException e) {
             e.printStackTrace();
         }

@@ -29,7 +29,7 @@ public class GamePanel extends JPanel {
     private int baseWidth;
     private int baseHeight;
     private int scaleFactor;
-    private String profileName; // Store the current profile name
+    private String profileName;
 
     // Initialize player
     public GamePanel(int baseWidth, int baseHeight, int scaleFactor) {
@@ -50,7 +50,7 @@ public class GamePanel extends JPanel {
         TileManager.loadTilesheet("/TileSheet.png", 64, 64);
         TileManager.tilesByMapSize("/MainWorld.txt");
 
-        // Initialize different states
+        // ------ Initialize different states ------
         currentState = new CurrentState();
         initialState = new InitialState(this);
         mainMenuState = new MainMenuState(this);
@@ -63,6 +63,7 @@ public class GamePanel extends JPanel {
         add(mainMenuState, StatesDefinitions.MAIN_MENU.name());
         add(gameState, StatesDefinitions.GAME.name());
         add(pauseState, StatesDefinitions.PAUSE_MENU.name());
+        // --------------------------------------------
 
         // Main Game loop
         Timer timer = new Timer(16, e -> {

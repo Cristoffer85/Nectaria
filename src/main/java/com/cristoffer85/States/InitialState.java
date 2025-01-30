@@ -16,20 +16,18 @@ public class InitialState extends JPanel {
         GridBagConstraints gbc = new GridBagConstraints();
         gbc.insets = new Insets(10, 10, 10, 10);
 
-        // Create and style the "Create New Profile" button
         JButton newProfileButton = new JButton("CREATE NEW PROFILE");
         newProfileButton.addActionListener(e -> {
             String profileName = JOptionPane.showInputDialog("Enter profile name:");
             if (profileName != null && !profileName.trim().isEmpty()) {
-                SaveLoadReset.createProfile(profileName); // Create the profile file
-                gamePanel.setProfileName(profileName); // Set the profile name in the GamePanel
-                gamePanel.resetGame(); // Reset the game for a new profile
+                SaveLoadReset.createProfile(profileName); 
+                gamePanel.setProfileName(profileName); 
+                gamePanel.resetGame();
                 gamePanel.setGameState(StatesDefinitions.GAME);
             }
         });
         styleButton(newProfileButton);
 
-        // Create and style the "Select Existing Profile" button
         JButton existingProfileButton = new JButton("SELECT EXISTING PROFILE");
         existingProfileButton.addActionListener(e -> {
             String[] profiles = getProfiles();
@@ -45,7 +43,7 @@ public class InitialState extends JPanel {
                 );
                 if (selectedProfile != null) {
                     gamePanel.setProfileName(selectedProfile);
-                    gamePanel.setGameState(StatesDefinitions.MAIN_MENU); // Go to main menu state
+                    gamePanel.setGameState(StatesDefinitions.MAIN_MENU);
                 }
             } else {
                 JOptionPane.showMessageDialog(this, "No profiles found.", "Error", JOptionPane.ERROR_MESSAGE);
@@ -53,10 +51,10 @@ public class InitialState extends JPanel {
         });
         styleButton(existingProfileButton);
 
-        // Add components to the layout
+    
         gbc.gridx = 0;
         gbc.gridy = 0;
-        add(new JLabel("Welcome to the Game!"), gbc);
+        add(new JLabel("Welcome to New Proper 2D Collision Game!"), gbc);
 
         gbc.gridy = 1;
         add(newProfileButton, gbc);
