@@ -70,7 +70,7 @@ public class InitialState extends JPanel {
     }
 
     private String[] getProfiles() {
-        File profilesDir = new File("profiles");
+        File profilesDir = new File("SavedGames");
         if (!profilesDir.exists() || !profilesDir.isDirectory()) {
             return new String[0];
         }
