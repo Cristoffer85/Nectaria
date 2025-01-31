@@ -11,13 +11,13 @@ import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 
-public class CRUDPlayer implements Serializable {
+public class CRUDProfile implements Serializable {
     private static final long serialVersionUID = 1L;
 
     private int playerX;
     private int playerY;
 
-    public CRUDPlayer(int playerX, int playerY) {
+    public CRUDProfile(int playerX, int playerY) {
         this.playerX = playerX;
         this.playerY = playerY;
     }
@@ -31,8 +31,8 @@ public class CRUDPlayer implements Serializable {
     }
 
     public static void saveGame(Player player, String profileName) {
-        CRUDPlayer saveData = new CRUDPlayer(player.getX(), player.getY());
-        String filePath = "SavedGames/" + profileName + ".dat";
+        CRUDProfile saveData = new CRUDProfile(player.getX(), player.getY());
+        String filePath = "profiles/" + profileName + ".dat";
         try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(filePath))) {
             oos.writeObject(saveData);
             System.out.println("Game saved successfully to " + filePath);
@@ -42,9 +42,9 @@ public class CRUDPlayer implements Serializable {
     }
 
     public static void loadGame(Player player, GamePanel gamePanel, String profileName) {
-        String filePath = "SavedGames/" + profileName + ".dat";
+        String filePath = "profiles/" + profileName + ".dat";
         try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(filePath))) {
-            CRUDPlayer saveData = (CRUDPlayer) ois.readObject();
+            CRUDProfile saveData = (CRUDProfile) ois.readObject();
             player.setX(saveData.getPlayerX());
             player.setY(saveData.getPlayerY());
             System.out.println("Game loaded successfully from " + filePath);
@@ -65,7 +65,7 @@ public class CRUDPlayer implements Serializable {
     }
 
     public static void createProfile(String profileName) {
-        String filePath = "SavedGames/" + profileName + ".dat";
+        String filePath = "profiles/" + profileName + ".dat";
         try {
             Files.createFile(Paths.get(filePath));
             System.out.println("Profile created: " + profileName);

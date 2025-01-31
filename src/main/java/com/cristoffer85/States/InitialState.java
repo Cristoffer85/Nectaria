@@ -1,7 +1,7 @@
 package com.cristoffer85.States;
 
 import com.cristoffer85.Main.GamePanel;
-import com.cristoffer85.Main.MainResources.CRUDPlayer;
+import com.cristoffer85.Main.MainResources.CRUDProfile;
 import com.cristoffer85.States.StatesResources.StatesDefinitions;
 
 import javax.swing.*;
@@ -20,7 +20,7 @@ public class InitialState extends JPanel {
         newProfileButton.addActionListener(e -> {
             String profileName = JOptionPane.showInputDialog("Enter profile name:");
             if (profileName != null && !profileName.trim().isEmpty()) {
-                CRUDPlayer.createProfile(profileName); 
+                CRUDProfile.createProfile(profileName); 
                 gamePanel.setProfileName(profileName); 
                 gamePanel.resetGame();
                 gamePanel.changeGameState(StatesDefinitions.GAME);
@@ -70,7 +70,7 @@ public class InitialState extends JPanel {
     }
 
     private String[] getProfiles() {
-        File profilesDir = new File("SavedGames");
+        File profilesDir = new File("profiles");
         if (!profilesDir.exists() || !profilesDir.isDirectory()) {
             return new String[0];
         }

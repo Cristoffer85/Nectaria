@@ -8,7 +8,7 @@ import com.cristoffer85.States.StatesResources.StatesDefinitions;
 import com.cristoffer85.States.GameState;
 import com.cristoffer85.States.InitialState;
 import com.cristoffer85.States.PauseState;
-import com.cristoffer85.Main.MainResources.CRUDPlayer;
+import com.cristoffer85.Main.MainResources.CRUDProfile;
 
 import javax.swing.*;
 import java.awt.*;
@@ -101,14 +101,14 @@ public class GamePanel extends JPanel {
     }
 
     public void saveGame() {
-        CRUDPlayer.saveGame(player, profileName);
+        CRUDProfile.saveGame(player, profileName);
     }
 
     public void loadGame() {
-        CRUDPlayer.loadGame(player, this, profileName);
+        CRUDProfile.loadGame(player, this, profileName);
     }
 
     public void resetGame() {
-        CRUDPlayer.resetGame(this, baseWidth, baseHeight, scaleFactor, profileName);
+        CRUDProfile.resetGame(this, baseWidth, baseHeight, scaleFactor, profileName);
     }
 }
