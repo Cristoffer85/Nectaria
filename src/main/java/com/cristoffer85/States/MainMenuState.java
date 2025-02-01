@@ -9,44 +9,44 @@ import java.awt.event.ActionListener;
 import java.awt.*;
 
 public class MainMenuState extends JPanel {
+    private static final Color BACKGROUND_COLOR = Color.ORANGE;
+    private static final Color BUTTON_COLOR = Color.ORANGE;
     private Image logoImage;
 
     public MainMenuState(GamePanel gamePanel) {
         // ------------ Top-right panel for the "Switch User" button ------------
-        JPanel topRightPanel = createPanel(new FlowLayout(FlowLayout.RIGHT), Color.ORANGE);
+        JPanel switchUserPanel = createPanel(new FlowLayout(FlowLayout.RIGHT));
         setLayout(new BorderLayout());
         JButton switchUserButton = createButton("Switch User", e -> gamePanel.changeGameState(StatesDefinitions.INITIAL_STATE), new Font("Arial", Font.PLAIN, 12));
-        topRightPanel.add(switchUserButton);
-        add(topRightPanel, BorderLayout.NORTH);
+        switchUserPanel.add(switchUserButton);
+        add(switchUserPanel, BorderLayout.NORTH);
 
         // ------------ Logo panel ------------
-        JPanel logoPanel = new JPanel();
+        JPanel logoPanel = createPanel(new BoxLayout(new JPanel(), BoxLayout.Y_AXIS));
         logoPanel.setLayout(new BoxLayout(logoPanel, BoxLayout.Y_AXIS));
-        logoPanel.setBackground(Color.ORANGE);
         addLogo(logoPanel);
         add(logoPanel, BorderLayout.CENTER);
 
         // ------------ Bottom panel for buttons ------------
-        JPanel containerPanel = createPanel(new BorderLayout(), Color.ORANGE);
+        JPanel containerPanel = createPanel(new BorderLayout());
             // Adds a button panel - inside container panel - to more easily position the buttons vertically and horizontally within its "South" border layout
-            JPanel buttonPanel = new JPanel();
+            JPanel buttonPanel = createPanel(new BoxLayout(new JPanel(), BoxLayout.Y_AXIS));
             buttonPanel.setLayout(new BoxLayout(buttonPanel, BoxLayout.Y_AXIS));
-            buttonPanel.setBackground(Color.ORANGE);
 
             buttonPanel.add(createButton("RESUME", e -> gamePanel.loadGame(), loadFont("/Retro-pixelfont.ttf", 44f)));
             buttonPanel.add(Box.createVerticalStrut(20));
             buttonPanel.add(createButton("START NEW GAME", e -> startNewGame(gamePanel), loadFont("/Retro-pixelfont.ttf", 44f)));
             buttonPanel.add(Box.createVerticalStrut(20));
             buttonPanel.add(createButton("TEST BUTTON", e -> System.out.println("Test Button Clicked"), loadFont("/Retro-pixelfont.ttf", 44f)));
-            buttonPanel.add(Box.createVerticalStrut(300));
+            buttonPanel.add(Box.createVerticalStrut(280));
 
             containerPanel.add(buttonPanel, BorderLayout.CENTER);
         add(containerPanel, BorderLayout.SOUTH);
     }
 
-    private JPanel createPanel(LayoutManager layout, Color background) {
+    private JPanel createPanel(LayoutManager layout) {
         JPanel panel = new JPanel(layout);
-        panel.setBackground(background);
+        panel.setBackground(BACKGROUND_COLOR);
         return panel;
     }
 
@@ -55,7 +55,7 @@ public class MainMenuState extends JPanel {
         button.addActionListener(action);
         button.setFont(font);
         button.setForeground(Color.BLACK);
-        button.setBackground(Color.ORANGE);
+        button.setBackground(BUTTON_COLOR);
         button.setAlignmentX(Component.CENTER_ALIGNMENT);
         button.setMargin(new Insets(5, 5, 1, 2));
         return button;
@@ -108,7 +108,7 @@ public class MainMenuState extends JPanel {
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
-        g.setColor(Color.ORANGE);
+        g.setColor(BACKGROUND_COLOR);
         g.fillRect(0, 0, getWidth(), getHeight());
     }
 }
