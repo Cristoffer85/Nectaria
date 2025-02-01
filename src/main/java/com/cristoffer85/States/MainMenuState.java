@@ -11,22 +11,22 @@ public class MainMenuState extends JPanel {
     private Image logoImage;
 
     public MainMenuState(GamePanel gamePanel) {
-        setLayout(new BorderLayout());
-
-        // Create a panel for the top right corner button
+        // ------ Switch user button, has its own JPanel with BorderLayout (BorderLayout.NORTH + FlowLayout.RIGHT), aligns it top-right
         JPanel topRightPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
-        topRightPanel.setBackground(Color.ORANGE); // Set background color
+        setLayout(new BorderLayout());
+        topRightPanel.setBackground(Color.ORANGE);
         JButton switchUserButton = new JButton("Switch User");
         switchUserButton.addActionListener(e -> {
-            gamePanel.changeGameState(StatesDefinitions.INITIAL_STATE); // Switch to initial state
+            gamePanel.changeGameState(StatesDefinitions.INITIAL_STATE);
         });
-        styleMinimalButton(switchUserButton);
+        styleSwitchUserButton(switchUserButton);
         topRightPanel.add(switchUserButton);
         add(topRightPanel, BorderLayout.NORTH);
+        // ------------------------------------------------------------
 
-        // Create a panel for the centered content
+        // ------ Center JPanel with GridBagLayout (gbc, which aligns components in a grid - x and y coordinates)
         JPanel centerPanel = new JPanel(new GridBagLayout());
-        centerPanel.setBackground(Color.ORANGE); // Set background color
+        centerPanel.setBackground(Color.ORANGE);
         GridBagConstraints gbc = new GridBagConstraints();
         gbc.insets = new Insets(10, 10, 10, 10);
 
@@ -38,14 +38,14 @@ public class MainMenuState extends JPanel {
             e.printStackTrace();
         }
 
-        // Create and style the "Resume" button
+        // Create and style "Resume" button
         JButton resumeButton = new JButton("RESUME");
         resumeButton.addActionListener(e -> {
-            gamePanel.loadGame(); // Load the game for the selected profile
+            gamePanel.loadGame(); // Load current, last saved game for the selected profile
         });
-        styleButton(resumeButton);
+        styleRegularButton(resumeButton);
 
-        // Create and style the "Start New Game" button
+        // Create and style "Start New Game" button
         JButton newGameButton = new JButton("START NEW GAME");
         newGameButton.addActionListener(e -> {
             int response = JOptionPane.showConfirmDialog(
@@ -61,21 +61,30 @@ public class MainMenuState extends JPanel {
                 gamePanel.changeGameState(StatesDefinitions.GAME);
             }
         });
-        styleButton(newGameButton);
+        styleRegularButton(newGameButton);
 
-        // Add components to the center panel
-        gbc.gridx = 0;
+        // #### Add components to grid ####
         gbc.gridy = 0;
+        centerPanel.add(Box.createVerticalStrut(20), gbc);
+
+        // Add logo
+        gbc.gridy = 1;
         centerPanel.add(new JLabel(new ImageIcon(logoImage)), gbc);
 
-        gbc.gridy = 1;
+        gbc.gridy = 2;
+        centerPanel.add(Box.createVerticalStrut(20), gbc);
+
+        // Add buttons
+        gbc.gridy = 3;
         centerPanel.add(resumeButton, gbc);
 
-        gbc.gridy = 2;
+        gbc.gridy = 4;
         centerPanel.add(newGameButton, gbc);
 
         add(centerPanel, BorderLayout.CENTER);
+        // ------------------------------------------------------------
     }
+    
 
     private Image scaleImage(Image image, double scale) {
         int width = (int) (image.getWidth(null) * scale);
@@ -83,7 +92,7 @@ public class MainMenuState extends JPanel {
         return image.getScaledInstance(width, height, Image.SCALE_SMOOTH);
     }
 
-    private void styleButton(JButton button) {
+    private void styleRegularButton(JButton button) {
         try {
             Font retroFont = Font.createFont(Font.TRUETYPE_FONT, getClass().getResourceAsStream("/Retro-pixelfont.ttf")).deriveFont(44f);
             button.setFont(retroFont);
@@ -95,7 +104,7 @@ public class MainMenuState extends JPanel {
         button.setMargin(new Insets(5, 5, 1, 2));
     }
 
-    private void styleMinimalButton(JButton button) {
+    private void styleSwitchUserButton(JButton button) {
         button.setForeground(Color.BLACK);
         button.setBackground(Color.ORANGE);
         button.setMargin(new Insets(2, 2, 2, 2));

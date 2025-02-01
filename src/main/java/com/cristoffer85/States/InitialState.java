@@ -1,36 +1,50 @@
 package com.cristoffer85.States;
 
 import com.cristoffer85.Main.GamePanel;
-import com.cristoffer85.Main.MainResources.CRUDProfile;
 import com.cristoffer85.States.StatesResources.StatesDefinitions;
+import com.cristoffer85.Main.MainResources.CRUDProfile;
 
 import javax.swing.*;
 import java.awt.*;
+import java.io.IOException;
 import java.io.File;
-import java.util.ArrayList;
 import java.util.List;
+import java.util.ArrayList;
 
 public class InitialState extends JPanel {
+    private Image logoImage;
+
     public InitialState(GamePanel gamePanel) {
         setLayout(new GridBagLayout());
+        setBackground(Color.ORANGE);
         GridBagConstraints gbc = new GridBagConstraints();
         gbc.insets = new Insets(10, 10, 10, 10);
 
+        // Load and scale logo image
+        try {
+            ImageIcon logoIcon = new ImageIcon(getClass().getResource("/Logo.png"));
+            logoImage = scaleImage(logoIcon.getImage(), 1.5);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        // Create and style "Create New Profile" button
         JButton newProfileButton = new JButton("CREATE NEW PROFILE");
         newProfileButton.addActionListener(e -> {
             String profileName = JOptionPane.showInputDialog("Enter profile name:");
             if (profileName != null && !profileName.trim().isEmpty()) {
-                CRUDProfile.createProfile(profileName); 
-                gamePanel.setProfileName(profileName); 
+                CRUDProfile.createProfile(profileName);
+                gamePanel.setProfileName(profileName);
                 gamePanel.resetGame();
                 gamePanel.changeGameState(StatesDefinitions.GAME);
             }
         });
-        styleButton(newProfileButton);
+        styleRegularButton(newProfileButton);
 
+        // Create and style "Select Existing Profile" button
         JButton existingProfileButton = new JButton("SELECT EXISTING PROFILE");
         existingProfileButton.addActionListener(e -> {
-            String[] profiles = getProfiles();
+            String[] profiles = getCurrentProfiles();
             if (profiles.length > 0) {
                 String selectedProfile = (String) JOptionPane.showInputDialog(
                         this,
@@ -43,33 +57,39 @@ public class InitialState extends JPanel {
                 );
                 if (selectedProfile != null) {
                     gamePanel.setProfileName(selectedProfile);
+                    gamePanel.loadGame();
                     gamePanel.changeGameState(StatesDefinitions.MAIN_MENU);
                 }
             } else {
                 JOptionPane.showMessageDialog(this, "No profiles found.", "Error", JOptionPane.ERROR_MESSAGE);
             }
         });
-        styleButton(existingProfileButton);
+        styleRegularButton(existingProfileButton);
 
-    
+        // #### Add components to grid ####
+        // Empty above logo
         gbc.gridx = 0;
         gbc.gridy = 0;
-        add(new JLabel("Welcome to New Proper 2D Collision Game!"), gbc);
+        add(Box.createVerticalStrut(20), gbc);
 
+        // Add logo
         gbc.gridy = 1;
+        add(new JLabel(new ImageIcon(logoImage)), gbc);
+
+        // Empty space below logo
+        gbc.gridx = 0;
+        gbc.gridy = 2;
+        add(Box.createVerticalStrut(20), gbc);
+
+        // Add buttons
+        gbc.gridy = 3;
         add(newProfileButton, gbc);
 
-        gbc.gridy = 2;
+        gbc.gridy = 4;
         add(existingProfileButton, gbc);
     }
 
-    private void styleButton(JButton button) {
-        button.setForeground(Color.BLACK);
-        button.setBackground(Color.ORANGE);
-        button.setMargin(new Insets(5, 5, 1, 2));
-    }
-
-    private String[] getProfiles() {
+    private String[] getCurrentProfiles() {
         File profilesDir = new File("profiles");
         if (!profilesDir.exists() || !profilesDir.isDirectory()) {
             return new String[0];
@@ -85,10 +105,21 @@ public class InitialState extends JPanel {
         return profiles.toArray(new String[0]);
     }
 
-    @Override
-    protected void paintComponent(Graphics g) {
-        super.paintComponent(g);
-        g.setColor(Color.ORANGE);
-        g.fillRect(0, 0, getWidth(), getHeight());
+    private Image scaleImage(Image image, double scale) {
+        int width = (int) (image.getWidth(null) * scale);
+        int height = (int) (image.getHeight(null) * scale);
+        return image.getScaledInstance(width, height, Image.SCALE_SMOOTH);
+    }
+
+    private void styleRegularButton(JButton button) {
+        try {
+            Font retroFont = Font.createFont(Font.TRUETYPE_FONT, getClass().getResourceAsStream("/Retro-pixelfont.ttf")).deriveFont(44f);
+            button.setFont(retroFont);
+        } catch (FontFormatException | IOException e) {
+            e.printStackTrace();
+        }
+        button.setForeground(Color.BLACK);
+        button.setBackground(Color.ORANGE);
+        button.setMargin(new Insets(5, 5, 1, 2));
     }
 }
