@@ -11,42 +11,49 @@ import java.awt.*;
 public class MainMenuState extends JPanel {
     private static final Color BACKGROUND_COLOR = Color.ORANGE;
     private static final Color BUTTON_COLOR = Color.ORANGE;
-    private final Font SWITCH_USER_FONTANDSIZE = new Font("Arial", Font.PLAIN, 12);
+    private static final Font SWITCH_USER_FONTANDSIZE = new Font("Arial", Font.PLAIN, 12);
     private final Font MENU_BUTTON_FONTANDSIZE = loadFont("/Retro-pixelfont.ttf", 44f);
-    
+    private static final int BUTTON_VERTICAL_SPACING = 20;
+    private static final int BOTTOM_PANEL_OFFSET = 280;
+
     private Image logoImage;
 
     public MainMenuState(GamePanel gamePanel) {
-        // ------------ Top-right panel for the "Switch User" button ------------
-        JPanel switchUserPanel = createPanel(new FlowLayout(FlowLayout.RIGHT));
         setLayout(new BorderLayout());
-        JButton switchUserButton = switchUserButton("Switch User", e -> gamePanel.changeGameState(StatesDefinitions.INITIAL_STATE));
-        switchUserPanel.add(switchUserButton);
-        add(switchUserPanel, BorderLayout.NORTH);
-
-        // ------------ Logo panel ------------
-        JPanel logoPanel = createPanel(new BoxLayout(new JPanel(), BoxLayout.Y_AXIS));
-        logoPanel.setLayout(new BoxLayout(logoPanel, BoxLayout.Y_AXIS));
-        addLogo(logoPanel);
-        add(logoPanel, BorderLayout.CENTER);
-
-        // ------------ Bottom panel for buttons ------------
-        JPanel containerPanel = createPanel(new BorderLayout());
-            // Adds a button panel - inside container panel - to more easily position the buttons vertically and horizontally within its "South" border layout
-            JPanel buttonPanel = createPanel(new BoxLayout(new JPanel(), BoxLayout.Y_AXIS));
-            buttonPanel.setLayout(new BoxLayout(buttonPanel, BoxLayout.Y_AXIS));
-
-            buttonPanel.add(menuButton("RESUME", e -> gamePanel.loadGame()));
-            buttonPanel.add(Box.createVerticalStrut(20));
-            buttonPanel.add(menuButton("START NEW GAME", e -> startNewGame(gamePanel)));
-            buttonPanel.add(Box.createVerticalStrut(20));
-            buttonPanel.add(menuButton("TEST BUTTON", e -> System.out.println("Test Button Clicked")));
-            buttonPanel.add(Box.createVerticalStrut(280));
-
-            containerPanel.add(buttonPanel, BorderLayout.CENTER);
-        add(containerPanel, BorderLayout.SOUTH);
+        add(createSwitchUserPanel(gamePanel), BorderLayout.NORTH);
+        add(createLogoPanel(), BorderLayout.CENTER);
+        add(createButtonPanel(gamePanel), BorderLayout.SOUTH);
     }
 
+    private JPanel createSwitchUserPanel(GamePanel gamePanel) {
+        JPanel switchUserPanel = createPanel(new FlowLayout(FlowLayout.RIGHT));
+        JButton switchUserButton = switchUserButton("Switch User", e -> gamePanel.changeGameState(StatesDefinitions.INITIAL_STATE));
+        switchUserPanel.add(switchUserButton);
+        return switchUserPanel;
+    }
+
+    private JPanel createLogoPanel() {
+        JPanel logoPanel = createPanel(new BoxLayout(new JPanel(), BoxLayout.Y_AXIS));
+        addLogo(logoPanel);
+        return logoPanel;
+    }
+
+    private JPanel createButtonPanel(GamePanel gamePanel) {
+        JPanel containerPanel = createPanel(new BorderLayout());
+        JPanel buttonPanel = createPanel(new BoxLayout(new JPanel(), BoxLayout.Y_AXIS));
+
+        buttonPanel.add(menuButton("RESUME", e -> gamePanel.loadGame()));
+        buttonPanel.add(Box.createVerticalStrut(BUTTON_VERTICAL_SPACING));
+        buttonPanel.add(menuButton("START NEW GAME", e -> startNewGame(gamePanel)));
+        buttonPanel.add(Box.createVerticalStrut(BUTTON_VERTICAL_SPACING));
+        buttonPanel.add(menuButton("TEST BUTTON", e -> System.out.println("Test Button Clicked")));
+        buttonPanel.add(Box.createVerticalStrut(BOTTOM_PANEL_OFFSET));
+
+        containerPanel.add(buttonPanel, BorderLayout.CENTER);
+        return containerPanel;
+    }
+
+    // Helper methods
     private JPanel createPanel(LayoutManager layout) {
         JPanel panel = new JPanel(layout);
         panel.setBackground(BACKGROUND_COLOR);
