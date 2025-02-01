@@ -11,13 +11,16 @@ import java.awt.*;
 public class MainMenuState extends JPanel {
     private static final Color BACKGROUND_COLOR = Color.ORANGE;
     private static final Color BUTTON_COLOR = Color.ORANGE;
+    private final Font SWITCH_USER_FONTANDSIZE = new Font("Arial", Font.PLAIN, 12);
+    private final Font MENU_BUTTON_FONTANDSIZE = loadFont("/Retro-pixelfont.ttf", 44f);
+    
     private Image logoImage;
 
     public MainMenuState(GamePanel gamePanel) {
         // ------------ Top-right panel for the "Switch User" button ------------
         JPanel switchUserPanel = createPanel(new FlowLayout(FlowLayout.RIGHT));
         setLayout(new BorderLayout());
-        JButton switchUserButton = createButton("Switch User", e -> gamePanel.changeGameState(StatesDefinitions.INITIAL_STATE), new Font("Arial", Font.PLAIN, 12));
+        JButton switchUserButton = switchUserButton("Switch User", e -> gamePanel.changeGameState(StatesDefinitions.INITIAL_STATE));
         switchUserPanel.add(switchUserButton);
         add(switchUserPanel, BorderLayout.NORTH);
 
@@ -33,11 +36,11 @@ public class MainMenuState extends JPanel {
             JPanel buttonPanel = createPanel(new BoxLayout(new JPanel(), BoxLayout.Y_AXIS));
             buttonPanel.setLayout(new BoxLayout(buttonPanel, BoxLayout.Y_AXIS));
 
-            buttonPanel.add(createButton("RESUME", e -> gamePanel.loadGame(), loadFont("/Retro-pixelfont.ttf", 44f)));
+            buttonPanel.add(menuButton("RESUME", e -> gamePanel.loadGame()));
             buttonPanel.add(Box.createVerticalStrut(20));
-            buttonPanel.add(createButton("START NEW GAME", e -> startNewGame(gamePanel), loadFont("/Retro-pixelfont.ttf", 44f)));
+            buttonPanel.add(menuButton("START NEW GAME", e -> startNewGame(gamePanel)));
             buttonPanel.add(Box.createVerticalStrut(20));
-            buttonPanel.add(createButton("TEST BUTTON", e -> System.out.println("Test Button Clicked"), loadFont("/Retro-pixelfont.ttf", 44f)));
+            buttonPanel.add(menuButton("TEST BUTTON", e -> System.out.println("Test Button Clicked")));
             buttonPanel.add(Box.createVerticalStrut(280));
 
             containerPanel.add(buttonPanel, BorderLayout.CENTER);
@@ -50,10 +53,21 @@ public class MainMenuState extends JPanel {
         return panel;
     }
 
-    private JButton createButton(String text, ActionListener action, Font font) {
+    private JButton menuButton(String text, ActionListener action) {
         JButton button = new JButton(text);
         button.addActionListener(action);
-        button.setFont(font);
+        button.setFont(MENU_BUTTON_FONTANDSIZE);
+        button.setForeground(Color.BLACK);
+        button.setBackground(BUTTON_COLOR);
+        button.setAlignmentX(Component.CENTER_ALIGNMENT);
+        button.setMargin(new Insets(5, 5, 1, 2));
+        return button;
+    }
+
+    private JButton switchUserButton(String text, ActionListener action) {
+        JButton button = new JButton(text);
+        button.addActionListener(action);
+        button.setFont(SWITCH_USER_FONTANDSIZE);
         button.setForeground(Color.BLACK);
         button.setBackground(BUTTON_COLOR);
         button.setAlignmentX(Component.CENTER_ALIGNMENT);
@@ -66,7 +80,7 @@ public class MainMenuState extends JPanel {
             return Font.createFont(Font.TRUETYPE_FONT, getClass().getResourceAsStream(path)).deriveFont(size);
         } catch (FontFormatException | IOException e) {
             e.printStackTrace();
-            return new Font("Arial", Font.PLAIN, 12);
+            return SWITCH_USER_FONTANDSIZE;
         }
     }
 
