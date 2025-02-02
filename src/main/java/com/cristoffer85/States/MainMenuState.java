@@ -13,15 +13,15 @@ public class MainMenuState extends JPanel {
     private static final Color BUTTON_COLOR = Color.ORANGE;
     private static final Font SWITCH_USER_FONTANDSIZE = new Font("Arial", Font.PLAIN, 12);
     private final Font MENU_BUTTON_FONTANDSIZE = loadFont("/Retro-pixelfont.ttf", 44f);
-    private static final int BUTTON_VERTICAL_SPACING = 20;
     private static final int BOTTOM_PANEL_OFFSET = 280;
+    private static final int MENUBUTTON_VERTICAL_SPACING = 20;
 
     private Image logoImage;
 
     public MainMenuState(GamePanel gamePanel) {
         setLayout(new BorderLayout());
         
-        // Uses borderlayout to place the panels in the correct position on the screen
+        // Uses Borderlayout to place the panels in the correct vertical positions on the screen. A combination of BorderLayout and FlowLayout is later also used to alter contents position horizontally.
         add(topPanel(gamePanel), BorderLayout.NORTH);
         add(middlePanel(), BorderLayout.CENTER);
         add(bottomPanel(gamePanel), BorderLayout.SOUTH);
@@ -46,9 +46,9 @@ public class MainMenuState extends JPanel {
         buttonPanel.setLayout(new BoxLayout(buttonPanel, BoxLayout.Y_AXIS));
 
         buttonPanel.add(menuButton("RESUME", e -> gamePanel.loadGame()));
-        buttonPanel.add(Box.createVerticalStrut(BUTTON_VERTICAL_SPACING));
+        buttonPanel.add(Box.createVerticalStrut(MENUBUTTON_VERTICAL_SPACING));
         buttonPanel.add(menuButton("START NEW GAME", e -> startNewGame(gamePanel)));
-        buttonPanel.add(Box.createVerticalStrut(BUTTON_VERTICAL_SPACING));
+        buttonPanel.add(Box.createVerticalStrut(MENUBUTTON_VERTICAL_SPACING));
         buttonPanel.add(menuButton("TEST BUTTON", e -> System.out.println("Test Button Clicked")));
         buttonPanel.add(Box.createVerticalStrut(BOTTOM_PANEL_OFFSET));
 

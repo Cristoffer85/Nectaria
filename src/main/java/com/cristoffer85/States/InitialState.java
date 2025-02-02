@@ -10,83 +10,79 @@ import java.io.IOException;
 import java.io.File;
 import java.util.List;
 import java.util.ArrayList;
+import java.awt.event.ActionListener;
 
 public class InitialState extends JPanel {
+    private static final Color BACKGROUND_COLOR = Color.ORANGE;
+    private static final int MIDDLE_PANEL_OFFSET = 36; // Offset to match MainMenuState, currently the (non-present here) topPanels height in MainMenuState is 36
+    private static final int BOTTOM_PANEL_OFFSET = 280;
+   
+    private static final Color BUTTON_COLOR = Color.ORANGE;
+    private final Font MENU_BUTTON_FONTANDSIZE = loadFont("/Retro-pixelfont.ttf", 44f);
+    private static final Font DEFAULT_FONT = new Font("Arial", Font.PLAIN, 12); // Have backup font in case of loadfont failure
+    private static final int MENUBUTTON_VERTICAL_SPACING = 20;
+
     private Image logoImage;
 
     public InitialState(GamePanel gamePanel) {
-        setLayout(new GridBagLayout());
-        setBackground(Color.ORANGE);
-        GridBagConstraints gbc = new GridBagConstraints();
-        gbc.insets = new Insets(10, 10, 10, 10);
+        setLayout(new BorderLayout());
 
-        // Load and scale logo image
-        try {
-            ImageIcon logoIcon = new ImageIcon(getClass().getResource("/Logo.png"));
-            logoImage = scaleImage(logoIcon.getImage(), 1.5);
-        } catch (Exception e) {
-            e.printStackTrace();
+        // Uses borderlayout to place the panels in the correct position on the screen
+        add(middlePanel(), BorderLayout.CENTER);
+        add(bottomPanel(gamePanel), BorderLayout.SOUTH);
+    }
+
+    private JPanel middlePanel() {
+        JPanel logoPanel = createSimpleVerticalPanel();
+        logoPanel.setLayout(new BoxLayout(logoPanel, BoxLayout.Y_AXIS));
+        logoPanel.add(Box.createVerticalStrut(MIDDLE_PANEL_OFFSET));
+        addLogo(logoPanel);
+        return logoPanel;
+    }
+
+    private JPanel bottomPanel(GamePanel gamePanel) {
+        JPanel buttonPanel = createSimpleVerticalPanel();
+        buttonPanel.setLayout(new BoxLayout(buttonPanel, BoxLayout.Y_AXIS));
+
+        buttonPanel.add(menuButton("CREATE NEW PROFILE", e -> createNewProfile(gamePanel)));
+        buttonPanel.add(Box.createVerticalStrut(MENUBUTTON_VERTICAL_SPACING));
+        buttonPanel.add(menuButton("SELECT EXISTING PROFILE", e -> selectExistingProfile(gamePanel)));
+        buttonPanel.add(Box.createVerticalStrut(BOTTOM_PANEL_OFFSET));
+
+        return buttonPanel;
+    }
+
+    // Helper methods
+    private void createNewProfile(GamePanel gamePanel) {
+        String profileName = JOptionPane.showInputDialog("Enter profile name:");
+        if (profileName != null && !profileName.trim().isEmpty()) {
+            CRUDProfile.createProfile(profileName);
+            gamePanel.setProfileName(profileName);
+            gamePanel.resetGame();
+            gamePanel.changeGameState(StatesDefinitions.GAME);
         }
+    }
 
-        // Create and style "Create New Profile" button
-        JButton newProfileButton = new JButton("CREATE NEW PROFILE");
-        newProfileButton.addActionListener(e -> {
-            String profileName = JOptionPane.showInputDialog("Enter profile name:");
-            if (profileName != null && !profileName.trim().isEmpty()) {
-                CRUDProfile.createProfile(profileName);
-                gamePanel.setProfileName(profileName);
-                gamePanel.resetGame();
-                gamePanel.changeGameState(StatesDefinitions.GAME);
+    private void selectExistingProfile(GamePanel gamePanel) {
+        String[] profiles = getCurrentProfiles();
+        if (profiles.length > 0) {
+            String selectedProfile = (String) JOptionPane.showInputDialog(
+                    this,
+                    "Select a profile:",
+                    "Select Profile",
+                    JOptionPane.PLAIN_MESSAGE,
+                    null,
+                    profiles,
+                    profiles[0]
+            );
+            if (selectedProfile != null) {
+                gamePanel.setProfileName(selectedProfile);
+                gamePanel.loadGame();
+                gamePanel.changeGameState(StatesDefinitions.MAIN_MENU);
             }
-        });
-        styleRegularButton(newProfileButton);
-
-        // Create and style "Select Existing Profile" button
-        JButton existingProfileButton = new JButton("SELECT EXISTING PROFILE");
-        existingProfileButton.addActionListener(e -> {
-            String[] profiles = getCurrentProfiles();
-            if (profiles.length > 0) {
-                String selectedProfile = (String) JOptionPane.showInputDialog(
-                        this,
-                        "Select a profile:",
-                        "Select Profile",
-                        JOptionPane.PLAIN_MESSAGE,
-                        null,
-                        profiles,
-                        profiles[0]
-                );
-                if (selectedProfile != null) {
-                    gamePanel.setProfileName(selectedProfile);
-                    gamePanel.loadGame();
-                    gamePanel.changeGameState(StatesDefinitions.MAIN_MENU);
-                }
-            } else {
-                JOptionPane.showMessageDialog(this, "No profiles found.", "Error", JOptionPane.ERROR_MESSAGE);
-            }
-        });
-        styleRegularButton(existingProfileButton);
-
-        // #### Add components to grid ####
-        // Empty above logo
-        gbc.gridx = 0;
-        gbc.gridy = 0;
-        add(Box.createVerticalStrut(20), gbc);
-
-        // Add logo
-        gbc.gridy = 1;
-        add(new JLabel(new ImageIcon(logoImage)), gbc);
-
-        // Empty space below logo
-        gbc.gridx = 0;
-        gbc.gridy = 2;
-        add(Box.createVerticalStrut(20), gbc);
-
-        // Add buttons
-        gbc.gridy = 3;
-        add(newProfileButton, gbc);
-
-        gbc.gridy = 4;
-        add(existingProfileButton, gbc);
+        } else {
+            JOptionPane.showMessageDialog(this, "No profiles found.", "Error", JOptionPane.ERROR_MESSAGE);
+        }
     }
 
     private String[] getCurrentProfiles() {
@@ -111,15 +107,43 @@ public class InitialState extends JPanel {
         return image.getScaledInstance(width, height, Image.SCALE_SMOOTH);
     }
 
-    private void styleRegularButton(JButton button) {
+    private void addLogo(JPanel logoPanel) {
         try {
-            Font retroFont = Font.createFont(Font.TRUETYPE_FONT, getClass().getResourceAsStream("/Retro-pixelfont.ttf")).deriveFont(44f);
-            button.setFont(retroFont);
-        } catch (FontFormatException | IOException e) {
+            ImageIcon logoIcon = new ImageIcon(getClass().getResource("/Logo.png"));
+            logoImage = scaleImage(logoIcon.getImage(), 1.5);
+            JLabel logoLabel = new JLabel(new ImageIcon(logoImage));
+            logoLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
+            logoPanel.add(Box.createVerticalStrut(100));
+            logoPanel.add(logoLabel);
+            logoPanel.add(Box.createVerticalGlue());
+        } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    private JButton menuButton(String text, ActionListener action) {
+        JButton button = new JButton(text);
+        button.addActionListener(action);
+        button.setFont(MENU_BUTTON_FONTANDSIZE);
         button.setForeground(Color.BLACK);
-        button.setBackground(Color.ORANGE);
+        button.setBackground(BUTTON_COLOR);
+        button.setAlignmentX(Component.CENTER_ALIGNMENT);
         button.setMargin(new Insets(5, 5, 1, 2));
+        return button;
+    }
+
+    private JPanel createSimpleVerticalPanel() {
+        JPanel panel = new JPanel();
+        panel.setBackground(BACKGROUND_COLOR);
+        return panel;
+    }
+
+    private Font loadFont(String path, float size) {
+        try {
+            return Font.createFont(Font.TRUETYPE_FONT, getClass().getResourceAsStream(path)).deriveFont(size);
+        } catch (FontFormatException | IOException e) {
+            e.printStackTrace();
+            return DEFAULT_FONT;
+        }
     }
 }
