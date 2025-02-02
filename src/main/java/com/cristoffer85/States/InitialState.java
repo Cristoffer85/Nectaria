@@ -2,8 +2,8 @@ package com.cristoffer85.States;
 
 import com.cristoffer85.Main.GamePanel;
 import com.cristoffer85.States.StatesResources.StateDefinitions;
-import com.cristoffer85.States.StatesResources.StateMenuDesign;
 import com.cristoffer85.Main.MainResources.CRUDProfile;
+import com.cristoffer85.States.StatesResources.StateMenuDesign;
 
 import javax.swing.*;
 import java.awt.*;
@@ -15,7 +15,7 @@ public class InitialState extends StateMenuDesign {
     public InitialState(GamePanel gamePanel) {
         setLayout(new BorderLayout());
 
-        // Uses borderlayout to place the panels in the correct vertical position on the screen
+        // Uses borderlayout to place the panels in the correct position on the screen
         add(middlePanel(), BorderLayout.CENTER);
         add(bottomPanel(gamePanel), BorderLayout.SOUTH);
     }
@@ -34,7 +34,7 @@ public class InitialState extends StateMenuDesign {
 
         buttonPanel.add(menuButton("CREATE NEW PROFILE", e -> createNewProfile(gamePanel)));
         buttonPanel.add(Box.createVerticalStrut(MENUBUTTON_VERTICAL_SPACING));
-        buttonPanel.add(menuButton("SELECT EXISTING PROFILE", e -> selectExistingProfile(gamePanel)));
+        buttonPanel.add(menuButton("SELECT EXISTING PROFILE", e -> selectProfile(gamePanel)));
         buttonPanel.add(Box.createVerticalStrut(BOTTOM_PANEL_OFFSET));
 
         return buttonPanel;
@@ -51,8 +51,8 @@ public class InitialState extends StateMenuDesign {
         }
     }
 
-    private void selectExistingProfile(GamePanel gamePanel) {
-        String[] profiles = getCurrentProfiles();
+    private void selectProfile(GamePanel gamePanel) {
+        String[] profiles = CRUDProfile.getCurrentProfiles();
         if (profiles.length > 0) {
             String selectedProfile = (String) JOptionPane.showInputDialog(
                     this,

@@ -3,15 +3,11 @@ package com.cristoffer85.States.StatesResources;
 import javax.swing.*;
 import java.awt.*;
 import java.io.IOException;
-import java.io.File;
-import java.util.List;
-import java.util.ArrayList;
 import java.awt.event.ActionListener;
 
 public class StateMenuDesign extends JPanel {
     protected static final Color BACKGROUND_COLOR = Color.ORANGE;
     protected static final int MIDDLE_PANEL_OFFSET = 36;
-
     protected static final Color BUTTON_COLOR = Color.ORANGE;
     protected final Font MENU_BUTTON_FONTANDSIZE = loadFont("/Retro-pixelfont.ttf", 44f);
     protected static final Font DEFAULT_FONT = new Font("Arial", Font.PLAIN, 12);
@@ -81,21 +77,5 @@ public class StateMenuDesign extends JPanel {
         int width = (int) (image.getWidth(null) * scale);
         int height = (int) (image.getHeight(null) * scale);
         return image.getScaledInstance(width, height, Image.SCALE_SMOOTH);
-    }
-
-    protected String[] getCurrentProfiles() {
-        File profilesDir = new File("profiles");
-        if (!profilesDir.exists() || !profilesDir.isDirectory()) {
-            return new String[0];
-        }
-        File[] profileFiles = profilesDir.listFiles((dir, name) -> name.endsWith(".dat"));
-        if (profileFiles == null) {
-            return new String[0];
-        }
-        List<String> profiles = new ArrayList<>();
-        for (File file : profileFiles) {
-            profiles.add(file.getName().replace(".dat", ""));
-        }
-        return profiles.toArray(new String[0]);
     }
 }

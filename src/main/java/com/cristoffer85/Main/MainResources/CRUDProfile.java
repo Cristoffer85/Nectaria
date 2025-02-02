@@ -1,15 +1,10 @@
 package com.cristoffer85.Main.MainResources;
 
-import com.cristoffer85.Entity.Obstacle;
-import com.cristoffer85.Entity.Player;
-import com.cristoffer85.States.GameState;
-import com.cristoffer85.States.StatesResources.StateDefinitions;
-import com.cristoffer85.Main.GamePanel;
-import com.cristoffer85.Tile.TileManager;
-
 import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.util.ArrayList;
+import java.util.List;
 
 public class CRUDProfile implements Serializable {
     private static final long serialVersionUID = 1L;
@@ -30,40 +25,7 @@ public class CRUDProfile implements Serializable {
         return playerY;
     }
 
-    public static void saveGame(Player player, String profileName) {
-        CRUDProfile saveData = new CRUDProfile(player.getX(), player.getY());
-        String filePath = "profiles/" + profileName + ".dat";
-        try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(filePath))) {
-            oos.writeObject(saveData);
-            System.out.println("Game saved successfully to " + filePath);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
-    public static void loadGame(Player player, GamePanel gamePanel, String profileName) {
-        String filePath = "profiles/" + profileName + ".dat";
-        try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(filePath))) {
-            CRUDProfile saveData = (CRUDProfile) ois.readObject();
-            player.setX(saveData.getPlayerX());
-            player.setY(saveData.getPlayerY());
-            System.out.println("Game loaded successfully from " + filePath);
-            gamePanel.changeGameState(StateDefinitions.GAME);
-        } catch (IOException | ClassNotFoundException e) {
-            e.printStackTrace();
-        }
-    }
-
-    public static void resetGame(GamePanel gamePanel, int baseWidth, int baseHeight, int scaleFactor, String profileName) {
-        Player player = new Player(30, 30, 64, 6);
-        Obstacle.addObstacles();
-        TileManager.tilesByMapSize("/MainWorld.txt");
-        GameState gameState = new GameState(player, baseWidth, baseHeight, scaleFactor);
-        gamePanel.add(gameState, StateDefinitions.GAME.name());
-        gamePanel.setPlayer(player);
-        gamePanel.initializeGameState(gameState);
-    }
-
+    // CRUD operations for profiles
     public static void createProfile(String profileName) {
         String filePath = "profiles/" + profileName + ".dat";
         try {
@@ -72,5 +34,21 @@ public class CRUDProfile implements Serializable {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    public static String[] getCurrentProfiles() {
+        File profilesDir = new File("profiles");
+        if (!profilesDir.exists() || !profilesDir.isDirectory()) {
+            return new String[0];
+        }
+        File[] profileFiles = profilesDir.listFiles((dir, name) -> name.endsWith(".dat"));
+        if (profileFiles == null) {
+            return new String[0];
+        }
+        List<String> profiles = new ArrayList<>();
+        for (File file : profileFiles) {
+            profiles.add(file.getName().replace(".dat", ""));
+        }
+        return profiles.toArray(new String[0]);
     }
 }
