@@ -20,27 +20,30 @@ public class MainMenuState extends JPanel {
 
     public MainMenuState(GamePanel gamePanel) {
         setLayout(new BorderLayout());
+        
+        // Uses borderlayout to place the panels in the correct position on the screen
         add(topPanel(gamePanel), BorderLayout.NORTH);
         add(middlePanel(), BorderLayout.CENTER);
         add(bottomPanel(gamePanel), BorderLayout.SOUTH);
     }
 
     private JPanel topPanel(GamePanel gamePanel) {
-        JPanel switchUserPanel = createPanel(new FlowLayout(FlowLayout.RIGHT));
+        JPanel switchUserPanel = createBothVertAndHorizPanelWithFLowLayout(new FlowLayout(FlowLayout.RIGHT));
         JButton switchUserButton = switchUserButton("Switch User", e -> gamePanel.changeGameState(StatesDefinitions.INITIAL_STATE));
         switchUserPanel.add(switchUserButton);
         return switchUserPanel;
     }
 
     private JPanel middlePanel() {
-        JPanel logoPanel = createPanel(new BoxLayout(new JPanel(), BoxLayout.Y_AXIS));
+        JPanel logoPanel = createSimpleVerticalPanel();
+        logoPanel.setLayout(new BoxLayout(logoPanel, BoxLayout.Y_AXIS));
         addLogo(logoPanel);
         return logoPanel;
     }
 
     private JPanel bottomPanel(GamePanel gamePanel) {
-        JPanel containerPanel = createPanel(new BorderLayout());
-        JPanel buttonPanel = createPanel(new BoxLayout(new JPanel(), BoxLayout.Y_AXIS));
+        JPanel buttonPanel = createSimpleVerticalPanel();
+        buttonPanel.setLayout(new BoxLayout(buttonPanel, BoxLayout.Y_AXIS));
 
         buttonPanel.add(menuButton("RESUME", e -> gamePanel.loadGame()));
         buttonPanel.add(Box.createVerticalStrut(BUTTON_VERTICAL_SPACING));
@@ -49,12 +52,17 @@ public class MainMenuState extends JPanel {
         buttonPanel.add(menuButton("TEST BUTTON", e -> System.out.println("Test Button Clicked")));
         buttonPanel.add(Box.createVerticalStrut(BOTTOM_PANEL_OFFSET));
 
-        containerPanel.add(buttonPanel, BorderLayout.CENTER);
-        return containerPanel;
+        return buttonPanel;
     }
 
     // Helper methods
-    private JPanel createPanel(LayoutManager layout) {
+    private JPanel createSimpleVerticalPanel() {
+        JPanel panel = new JPanel();
+        panel.setBackground(BACKGROUND_COLOR);
+        return panel;
+    }
+
+    private JPanel createBothVertAndHorizPanelWithFLowLayout(LayoutManager layout) {
         JPanel panel = new JPanel(layout);
         panel.setBackground(BACKGROUND_COLOR);
         return panel;
