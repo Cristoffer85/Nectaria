@@ -4,7 +4,7 @@ import com.cristoffer85.Entity.Obstacle;
 import com.cristoffer85.Tile.TileManager;
 import com.cristoffer85.Entity.Player;
 import com.cristoffer85.States.MainMenuState;
-import com.cristoffer85.States.StatesResources.StatesDefinitions;
+import com.cristoffer85.States.StatesResources.StateDefinitions;
 import com.cristoffer85.States.GameState;
 import com.cristoffer85.States.InitialState;
 import com.cristoffer85.States.PauseState;
@@ -28,7 +28,7 @@ public class GamePanel extends JPanel {
     private int baseHeight;
     private int scaleFactor;
     private String profileName;
-    private StatesDefinitions currentState;
+    private StateDefinitions currentState;
 
     public GamePanel(int baseWidth, int baseHeight, int scaleFactor) {
         this.baseWidth = baseWidth;
@@ -56,16 +56,16 @@ public class GamePanel extends JPanel {
 
         // ..and add them to the "card" layout.
         setLayout(new CardLayout());
-        add(initialState, StatesDefinitions.INITIAL_STATE.name());
-        add(mainMenuState, StatesDefinitions.MAIN_MENU.name());
-        add(gameState, StatesDefinitions.GAME.name());
-        add(pauseState, StatesDefinitions.PAUSE_MENU.name());
+        add(initialState, StateDefinitions.INITIAL_STATE.name());
+        add(mainMenuState, StateDefinitions.MAIN_MENU.name());
+        add(gameState, StateDefinitions.GAME.name());
+        add(pauseState, StateDefinitions.PAUSE_MENU.name());
         //---------------------------------------------------
 
         // Main Game loop
         Timer timer = new Timer(16, e -> {
                 // IF GameState: Update game state
-            if (currentState == StatesDefinitions.GAME) {
+            if (currentState == StateDefinitions.GAME) {
                 List<Rectangle> straightObstacles = Obstacle.getStraightObstacles();
                 List<Line2D> diagonalObstacles = Obstacle.getDiagonalObstacles();
                 player.move(keyHandler, straightObstacles, diagonalObstacles);
@@ -76,7 +76,7 @@ public class GamePanel extends JPanel {
     }
 
     // ## Helper Methods ##
-    public StatesDefinitions getCurrentState() {
+    public StateDefinitions getCurrentState() {
         return currentState;
     }
 
@@ -84,8 +84,8 @@ public class GamePanel extends JPanel {
         this.gameState = gameState;
     }
 
-    public void changeGameState(StatesDefinitions newState) {
-        if (newState == StatesDefinitions.PAUSE_MENU) {
+    public void changeGameState(StateDefinitions newState) {
+        if (newState == StateDefinitions.PAUSE_MENU) {
             pauseState.freezeGameBackground(this, gameState);
         }
         currentState = newState;

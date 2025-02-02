@@ -1,7 +1,7 @@
 package com.cristoffer85.States;
 
 import com.cristoffer85.Main.GamePanel;
-import com.cristoffer85.States.StatesResources.StatesDefinitions;
+import com.cristoffer85.States.StatesResources.StateDefinitions;
 import com.cristoffer85.States.StatesResources.StateMenuDesign;
 
 import javax.swing.*;
@@ -22,7 +22,7 @@ public class MainMenuState extends StateMenuDesign {
 
     private JPanel topPanel(GamePanel gamePanel) {
         JPanel switchUserPanel = createBothVertAndHorizPanelWithFLowLayout(new FlowLayout(FlowLayout.RIGHT));
-        JButton switchUserButton = switchUserButton("Switch User", e -> gamePanel.changeGameState(StatesDefinitions.INITIAL_STATE));
+        JButton switchUserButton = switchUserButton("Switch User", e -> gamePanel.changeGameState(StateDefinitions.INITIAL_STATE));
         switchUserPanel.add(switchUserButton);
         return switchUserPanel;
     }
@@ -60,7 +60,7 @@ public class MainMenuState extends StateMenuDesign {
         if (response == JOptionPane.YES_OPTION) {
             gamePanel.resetGame();
             gamePanel.saveGame();
-            gamePanel.changeGameState(StatesDefinitions.GAME);
+            gamePanel.changeGameState(StateDefinitions.GAME);
         }
     }
 }

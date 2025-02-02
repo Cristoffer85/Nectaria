@@ -1,7 +1,7 @@
 package com.cristoffer85.States;
 
 import com.cristoffer85.Main.GamePanel;
-import com.cristoffer85.States.StatesResources.StatesDefinitions;
+import com.cristoffer85.States.StatesResources.StateDefinitions;
 
 import javax.swing.*;
 import java.awt.*;
@@ -17,7 +17,7 @@ public class PauseState extends JPanel {
 
         // Create and style the "Resume Game" button
         JButton resumeButton = new JButton("RESUME GAME");
-        resumeButton.addActionListener(e -> gamePanel.changeGameState(StatesDefinitions.GAME));
+        resumeButton.addActionListener(e -> gamePanel.changeGameState(StateDefinitions.GAME));
         styleButton(resumeButton);
 
         // Create and style the "Save Game" button
@@ -32,7 +32,7 @@ public class PauseState extends JPanel {
 
         // Create and style the "Quit Game" button
         JButton quitButton = new JButton("QUIT GAME");
-        quitButton.addActionListener(e -> gamePanel.changeGameState(StatesDefinitions.MAIN_MENU));
+        quitButton.addActionListener(e -> gamePanel.changeGameState(StateDefinitions.MAIN_MENU));
         styleButton(quitButton);
 
         // Add components to the layout

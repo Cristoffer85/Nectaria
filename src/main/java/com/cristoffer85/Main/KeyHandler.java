@@ -1,7 +1,7 @@
 package com.cristoffer85.Main;
 
 import com.cristoffer85.Game;
-import com.cristoffer85.States.StatesResources.StatesDefinitions;
+import com.cristoffer85.States.StatesResources.StateDefinitions;
 
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
@@ -64,10 +64,10 @@ public class KeyHandler extends KeyAdapter {
 
     private void handlePause(KeyEvent e) {
         if (e.getKeyCode() == keyBindings.get("pause")) {
-            if (gamePanel.getCurrentState() == StatesDefinitions.GAME) {
-                gamePanel.changeGameState(StatesDefinitions.PAUSE_MENU);
-            } else if (gamePanel.getCurrentState() == StatesDefinitions.PAUSE_MENU) {
-                gamePanel.changeGameState(StatesDefinitions.GAME);
+            if (gamePanel.getCurrentState() == StateDefinitions.GAME) {
+                gamePanel.changeGameState(StateDefinitions.PAUSE_MENU);
+            } else if (gamePanel.getCurrentState() == StateDefinitions.PAUSE_MENU) {
+                gamePanel.changeGameState(StateDefinitions.GAME);
             }
         }
     }

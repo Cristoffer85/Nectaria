@@ -3,7 +3,7 @@ package com.cristoffer85.Main.MainResources;
 import com.cristoffer85.Entity.Obstacle;
 import com.cristoffer85.Entity.Player;
 import com.cristoffer85.States.GameState;
-import com.cristoffer85.States.StatesResources.StatesDefinitions;
+import com.cristoffer85.States.StatesResources.StateDefinitions;
 import com.cristoffer85.Main.GamePanel;
 import com.cristoffer85.Tile.TileManager;
 
@@ -48,7 +48,7 @@ public class CRUDProfile implements Serializable {
             player.setX(saveData.getPlayerX());
             player.setY(saveData.getPlayerY());
             System.out.println("Game loaded successfully from " + filePath);
-            gamePanel.changeGameState(StatesDefinitions.GAME);
+            gamePanel.changeGameState(StateDefinitions.GAME);
         } catch (IOException | ClassNotFoundException e) {
             e.printStackTrace();
         }
@@ -59,7 +59,7 @@ public class CRUDProfile implements Serializable {
         Obstacle.addObstacles();
         TileManager.tilesByMapSize("/MainWorld.txt");
         GameState gameState = new GameState(player, baseWidth, baseHeight, scaleFactor);
-        gamePanel.add(gameState, StatesDefinitions.GAME.name());
+        gamePanel.add(gameState, StateDefinitions.GAME.name());
         gamePanel.setPlayer(player);
         gamePanel.initializeGameState(gameState);
     }

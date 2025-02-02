@@ -1,7 +1,7 @@
 package com.cristoffer85.States;
 
 import com.cristoffer85.Main.GamePanel;
-import com.cristoffer85.States.StatesResources.StatesDefinitions;
+import com.cristoffer85.States.StatesResources.StateDefinitions;
 import com.cristoffer85.States.StatesResources.StateMenuDesign;
 import com.cristoffer85.Main.MainResources.CRUDProfile;
 
@@ -47,7 +47,7 @@ public class InitialState extends StateMenuDesign {
             CRUDProfile.createProfile(profileName);
             gamePanel.setProfileName(profileName);
             gamePanel.resetGame();
-            gamePanel.changeGameState(StatesDefinitions.GAME);
+            gamePanel.changeGameState(StateDefinitions.GAME);
         }
     }
 
@@ -66,7 +66,7 @@ public class InitialState extends StateMenuDesign {
             if (selectedProfile != null) {
                 gamePanel.setProfileName(selectedProfile);
                 gamePanel.loadGame();
-                gamePanel.changeGameState(StatesDefinitions.MAIN_MENU);
+                gamePanel.changeGameState(StateDefinitions.MAIN_MENU);
             }
         } else {
             JOptionPane.showMessageDialog(this, "No profiles found.", "Error", JOptionPane.ERROR_MESSAGE);
