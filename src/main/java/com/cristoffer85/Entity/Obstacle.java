@@ -40,7 +40,6 @@ public class Obstacle {
         // Diagonal obstacles
         obstacles.add(new Obstacle(new Line2D.Float(194, 193, 258, 257), Color.BLUE));
 
-        
         categorizeObstacles();
     }
 
@@ -52,8 +51,29 @@ public class Obstacle {
             if (obstacle.getRectangle() != null) {
                 straightObstacles.add(obstacle.getRectangle());
             } else if (obstacle.getDiagonalLine() != null) {
-                diagonalObstacles.add(obstacle.getDiagonalLine());
+                subdivideLine(obstacle.getDiagonalLine());
             }
+        }
+    }
+
+    // Subdivide a Line2D into smaller segments for more precise collision detection
+    private static void subdivideLine(Line2D line) {
+        final double segmentLength = 1.0; // Smaller segment length for higher precision
+        double x1 = line.getX1();
+        double y1 = line.getY1();
+        double x2 = line.getX2();
+        double y2 = line.getY2();
+        double length = line.getP1().distance(line.getP2());
+        int numSegments = (int) (length / segmentLength);
+        double dx = (x2 - x1) / numSegments;
+        double dy = (y2 - y1) / numSegments;
+    
+        for (int i = 0; i < numSegments; i++) {
+            double startX = x1 + i * dx;
+            double startY = y1 + i * dy;
+            double endX = x1 + (i + 1) * dx;
+            double endY = y1 + (i + 1) * dy;
+            diagonalObstacles.add(new Line2D.Double(startX, startY, endX, endY));
         }
     }
 

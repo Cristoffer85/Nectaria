@@ -1,12 +1,11 @@
 package com.cristoffer85.Entity;
 
-import com.cristoffer85.Tile.TileManager;
-import com.cristoffer85.Tile.Tile;
-
 import java.awt.*;
 import java.awt.geom.Line2D;
 import java.util.List;
 import java.util.Map;
+import com.cristoffer85.Tile.TileManager;
+import com.cristoffer85.Tile.Tile;
 
 public class CollisionChecker {
     private final Player player;
@@ -42,7 +41,6 @@ public class CollisionChecker {
         return projectedPosition;
     }
 
-    // Method where the boundaries are located in the map, and player is stopped from moving outside them
     private int checkBoundaryCollision(int projectedPosition, int boundaryLimit, boolean isHorizontal) {
         int collisionBoxSize = player.getCollisionBoxSize();
         int collisionBoxOffset = isHorizontal ? player.getCollisionBoxOffsetX() : player.getCollisionBoxOffsetY();
@@ -58,7 +56,6 @@ public class CollisionChecker {
         return Integer.MIN_VALUE;
     }
 
-    // Method to check straight obstacle collision
     private int checkStraightObstacleCollision(Rectangle projectedRect, List<Rectangle> straightObstacles, int velocity, boolean isHorizontal) {
         for (Rectangle straightObstacle : straightObstacles) {
             if (projectedRect.intersects(straightObstacle)) {
@@ -70,7 +67,8 @@ public class CollisionChecker {
                     return velocity > 0
                         ? straightObstacle.x - collisionBoxSize - collisionBoxOffsetX
                         : straightObstacle.x + straightObstacle.width - collisionBoxOffsetX;
-                } else {
+                } 
+                else {
                     return velocity > 0
                         ? straightObstacle.y - collisionBoxSize - collisionBoxOffsetY
                         : straightObstacle.y + straightObstacle.height - collisionBoxOffsetY;
@@ -80,21 +78,36 @@ public class CollisionChecker {
         return Integer.MIN_VALUE;
     }
 
-    // Method to check diagonal obstacle collision
     private int checkDiagonalObstacleCollision(Rectangle projectedRect, List<Line2D> diagonalObstacles, int velocity, boolean isHorizontal) {
         for (Line2D diagonalObstacle : diagonalObstacles) {
             if (projectedRect.intersectsLine(diagonalObstacle)) {
                 double angle = Math.atan2(diagonalObstacle.getY2() - diagonalObstacle.getY1(), diagonalObstacle.getX2() - diagonalObstacle.getX1());
                 double sin = Math.sin(angle);
                 double cos = Math.cos(angle);
+                
+                System.out.println("Collision Detected at: " + diagonalObstacle);
+
+                // Normalize velocity adjustments
+                int adjustedVelocityX = (int) Math.round(velocity * cos);
+                int adjustedVelocityY = (int) Math.round(velocity * sin);
 
                 if (isHorizontal) {
-                    player.setVelocityY((int) (velocity * sin));
+                    player.setVelocityY(adjustedVelocityY);
+                    
+                    if (velocity > 0) { // Moving right
+                        return (int) (diagonalObstacle.getX1() - player.getCollisionBoxSize() - player.getCollisionBoxOffsetX());
+                    } else { // Moving left - Fix applied here
+                        return (int) (diagonalObstacle.getX2() + player.getCollisionBoxOffsetX());
+                    }
                 } else {
-                    player.setVelocityX((int) (velocity * cos));
+                    player.setVelocityX(adjustedVelocityX);
+                    
+                    if (velocity > 0) { // Moving down
+                        return (int) (diagonalObstacle.getY1() - player.getCollisionBoxSize() - player.getCollisionBoxOffsetY());
+                    } else { // Moving up
+                        return (int) (diagonalObstacle.getY2() + player.getCollisionBoxOffsetY());
+                    }
                 }
-
-                return isHorizontal ? player.getX() : player.getY();
             }
         }
         return Integer.MIN_VALUE;
@@ -134,14 +147,16 @@ public class CollisionChecker {
         return Integer.MIN_VALUE;
     }
 
-    // Method to calculate the projected position of the player (Snap (to grid)) to provide more accurate collision detection by the intersect method etc 
+    // Calculate the projected position of the player's collision box
     private Rectangle calculateProjectedPosition(int projectedPosition, boolean isHorizontal) {
         int collisionBoxSize = player.getCollisionBoxSize();
         int collisionBoxOffsetX = player.getCollisionBoxOffsetX();
         int collisionBoxOffsetY = player.getCollisionBoxOffsetY();
 
-        return isHorizontal
-            ? new Rectangle(projectedPosition + collisionBoxOffsetX, player.getY() + collisionBoxOffsetY, collisionBoxSize, collisionBoxSize)
-            : new Rectangle(player.getX() + collisionBoxOffsetX, projectedPosition + collisionBoxOffsetY, collisionBoxSize, collisionBoxSize);
+        if (isHorizontal) {
+            return new Rectangle(projectedPosition + collisionBoxOffsetX, player.getY() + collisionBoxOffsetY, collisionBoxSize, collisionBoxSize);
+        } else {
+            return new Rectangle(player.getX() + collisionBoxOffsetX, projectedPosition + collisionBoxOffsetY, collisionBoxSize, collisionBoxSize);
+        }
     }
 }
