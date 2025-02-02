@@ -1,126 +1,47 @@
 package com.cristoffer85.Tile;
 
-import javax.imageio.ImageIO;
+import lombok.Getter;
 import java.awt.*;
 import java.awt.image.BufferedImage;
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.HashSet;
+import java.util.Set;
 
+@Getter
 public class TileManager {
-    private static BufferedImage tilesheet;
-    private static int tileWidth;
-    private static int tileHeight;
-    private static final Map<Integer, Tile> tileMap = new HashMap<>();
-    private static final Map<Point, Integer> tilePositions = new HashMap<>();
-    private static int mapWidth;
-    private static int mapHeight;
+    private final BufferedImage image;
+    private final int tileId;
+    private final boolean collidable;
+    private static final Set<Integer> collidableTileIds = new HashSet<>();
 
-    // Load tilesheet and define tiles from it
-    public static void loadTilesheet(String path, int tileWidth, int tileHeight) {
-        try {
-            tilesheet = readTilesheetImage(path);
-            TileManager.tileWidth = tileWidth;
-            TileManager.tileHeight = tileHeight;
-
-            int rows = tilesheet.getHeight() / tileHeight;
-            int cols = tilesheet.getWidth() / tileWidth;
-
-            int tileId = 0;
-
-            // Outer loop for rows
-            for (int row = 0; row < rows; row++) {
-                // Inner loop for columns
-                for (int col = 0; col < cols; col++) {
-                    tileDefiner(tileId, col, row);
-                    tileId++;
-                }
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-    private static void tileDefiner(int tileId, int col, int row) {
-        BufferedImage tileImage = tilesheet.getSubimage(col * tileWidth, row * tileHeight, tileWidth, tileHeight);
-        boolean collidable = Tile.getCollidableTileIds().contains(tileId);
-        Tile tile = new Tile(tileImage, tileId, collidable);
-        tileMap.put(tileId, tile);
+    // COLLIDABLE TILES values go here (from array value from tilesheet)
+    static {
+        collidableTileIds.add(1);   // Grass water top left corner
+        collidableTileIds.add(2);   // Grass water top center
+        collidableTileIds.add(3);   // Grass water top right corner
+        collidableTileIds.add(4);   // Grass water top left outer corner
+        collidableTileIds.add(5);   // Grass water top right outer corner
+        collidableTileIds.add(21);  // Grass water left center
+        collidableTileIds.add(23);  // Grass water right center
+        collidableTileIds.add(24);  // Grass water bottom left outer corner
+        collidableTileIds.add(25);  // Grass water bottom right outer corner
+        collidableTileIds.add(40);  // Water base
+        collidableTileIds.add(41);  // Grass water bottom left corner
+        collidableTileIds.add(42);  // Grass water bottom center
+        collidableTileIds.add(43);  // Grass water bottom right corner
+        collidableTileIds.add(60);  // Water waves
     }
 
-    // Read map file, and then define tiles automagically by map size defined in "MainWorld.txt" for example
-    public static void tilesByMapSize(String path) {
-        try (BufferedReader br = new BufferedReader(new InputStreamReader(TileManager.class.getResourceAsStream(path)))) {
-            readMapRow(br);
-            totalMapSize();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-    private static void readMapRow(BufferedReader br) throws IOException {
-        String line;
-        int y = 0;
-        // Read each line of the map file
-        while ((line = br.readLine()) != null) {
-            readMapColumn(line, y);
-            y++;
-        }
-    }
-    private static void readMapColumn(String line, int y) {
-        String[] tokens = line.split(" ");
-        // Read each tile id on row
-        for (int x = 0; x < tokens.length; x++) {
-            int tileId = Integer.parseInt(tokens[x]);
-            tilePositions.put(new Point(x, y), tileId);
-        }
-    }
-    private static void totalMapSize() {
-        mapWidth = tilePositions.keySet().stream().mapToInt(point -> (int) point.getX()).max().orElse(0) + 1;
-        mapHeight = tilePositions.keySet().stream().mapToInt(point -> (int) point.getY()).max().orElse(0) + 1;
+    public TileManager(BufferedImage image, int tileId, boolean collidable) {
+        this.image = image;
+        this.tileId = tileId;
+        this.collidable = collidable;
     }
 
-    // Render all tiles
-    public static void paintTiles(Graphics2D g2d, int cameraX, int cameraY) {
-        for (Map.Entry<Point, Integer> entry : tilePositions.entrySet()) {
-            Point point = entry.getKey();
-            int tileId = entry.getValue();
-            Tile tile = getTile(tileId);
-            
-            if (tile != null) {
-                int x = (int) point.getX() * tileWidth - cameraX;
-                int y = (int) point.getY() * tileHeight - cameraY;
-                tile.render(g2d, x, y);
-            }
-        }
+    public void render(Graphics g, int x, int y) {
+        g.drawImage(image, x, y, null);
     }
 
-    private static BufferedImage readTilesheetImage(String path) throws IOException {
-        return ImageIO.read(TileManager.class.getResource(path));
-    }
-
-    // Helper methods for other classes be able to access the tile data
-    public static Tile getTile(int tileId) {
-        return tileMap.get(tileId);
-    }
-
-    public static Map<Point, Integer> getTilePositions() {
-        return tilePositions;
-    }
-
-    public static int getMapWidth() {
-        return mapWidth;
-    }
-
-    public static int getMapHeight() {
-        return mapHeight;
-    }
-
-    public static int getTileWidth() {
-        return tileWidth;
-    }
-
-    public static int getTileHeight() {
-        return tileHeight;
+    public static Set<Integer> getCollidableTileIds() {
+        return collidableTileIds;
     }
 }

@@ -50,7 +50,7 @@ public class StateMenuDesign extends JPanel {
         return button;
     }
 
-    protected Font loadFont(String path, float size) {
+    public Font loadFont(String path, float size) {
         try {
             return Font.createFont(Font.TRUETYPE_FONT, getClass().getResourceAsStream(path)).deriveFont(size);
         } catch (FontFormatException | IOException e) {

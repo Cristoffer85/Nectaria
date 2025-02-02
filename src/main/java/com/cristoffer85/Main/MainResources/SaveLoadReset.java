@@ -5,7 +5,7 @@ import com.cristoffer85.Entity.Player;
 import com.cristoffer85.States.GameState;
 import com.cristoffer85.States.StatesResources.StateDefinitions;
 import com.cristoffer85.Main.GamePanel;
-import com.cristoffer85.Tile.TileManager;
+import com.cristoffer85.Tile.Tile;
 
 import java.io.*;
 
@@ -38,7 +38,7 @@ public class SaveLoadReset {
     public static void resetGame(GamePanel gamePanel, int baseWidth, int baseHeight, int scaleFactor, String profileName) {
         Player player = new Player(30, 30, 64, 6);
         Obstacle.addObstacles();
-        TileManager.tilesByMapSize("/MainWorld.txt");
+        Tile.tilesByMapSize("/MainWorld.txt");
         GameState gameState = new GameState(player, baseWidth, baseHeight, scaleFactor);
         gamePanel.add(gameState, StateDefinitions.GAME.name());
         gamePanel.setPlayer(player);

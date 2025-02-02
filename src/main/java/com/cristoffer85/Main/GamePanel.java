@@ -1,7 +1,7 @@
 package com.cristoffer85.Main;
 
 import com.cristoffer85.Entity.Obstacle;
-import com.cristoffer85.Tile.TileManager;
+import com.cristoffer85.Tile.Tile;
 import com.cristoffer85.Entity.Player;
 import com.cristoffer85.States.MainMenuState;
 import com.cristoffer85.States.StatesResources.StateDefinitions;
@@ -45,8 +45,8 @@ public class GamePanel extends JPanel {
         keyHandler = new KeyHandler(this);
 
         // Initialize tilesheet and map
-        TileManager.loadTilesheet("/TileSheet.png", 64, 64);
-        TileManager.tilesByMapSize("/MainWorld.txt");
+        Tile.loadTilesheet("/TileSheet.png", 64, 64);
+        Tile.tilesByMapSize("/MainWorld.txt");
 
         // ---------- Initialize different states ----------
         initialState = new InitialState(this);

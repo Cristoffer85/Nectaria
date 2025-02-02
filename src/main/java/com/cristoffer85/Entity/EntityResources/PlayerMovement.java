@@ -2,7 +2,7 @@ package com.cristoffer85.Entity.EntityResources;
 
 import com.cristoffer85.Entity.Player;
 import com.cristoffer85.Main.KeyHandler;
-import com.cristoffer85.Tile.TileManager;
+import com.cristoffer85.Tile.Tile;
 
 import java.awt.*;
 import java.awt.geom.Line2D;
@@ -27,8 +27,8 @@ public class PlayerMovement {
         handleVerticalMovement(keyHandler);
 
         // Get map dimensions automatically, based on tile size and map size (look in Tile.java, for reference)
-        int mapWidth = TileManager.getMapWidth() * TileManager.getTileWidth();
-        int mapHeight = TileManager.getMapHeight() * TileManager.getTileHeight();
+        int mapWidth = Tile.getMapWidth() * Tile.getTileWidth();
+        int mapHeight = Tile.getMapHeight() * Tile.getTileHeight();
 
         // Update player's position and check for collisions with all obstacles
         player.setX(collisionChecker.playerCollision(player.getX(), player.getVelocityX(), mapWidth, straightObstacles, diagonalObstacles, true));

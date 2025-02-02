@@ -2,7 +2,7 @@ package com.cristoffer85.States;
 
 import com.cristoffer85.Entity.Obstacle;
 import com.cristoffer85.Entity.Player;
-import com.cristoffer85.Tile.TileManager;
+import com.cristoffer85.Tile.Tile;
 
 import javax.swing.*;
 import java.awt.*;
@@ -29,8 +29,8 @@ public class GameState extends JPanel {
         int cameraY = player.getY() - baseHeight / 2 + player.getSize() / 2 + 24;
 
         // Clamp camera position to map boundaries, when player is near map boundary
-        int maxCameraX = TileManager.getMapWidth() * TileManager.getTileWidth() - baseWidth;
-        int maxCameraY = TileManager.getMapHeight() * TileManager.getTileHeight() - baseHeight;
+        int maxCameraX = Tile.getMapWidth() * Tile.getTileWidth() - baseWidth;
+        int maxCameraY = Tile.getMapHeight() * Tile.getTileHeight() - baseHeight;
         cameraX = Math.max(0, Math.min(cameraX, maxCameraX));
         cameraY = Math.max(0, Math.min(cameraY, maxCameraY));
 
@@ -40,7 +40,7 @@ public class GameState extends JPanel {
         g2d.fillRect(0, 0, gameImage.getWidth(), gameImage.getHeight());
 
         // Render all tiles with camera offset
-        TileManager.paintTiles(g2d, cameraX, cameraY);
+        Tile.paintTiles(g2d, cameraX, cameraY);
 
         // Render all obstacles with camera offset
         Obstacle.paintObstacles(g2d, cameraX, cameraY);

@@ -1,7 +1,7 @@
 package com.cristoffer85.Entity;
 
-import com.cristoffer85.Tile.Tile;
 import com.cristoffer85.Tile.TileManager;
+import com.cristoffer85.Tile.Tile;
 
 import java.awt.*;
 import java.awt.geom.Line2D;
@@ -102,15 +102,15 @@ public class CollisionChecker {
 
     // Method to check tile collision, calculates the entire map and checks for collision with each tile
     private int checkTileCollision(Rectangle projectedRect, int velocity, boolean isHorizontal) {
-        int tileWidth = TileManager.getTileWidth();
-        int tileHeight = TileManager.getTileHeight();
-        int mapWidth = TileManager.getMapWidth();
-        int mapHeight = TileManager.getMapHeight();
-        Map<Point, Integer> tilePositions = TileManager.getTilePositions();
+        int tileWidth = Tile.getTileWidth();
+        int tileHeight = Tile.getTileHeight();
+        int mapWidth = Tile.getMapWidth();
+        int mapHeight = Tile.getMapHeight();
+        Map<Point, Integer> tilePositions = Tile.getTilePositions();
 
         for (int y = 0; y < mapHeight; y++) {
             for (int x = 0; x < mapWidth; x++) {
-                Tile tile = TileManager.getTile(tilePositions.get(new Point(x, y)));
+                TileManager tile = Tile.getTile(tilePositions.get(new Point(x, y)));
                 if (tile != null && tile.isCollidable()) {
                     Rectangle tileRect = new Rectangle(x * tileWidth, y * tileHeight, tileWidth, tileHeight);
                     if (projectedRect.intersects(tileRect)) {
