@@ -20,25 +20,25 @@ public class MainMenuState extends JPanel {
 
     public MainMenuState(GamePanel gamePanel) {
         setLayout(new BorderLayout());
-        add(createSwitchUserPanel(gamePanel), BorderLayout.NORTH);
-        add(createLogoPanel(), BorderLayout.CENTER);
-        add(createButtonPanel(gamePanel), BorderLayout.SOUTH);
+        add(topPanel(gamePanel), BorderLayout.NORTH);
+        add(middlePanel(), BorderLayout.CENTER);
+        add(bottomPanel(gamePanel), BorderLayout.SOUTH);
     }
 
-    private JPanel createSwitchUserPanel(GamePanel gamePanel) {
+    private JPanel topPanel(GamePanel gamePanel) {
         JPanel switchUserPanel = createPanel(new FlowLayout(FlowLayout.RIGHT));
         JButton switchUserButton = switchUserButton("Switch User", e -> gamePanel.changeGameState(StatesDefinitions.INITIAL_STATE));
         switchUserPanel.add(switchUserButton);
         return switchUserPanel;
     }
 
-    private JPanel createLogoPanel() {
+    private JPanel middlePanel() {
         JPanel logoPanel = createPanel(new BoxLayout(new JPanel(), BoxLayout.Y_AXIS));
         addLogo(logoPanel);
         return logoPanel;
     }
 
-    private JPanel createButtonPanel(GamePanel gamePanel) {
+    private JPanel bottomPanel(GamePanel gamePanel) {
         JPanel containerPanel = createPanel(new BorderLayout());
         JPanel buttonPanel = createPanel(new BoxLayout(new JPanel(), BoxLayout.Y_AXIS));
 
