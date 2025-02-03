@@ -1,4 +1,5 @@
-1. Introduce triangle collidable tiles
+1. Make Line2D collision smoother - Acc. stumbled on way to make collision better - working vertical and down right collision in new extra branch pushed - but not horizontal to left up, ?
+2. Introduce settings state. Start working on what should be included there, and also able to alter later.
 
 
 
