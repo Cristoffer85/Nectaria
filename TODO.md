@@ -1,4 +1,4 @@
-1. Introduce triangle collidable tiles
+1. Diagonal 2Dline new collision - When players movement direction is down or right, the collision works smoothly. But when players movement direction is up or left the collisionbounce/offset is bouncing back a long way (left = 1tile, 64px) (up = 2tiles, almost 128px)
 
 
 

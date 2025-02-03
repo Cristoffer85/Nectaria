@@ -84,8 +84,6 @@ public class CollisionChecker {
                 double angle = Math.atan2(diagonalObstacle.getY2() - diagonalObstacle.getY1(), diagonalObstacle.getX2() - diagonalObstacle.getX1());
                 double sin = Math.sin(angle);
                 double cos = Math.cos(angle);
-                
-                System.out.println("Collision Detected at: " + diagonalObstacle);
 
                 // Normalize velocity adjustments
                 int adjustedVelocityX = (int) Math.round(velocity * cos);
@@ -93,15 +91,13 @@ public class CollisionChecker {
 
                 if (isHorizontal) {
                     player.setVelocityY(adjustedVelocityY);
-                    
                     if (velocity > 0) { // Moving right
                         return (int) (diagonalObstacle.getX1() - player.getCollisionBoxSize() - player.getCollisionBoxOffsetX());
-                    } else { // Moving left - Fix applied here
+                    } else { // Moving left
                         return (int) (diagonalObstacle.getX2() + player.getCollisionBoxOffsetX());
                     }
                 } else {
                     player.setVelocityX(adjustedVelocityX);
-                    
                     if (velocity > 0) { // Moving down
                         return (int) (diagonalObstacle.getY1() - player.getCollisionBoxSize() - player.getCollisionBoxOffsetY());
                     } else { // Moving up
@@ -113,7 +109,6 @@ public class CollisionChecker {
         return Integer.MIN_VALUE;
     }
 
-    // Method to check tile collision, calculates the entire map and checks for collision with each tile
     private int checkTileCollision(Rectangle projectedRect, int velocity, boolean isHorizontal) {
         int tileWidth = Tile.getTileWidth();
         int tileHeight = Tile.getTileHeight();
@@ -147,7 +142,6 @@ public class CollisionChecker {
         return Integer.MIN_VALUE;
     }
 
-    // Calculate the projected position of the player's collision box
     private Rectangle calculateProjectedPosition(int projectedPosition, boolean isHorizontal) {
         int collisionBoxSize = player.getCollisionBoxSize();
         int collisionBoxOffsetX = player.getCollisionBoxOffsetX();

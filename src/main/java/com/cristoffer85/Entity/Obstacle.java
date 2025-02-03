@@ -35,10 +35,14 @@ public class Obstacle {
         // Straight obstacles
         obstacles.add(new Obstacle(new Rectangle(300, 300, 50, 64), Color.RED));
         obstacles.add(new Obstacle(new Rectangle(192, 192, 1, 64), Color.RED));
-        obstacles.add(new Obstacle(new Rectangle(400, 200, 64, 1), Color.RED));
+        //obstacles.add(new Obstacle(new Rectangle(400, 200, 64, 1), Color.RED));
 
         // Diagonal obstacles
         obstacles.add(new Obstacle(new Line2D.Float(194, 193, 258, 257), Color.BLUE));
+
+        // Test diagonal
+        obstacles.add(new Obstacle(new Line2D.Float(458, 193, 394, 257), Color.BLUE));
+        obstacles.add(new Obstacle(new Line2D.Float(494, 193, 558, 257), Color.BLUE));
 
         categorizeObstacles();
     }
@@ -67,7 +71,7 @@ public class Obstacle {
         int numSegments = (int) (length / segmentLength);
         double dx = (x2 - x1) / numSegments;
         double dy = (y2 - y1) / numSegments;
-    
+
         for (int i = 0; i < numSegments; i++) {
             double startX = x1 + i * dx;
             double startY = y1 + i * dy;
