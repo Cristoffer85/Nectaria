@@ -35,12 +35,27 @@ public class Obstacle {
         // Straight obstacles
         obstacles.add(new Obstacle(new Rectangle(300, 300, 50, 64), Color.RED));
         obstacles.add(new Obstacle(new Rectangle(192, 192, 1, 64), Color.RED));
-        obstacles.add(new Obstacle(new Rectangle(400, 200, 64, 1), Color.RED));
+        obstacles.add(new Obstacle(new Rectangle(600, 100, 64, 1), Color.RED));
 
         // Diagonal obstacles
         obstacles.add(new Obstacle(new Line2D.Float(194, 193, 258, 257), Color.BLUE));
+        
+
 
         
+        // ### Testing/debugging diagonal line2D:S ###
+        // Diagonal obstacles, down right
+        obstacles.add(new Obstacle(new Line2D.Float(594, 193, 658, 257), Color.BLUE));
+
+
+        // Diagonal obstacles, down left (The line collision that is bugging/not working 100% properly)
+        // -------------------------------------------------------------------------------
+        // When moving the player left against it player wants to move upward and gets stuck. 
+        // When moving right against the line it wants to move move downward but gets stuck.
+        obstacles.add(new Obstacle(new Line2D.Float(458, 193, 394, 257), Color.BLUE));
+        // ### ### ### ### ### ### ### ### ### ### ###
+
+
         categorizeObstacles();
     }
 
