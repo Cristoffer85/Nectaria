@@ -8,6 +8,7 @@ import com.cristoffer85.States.StatesResources.StateDefinitions;
 import com.cristoffer85.States.GameState;
 import com.cristoffer85.States.InitialState;
 import com.cristoffer85.States.PauseState;
+import com.cristoffer85.States.SettingsState;
 import com.cristoffer85.Main.MainResources.SaveLoadReset;
 
 import javax.swing.*;
@@ -23,6 +24,7 @@ public class GamePanel extends JPanel {
     private GameState gameState;
     private PauseState pauseState;
     private InitialState initialState;
+    private SettingsState settingsState;
 
     private int baseWidth;
     private int baseHeight;
@@ -53,6 +55,7 @@ public class GamePanel extends JPanel {
         mainMenuState = new MainMenuState(this);
         gameState = new GameState(player, baseWidth, baseHeight, scaleFactor);
         pauseState = new PauseState(this);
+        settingsState = new SettingsState(); 
 
         // ..and add them to the "card" layout.
         setLayout(new CardLayout());
@@ -60,6 +63,7 @@ public class GamePanel extends JPanel {
         add(mainMenuState, StateDefinitions.MAIN_MENU.name());
         add(gameState, StateDefinitions.GAME.name());
         add(pauseState, StateDefinitions.PAUSE_MENU.name());
+        add(settingsState, StateDefinitions.SETTINGS_MENU.name());
         //---------------------------------------------------
 
         // Main Game loop
