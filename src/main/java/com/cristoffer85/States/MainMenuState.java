@@ -9,7 +9,7 @@ import java.awt.*;
 
 public class MainMenuState extends StateMenuDesign {
 
-    private static final int BOTTOM_PANEL_OFFSET = 280;
+    private static final int BOTTOM_PANEL_OFFSET = 180;
 
     public MainMenuState(GamePanel gamePanel) {
         setLayout(new BorderLayout());
@@ -43,6 +43,8 @@ public class MainMenuState extends StateMenuDesign {
         buttonPanel.add(regularMenuButton("START NEW GAME", e -> startNewGame(gamePanel)));
         buttonPanel.add(Box.createVerticalStrut(MENUBUTTON_VERTICAL_SPACING));
         buttonPanel.add(regularMenuButton("SETTINGS", e -> gamePanel.changeGameState(StateDefinitions.SETTINGS_MENU)));
+        buttonPanel.add(Box.createVerticalStrut(MENUBUTTON_VERTICAL_SPACING));
+        buttonPanel.add(regularMenuButton("EXIT GAME", e -> System.exit(0)));
         buttonPanel.add(Box.createVerticalStrut(BOTTOM_PANEL_OFFSET));
     
         return buttonPanel;
