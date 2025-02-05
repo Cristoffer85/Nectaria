@@ -28,7 +28,7 @@ public class StateMenuDesign extends JPanel {
         return panel;
     }
 
-    protected JButton menuButton(String text, ActionListener action) {
+    protected JButton regularMenuButton(String text, ActionListener action) {
         JButton button = new JButton(text);
         button.addActionListener(action);
         button.setFont(MENU_BUTTON_FONTANDSIZE);

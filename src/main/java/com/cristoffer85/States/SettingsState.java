@@ -31,7 +31,7 @@ public class SettingsState extends StateMenuDesign {
         JPanel buttonPanel = createVerticalPanel();
         buttonPanel.setLayout(new BoxLayout(buttonPanel, BoxLayout.Y_AXIS));
 
-        JButton backButton = menuButton("Back", new ActionListener() {
+        JButton backButton = regularMenuButton("Back", new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 gamePanel.changeGameState(StateDefinitions.MAIN_MENU);

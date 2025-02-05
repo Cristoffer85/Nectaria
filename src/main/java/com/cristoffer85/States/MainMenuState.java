@@ -38,11 +38,11 @@ public class MainMenuState extends StateMenuDesign {
         JPanel buttonPanel = createVerticalPanel();
         buttonPanel.setLayout(new BoxLayout(buttonPanel, BoxLayout.Y_AXIS));
     
-        buttonPanel.add(menuButton("RESUME", e -> gamePanel.loadGame()));
+        buttonPanel.add(regularMenuButton("RESUME", e -> gamePanel.loadGame()));
         buttonPanel.add(Box.createVerticalStrut(MENUBUTTON_VERTICAL_SPACING));
-        buttonPanel.add(menuButton("START NEW GAME", e -> startNewGame(gamePanel)));
+        buttonPanel.add(regularMenuButton("START NEW GAME", e -> startNewGame(gamePanel)));
         buttonPanel.add(Box.createVerticalStrut(MENUBUTTON_VERTICAL_SPACING));
-        buttonPanel.add(menuButton("SETTINGS", e -> gamePanel.changeGameState(StateDefinitions.SETTINGS_MENU)));
+        buttonPanel.add(regularMenuButton("SETTINGS", e -> gamePanel.changeGameState(StateDefinitions.SETTINGS_MENU)));
         buttonPanel.add(Box.createVerticalStrut(BOTTOM_PANEL_OFFSET));
     
         return buttonPanel;

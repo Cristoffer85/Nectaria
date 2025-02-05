@@ -32,9 +32,9 @@ public class InitialState extends StateMenuDesign {
         JPanel buttonPanel = createVerticalPanel();
         buttonPanel.setLayout(new BoxLayout(buttonPanel, BoxLayout.Y_AXIS));
 
-        buttonPanel.add(menuButton("CREATE NEW PROFILE", e -> createNewProfile(gamePanel)));
+        buttonPanel.add(regularMenuButton("CREATE NEW PROFILE", e -> createNewProfile(gamePanel)));
         buttonPanel.add(Box.createVerticalStrut(MENUBUTTON_VERTICAL_SPACING));
-        buttonPanel.add(menuButton("SELECT EXISTING PROFILE", e -> selectProfile(gamePanel)));
+        buttonPanel.add(regularMenuButton("SELECT EXISTING PROFILE", e -> selectProfile(gamePanel)));
         buttonPanel.add(Box.createVerticalStrut(BOTTOM_PANEL_OFFSET));
 
         return buttonPanel;
