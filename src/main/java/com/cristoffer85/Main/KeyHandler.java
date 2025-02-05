@@ -1,6 +1,6 @@
 package com.cristoffer85.Main;
 
-import com.cristoffer85.Game;
+import com.cristoffer85.States.SettingsState;
 import com.cristoffer85.States.StatesResources.StateDefinitions;
 
 import java.awt.event.KeyAdapter;
@@ -13,9 +13,11 @@ public class KeyHandler extends KeyAdapter {
     private final Set<Integer> keysPressed = new HashSet<>();
     private final Map<String, Integer> keyBindings;
     private final GamePanel gamePanel;
+    private final SettingsState settingsState;
 
-    public KeyHandler(GamePanel gamePanel) {
+    public KeyHandler(GamePanel gamePanel, SettingsState settingsState) {
         this.gamePanel = gamePanel;
+        this.settingsState = settingsState;
         keyBindings = Map.of(
             "moveLeft", KeyEvent.VK_A,
             "moveRight", KeyEvent.VK_D,
@@ -54,11 +56,11 @@ public class KeyHandler extends KeyAdapter {
     // Specific individual key handling methods below
     private void handleResolutionChange(KeyEvent e) {
         if (e.getKeyCode() == keyBindings.get("resolution720p")) {
-            Game.changeResolution(1280, 720);
+            settingsState.changeResolution(1280, 720);
         } else if (e.getKeyCode() == keyBindings.get("resolution1080p")) {
-            Game.changeResolution(1920, 1080);
+            settingsState.changeResolution(1920, 1080);
         } else if (e.getKeyCode() == keyBindings.get("resolution1440p")) {
-            Game.changeResolution(2560, 1440);
+            settingsState.changeResolution(2560, 1440);
         }
     }
 

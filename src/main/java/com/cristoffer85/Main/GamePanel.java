@@ -26,17 +26,10 @@ public class GamePanel extends JPanel {
     private InitialState initialState;
     private SettingsState settingsState;
 
-    private int baseWidth;
-    private int baseHeight;
-    private int scaleFactor;
     private String profileName;
     private StateDefinitions currentState;
 
-    public GamePanel(int baseWidth, int baseHeight, int scaleFactor) {
-        this.baseWidth = baseWidth;
-        this.baseHeight = baseHeight;
-        this.scaleFactor = scaleFactor;
-
+    public GamePanel() {
         // Initialize player
         player = new Player(30, 30, 64, 6);
 
@@ -44,7 +37,7 @@ public class GamePanel extends JPanel {
         Obstacle.addObstacles();
 
         // Initialize key handler
-        keyHandler = new KeyHandler(this);
+        keyHandler = new KeyHandler(this, settingsState);
 
         // Initialize tilesheet and map
         Tile.loadTilesheet("/TileSheet.png", 64, 64);
@@ -53,7 +46,7 @@ public class GamePanel extends JPanel {
         // ---------- Initialize different states ----------
         initialState = new InitialState(this);
         mainMenuState = new MainMenuState(this);
-        gameState = new GameState(player, baseWidth, baseHeight, scaleFactor);
+        gameState = new GameState(player, 960, 540, 2); // Default values
         pauseState = new PauseState(this);
         settingsState = new SettingsState(this); 
 
@@ -113,6 +106,6 @@ public class GamePanel extends JPanel {
     }
 
     public void resetGame() {
-        SaveLoadReset.resetGame(this, baseWidth, baseHeight, scaleFactor, profileName);
+        SaveLoadReset.resetGame(this, 960, 540, 2, profileName); // Default values
     }
 }
