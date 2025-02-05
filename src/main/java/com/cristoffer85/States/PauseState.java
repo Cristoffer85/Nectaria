@@ -26,17 +26,9 @@ public class PauseState extends JPanel {
         buttonPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
 
         // Create and style the "Resume Game" button
-        JButton resumeButton = new JButton("RESUME GAME");
+        JButton resumeButton = new JButton("RESUME");
         resumeButton.addActionListener(e -> gamePanel.changeGameState(StateDefinitions.GAME));
         styleButton(resumeButton);
-
-        // Create and style the "Save Game" button
-        JButton saveButton = new JButton("SAVE GAME");
-        saveButton.addActionListener(e -> {
-            gamePanel.saveGame();
-            gamePanel.requestFocusInWindow();
-        });
-        styleButton(saveButton);
 
         // Create and style the "Load Game" button
         JButton loadButton = new JButton("LOAD GAME");
@@ -44,22 +36,22 @@ public class PauseState extends JPanel {
         styleButton(loadButton);
 
         // Create and style the "Quit Game" button
-        JButton quitButton = new JButton("QUIT GAME");
-        quitButton.addActionListener(e -> gamePanel.changeGameState(StateDefinitions.MAIN_MENU));
+        JButton quitButton = new JButton("SAVE & QUIT");
+        quitButton.addActionListener(e -> {
+            gamePanel.saveGame();
+            gamePanel.changeGameState(StateDefinitions.MAIN_MENU);
+        });
         styleButton(quitButton);
 
         // Add buttons to the button panel
         buttonPanel.add(resumeButton);
         buttonPanel.add(Box.createVerticalStrut(10));
-        buttonPanel.add(saveButton);
-        buttonPanel.add(Box.createVerticalStrut(10));
         buttonPanel.add(loadButton);
-        buttonPanel.add(Box.createVerticalStrut(200));
+        buttonPanel.add(Box.createVerticalStrut(250));
         buttonPanel.add(quitButton);
 
         // Center buttons horizontally
         resumeButton.setAlignmentX(Component.CENTER_ALIGNMENT);
-        saveButton.setAlignmentX(Component.CENTER_ALIGNMENT);
         loadButton.setAlignmentX(Component.CENTER_ALIGNMENT);
         quitButton.setAlignmentX(Component.CENTER_ALIGNMENT);
 
