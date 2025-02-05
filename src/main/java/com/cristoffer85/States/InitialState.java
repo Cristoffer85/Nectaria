@@ -10,7 +10,7 @@ import java.awt.*;
 
 public class InitialState extends StateMenuDesign {
 
-    private static final int BOTTOM_PANEL_OFFSET = 280;
+    private static final int BOTTOM_PANEL_OFFSET = 180;
 
     public InitialState(GamePanel gamePanel) {
         setLayout(new BorderLayout());
@@ -35,6 +35,14 @@ public class InitialState extends StateMenuDesign {
         buttonPanel.add(regularMenuButton("CREATE NEW PROFILE", e -> createNewProfile(gamePanel)));
         buttonPanel.add(Box.createVerticalStrut(MENUBUTTON_VERTICAL_SPACING));
         buttonPanel.add(regularMenuButton("SELECT EXISTING PROFILE", e -> selectProfile(gamePanel)));
+        buttonPanel.add(Box.createVerticalStrut(MENUBUTTON_VERTICAL_SPACING));
+
+        // Add an invisible space the size of a button
+        Dimension buttonSize = new Dimension(200, 50); // Adjust size as needed
+        buttonPanel.add(new Box.Filler(buttonSize, buttonSize, buttonSize));
+
+        buttonPanel.add(Box.createVerticalStrut(MENUBUTTON_VERTICAL_SPACING));
+        buttonPanel.add(regularMenuButton("EXIT GAME", e -> System.exit(0)));
         buttonPanel.add(Box.createVerticalStrut(BOTTOM_PANEL_OFFSET));
 
         return buttonPanel;

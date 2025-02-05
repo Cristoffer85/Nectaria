@@ -12,9 +12,14 @@ public class Game {
         frame = new JFrame("New proper 2D collision game");
         gamePanel = new GamePanel();
         frame.add(gamePanel);
-        frame.pack();
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setLocationRelativeTo(null);
+
+        // Set the frame to fullscreen mode
+        frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
+        frame.setUndecorated(true);
         frame.setVisible(true);
+
+        // Ensure the game panel is focused to receive key events
+        gamePanel.requestFocusInWindow();
     }
 }
