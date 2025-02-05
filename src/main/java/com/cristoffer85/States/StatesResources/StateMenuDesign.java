@@ -81,11 +81,13 @@ public class StateMenuDesign extends JPanel {
     }
 
     protected void addTitle(JPanel panel, String title) {
+        panel.add(Box.createVerticalGlue());
         JLabel titleLabel = new JLabel(title);
         titleLabel.setFont(MENU_BUTTON_FONTANDSIZE);
         titleLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
         panel.add(titleLabel);
-        panel.setBackground(BACKGROUND_COLOR);
         panel.add(Box.createVerticalStrut(MIDDLE_PANEL_OFFSET));
+        panel.add(Box.createVerticalGlue());
+        panel.setBackground(BACKGROUND_COLOR);
     }
 }

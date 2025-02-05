@@ -23,7 +23,7 @@ public class SettingsState extends StateMenuDesign {
     private JPanel middlePanel() {
         JPanel panel = createVerticalPanel();
         panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
-        addTitle(panel, "Settings");
+        addTitle(panel, "SETTINGS");
         return panel;
     }
 
