@@ -21,30 +21,30 @@ public class MainMenuState extends StateMenuDesign {
     }
 
     private JPanel topPanel(GamePanel gamePanel) {
-        JPanel switchUserPanel = createBothVertAndHorizPanelWithFLowLayout(new FlowLayout(FlowLayout.RIGHT));
+        JPanel switchUserPanel = createCombinedVerticalAndHorizontalPanel(new FlowLayout(FlowLayout.RIGHT));
         JButton switchUserButton = switchUserButton("Switch User", e -> gamePanel.changeGameState(StateDefinitions.INITIAL_STATE));
         switchUserPanel.add(switchUserButton);
         return switchUserPanel;
     }
 
     private JPanel middlePanel() {
-        JPanel logoPanel = createSimpleVerticalPanel();
+        JPanel logoPanel = createVerticalPanel();
         logoPanel.setLayout(new BoxLayout(logoPanel, BoxLayout.Y_AXIS));
-        addLogo(logoPanel);
+        addLogo(logoPanel, 1.5);
         return logoPanel;
     }
 
     private JPanel bottomPanel(GamePanel gamePanel) {
-        JPanel buttonPanel = createSimpleVerticalPanel();
+        JPanel buttonPanel = createVerticalPanel();
         buttonPanel.setLayout(new BoxLayout(buttonPanel, BoxLayout.Y_AXIS));
-
+    
         buttonPanel.add(menuButton("RESUME", e -> gamePanel.loadGame()));
         buttonPanel.add(Box.createVerticalStrut(MENUBUTTON_VERTICAL_SPACING));
         buttonPanel.add(menuButton("START NEW GAME", e -> startNewGame(gamePanel)));
         buttonPanel.add(Box.createVerticalStrut(MENUBUTTON_VERTICAL_SPACING));
-        buttonPanel.add(menuButton("TEST BUTTON", e -> System.out.println("Test Button Clicked")));
+        buttonPanel.add(menuButton("SETTINGS", e -> gamePanel.changeGameState(StateDefinitions.SETTINGS_MENU)));
         buttonPanel.add(Box.createVerticalStrut(BOTTOM_PANEL_OFFSET));
-
+    
         return buttonPanel;
     }
 

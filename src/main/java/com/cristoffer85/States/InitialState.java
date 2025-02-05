@@ -21,15 +21,15 @@ public class InitialState extends StateMenuDesign {
     }
 
     private JPanel middlePanel() {
-        JPanel logoPanel = createSimpleVerticalPanel();
+        JPanel logoPanel = createVerticalPanel();
         logoPanel.setLayout(new BoxLayout(logoPanel, BoxLayout.Y_AXIS));
         logoPanel.add(Box.createVerticalStrut(MIDDLE_PANEL_OFFSET));
-        addLogo(logoPanel);
+        addLogo(logoPanel, 1.5);
         return logoPanel;
     }
 
     private JPanel bottomPanel(GamePanel gamePanel) {
-        JPanel buttonPanel = createSimpleVerticalPanel();
+        JPanel buttonPanel = createVerticalPanel();
         buttonPanel.setLayout(new BoxLayout(buttonPanel, BoxLayout.Y_AXIS));
 
         buttonPanel.add(menuButton("CREATE NEW PROFILE", e -> createNewProfile(gamePanel)));

@@ -1,5 +1,7 @@
 package com.cristoffer85.States;
 import com.cristoffer85.States.StatesResources.StateMenuDesign;
+import com.cristoffer85.States.StatesResources.StateDefinitions;
+import com.cristoffer85.Main.GamePanel;
 
 import javax.swing.*;
 import java.awt.*;
@@ -7,32 +9,37 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class SettingsState extends StateMenuDesign {
-    private JPanel settingsPanel;
 
-    public SettingsState() {
-        settingsPanel = createSimpleVerticalPanel();
-        initializeSettingsMenu();
+    private static final int BOTTOM_PANEL_OFFSET = 280;
+
+    public SettingsState(GamePanel gamePanel) {
+        setLayout(new BorderLayout());
+
+        // Uses Borderlayout to place the panels in the correct vertical positions on the screen.
+        add(middlePanel(), BorderLayout.CENTER);
+        add(bottomPanel(gamePanel), BorderLayout.SOUTH);
     }
 
-    private void initializeSettingsMenu() {
-        JLabel titleLabel = new JLabel("Settings");
-        titleLabel.setFont(MENU_BUTTON_FONTANDSIZE);
-        titleLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
-        settingsPanel.add(titleLabel);
-        settingsPanel.add(Box.createVerticalStrut(MIDDLE_PANEL_OFFSET));
+    private JPanel middlePanel() {
+        JPanel panel = createVerticalPanel();
+        panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
+        addTitle(panel, "Settings");
+        return panel;
+    }
+
+    private JPanel bottomPanel(GamePanel gamePanel) {
+        JPanel buttonPanel = createVerticalPanel();
+        buttonPanel.setLayout(new BoxLayout(buttonPanel, BoxLayout.Y_AXIS));
 
         JButton backButton = menuButton("Back", new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                // Logic to return to the previous state
+                gamePanel.changeGameState(StateDefinitions.MAIN_MENU);
             }
         });
-        settingsPanel.add(backButton);
-        
-        // Additional settings options can be added here
-    }
+        buttonPanel.add(backButton);
+        buttonPanel.add(Box.createVerticalStrut(BOTTOM_PANEL_OFFSET));
 
-    public JPanel getSettingsPanel() {
-        return settingsPanel;
+        return buttonPanel;
     }
 }

@@ -16,13 +16,13 @@ public class StateMenuDesign extends JPanel {
 
     protected Image logoImage;
 
-    protected JPanel createSimpleVerticalPanel() {
+    protected JPanel createVerticalPanel() {
         JPanel panel = new JPanel();
         panel.setBackground(BACKGROUND_COLOR);
         return panel;
     }
 
-    protected JPanel createBothVertAndHorizPanelWithFLowLayout(LayoutManager layout) {
+    protected JPanel createCombinedVerticalAndHorizontalPanel(LayoutManager layout) {
         JPanel panel = new JPanel(layout);
         panel.setBackground(BACKGROUND_COLOR);
         return panel;
@@ -59,12 +59,19 @@ public class StateMenuDesign extends JPanel {
         }
     }
 
-    protected void addLogo(JPanel logoPanel) {
+    protected void addLogo(JPanel logoPanel, double scale) {
         try {
             ImageIcon logoIcon = new ImageIcon(getClass().getResource("/Logo.png"));
-            logoImage = scaleImage(logoIcon.getImage(), 1.5);
-            JLabel logoLabel = new JLabel(new ImageIcon(logoImage));
+            Image logoImage = logoIcon.getImage();
+
+                    int width = (int) (logoImage.getWidth(null) * scale);
+                    int height = (int) (logoImage.getHeight(null) * scale);
+
+            Image scaledImage = logoImage.getScaledInstance(width, height, Image.SCALE_SMOOTH);
+            
+            JLabel logoLabel = new JLabel(new ImageIcon(scaledImage));
             logoLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
+
             logoPanel.add(Box.createVerticalStrut(100));
             logoPanel.add(logoLabel);
             logoPanel.add(Box.createVerticalGlue());
@@ -73,9 +80,12 @@ public class StateMenuDesign extends JPanel {
         }
     }
 
-    protected Image scaleImage(Image image, double scale) {
-        int width = (int) (image.getWidth(null) * scale);
-        int height = (int) (image.getHeight(null) * scale);
-        return image.getScaledInstance(width, height, Image.SCALE_SMOOTH);
+    protected void addTitle(JPanel panel, String title) {
+        JLabel titleLabel = new JLabel(title);
+        titleLabel.setFont(MENU_BUTTON_FONTANDSIZE);
+        titleLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
+        panel.add(titleLabel);
+        panel.setBackground(BACKGROUND_COLOR);
+        panel.add(Box.createVerticalStrut(MIDDLE_PANEL_OFFSET));
     }
 }

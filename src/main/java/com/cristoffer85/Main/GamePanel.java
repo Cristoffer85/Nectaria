@@ -55,7 +55,7 @@ public class GamePanel extends JPanel {
         mainMenuState = new MainMenuState(this);
         gameState = new GameState(player, baseWidth, baseHeight, scaleFactor);
         pauseState = new PauseState(this);
-        settingsState = new SettingsState(); 
+        settingsState = new SettingsState(this); 
 
         // ..and add them to the "card" layout.
         setLayout(new CardLayout());
