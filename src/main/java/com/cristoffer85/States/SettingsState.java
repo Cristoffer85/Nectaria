@@ -43,10 +43,25 @@ public class SettingsState extends StateDesign {
         gbc.insets = new Insets(5, 5, 5, 5);
         gbc.anchor = GridBagConstraints.WEST;
 
+        // Fullscreen checkbox
+        JLabel fullscreenLabel = new JLabel("Fullscreen:");
+        gbc.gridx = 0;
+        gbc.gridy = 0;
+        settingsPanel.add(fullscreenLabel, gbc);
+
+        JCheckBox fullscreenCheckbox = new JCheckBox();
+        fullscreenCheckbox.setSelected(true); // Default to fullscreen
+        gbc.gridx = 1;
+        settingsPanel.add(fullscreenCheckbox, gbc);
+        fullscreenCheckbox.addActionListener(e -> {
+            boolean isSelected = fullscreenCheckbox.isSelected();
+            setFullscreen(isSelected);
+        });
+
         // Resolution dropdown
         JLabel resolutionLabel = new JLabel("Window size:");
         gbc.gridx = 0;
-        gbc.gridy = 0;
+        gbc.gridy = 1;
         settingsPanel.add(resolutionLabel, gbc);
 
         String[] resolutions = {"960x540", "1280x720", "1920x1080"};
@@ -67,7 +82,7 @@ public class SettingsState extends StateDesign {
         // Scale factor dropdown
         JLabel scaleFactorLabel = new JLabel("Graphic scale:");
         gbc.gridx = 0;
-        gbc.gridy = 1;
+        gbc.gridy = 2;
         settingsPanel.add(scaleFactorLabel, gbc);
 
         Map<String, Double> scaleFactorsMap = new HashMap<>();
@@ -109,5 +124,20 @@ public class SettingsState extends StateDesign {
         gamePanel.changeResolution(width, height);
         gamePanel.revalidate();
         gamePanel.repaint();
+    }
+
+    public void setFullscreen(boolean fullscreen) {
+        JFrame frame = (JFrame) SwingUtilities.getWindowAncestor(gamePanel);
+        if (fullscreen) {
+            frame.dispose();
+            frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
+            frame.setUndecorated(true);
+            frame.setVisible(true);
+        } else {
+            frame.dispose();
+            frame.setExtendedState(JFrame.NORMAL);
+            frame.setUndecorated(false);
+            frame.setVisible(true);
+        }
     }
 }
