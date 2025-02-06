@@ -45,6 +45,18 @@ public class SettingsState extends StateDesign {
         panel.add(resolutionDropdown);
         panel.add(Box.createVerticalStrut(20));
 
+        // Scale factor dropdown
+        String[] scaleFactors = {"0.5", "0.9", "1"};
+        JComboBox<String> scaleFactorDropdown = new JComboBox<>(scaleFactors);
+        scaleFactorDropdown.setMaximumSize(new Dimension(200, 30));
+        scaleFactorDropdown.setAlignmentX(Component.CENTER_ALIGNMENT);
+        scaleFactorDropdown.addActionListener(e -> {
+            double scaleFactor = Double.parseDouble((String) scaleFactorDropdown.getSelectedItem());
+            gamePanel.setScaleFactor(scaleFactor);
+        });
+        panel.add(scaleFactorDropdown);
+        panel.add(Box.createVerticalStrut(20));
+
         return panel;
     }
 

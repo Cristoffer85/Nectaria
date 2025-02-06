@@ -13,32 +13,38 @@ public class GameState extends JPanel {
     private BufferedImage gameImage;
     private int baseWidth;
     private int baseHeight;
-    private final int scaleFactor;
+    private double scaleFactor = 1.0; // Default scale
 
-    public GameState(Player player, int baseWidth, int baseHeight, int scaleFactor) {
+    public GameState(Player player, int baseWidth, int baseHeight) {
         this.player = player;
         this.baseWidth = baseWidth;
         this.baseHeight = baseHeight;
-        this.scaleFactor = scaleFactor;
-        this.gameImage = new BufferedImage(baseWidth * scaleFactor, baseHeight * scaleFactor, BufferedImage.TYPE_INT_ARGB);
+        this.gameImage = new BufferedImage((int) (baseWidth * scaleFactor), (int) (baseHeight * scaleFactor), BufferedImage.TYPE_INT_ARGB);
     }
 
     public void updateResolution(int width, int height) {
         this.baseWidth = width;
         this.baseHeight = height;
-        this.gameImage = new BufferedImage(baseWidth * scaleFactor, baseHeight * scaleFactor, BufferedImage.TYPE_INT_ARGB);
+        this.gameImage = new BufferedImage((int) (baseWidth * scaleFactor), (int) (baseHeight * scaleFactor), BufferedImage.TYPE_INT_ARGB);
+        revalidate();
+        repaint();
+    }
+
+    public void setScaleFactor(double scaleFactor) {
+        this.scaleFactor = scaleFactor;
+        this.gameImage = new BufferedImage((int) (baseWidth * scaleFactor), (int) (baseHeight * scaleFactor), BufferedImage.TYPE_INT_ARGB);
         revalidate();
         repaint();
     }
 
     private void paintGame(Graphics g) {
         // Calculate position for Camera following player, keeps player centered on map when not near map boundary
-        int cameraX = player.getX() - (baseWidth * scaleFactor) / 2 + player.getSize() / 2;
-        int cameraY = player.getY() - (baseHeight * scaleFactor) / 2 + player.getSize() / 2 + 24;
+        int cameraX = player.getX() - (int) (baseWidth * scaleFactor) / 2 + player.getSize() / 2;
+        int cameraY = player.getY() - (int) (baseHeight * scaleFactor) / 2 + player.getSize() / 2 + 24;
 
         // Clamp camera position to map boundaries, when player is near map boundary
-        int maxCameraX = Tile.getMapWidth() * Tile.getTileWidth() - (baseWidth * scaleFactor);
-        int maxCameraY = Tile.getMapHeight() * Tile.getTileHeight() - (baseHeight * scaleFactor);
+        int maxCameraX = Tile.getMapWidth() * Tile.getTileWidth() - (int) (baseWidth * scaleFactor);
+        int maxCameraY = Tile.getMapHeight() * Tile.getTileHeight() - (int) (baseHeight * scaleFactor);
         cameraX = Math.max(0, Math.min(cameraX, maxCameraX));
         cameraY = Math.max(0, Math.min(cameraY, maxCameraY));
 
@@ -60,7 +66,7 @@ public class GameState extends JPanel {
         g2d.dispose();
 
         // Draw the BufferedImage scaled up to the panel size
-        g.drawImage(gameImage, 0, 0, gameImage.getWidth() / scaleFactor, gameImage.getHeight() / scaleFactor, null);
+        g.drawImage(gameImage, 0, 0, getWidth(), getHeight(), null);
     }
 
     @Override
