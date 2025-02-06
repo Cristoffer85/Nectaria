@@ -3,6 +3,7 @@ package com.cristoffer85.Main.MainResources;
 import com.cristoffer85.Entity.Obstacle;
 import com.cristoffer85.Entity.Player;
 import com.cristoffer85.States.GameState;
+import com.cristoffer85.States.SettingsState;
 import com.cristoffer85.States.StatesResources.StateDefinitions;
 import com.cristoffer85.Main.GamePanel;
 import com.cristoffer85.Tile.Tile;
@@ -39,9 +40,10 @@ public class SaveLoadReset {
         Player player = new Player(30, 30, 64, 6);
         Obstacle.addObstacles();
         Tile.tilesByMapSize("/MainWorld.txt");
-        GameState gameState = new GameState(player, 1920, 1080);
+        GameState gameState = new GameState(player, gamePanel.getWidth(), gamePanel.getHeight());
         gamePanel.add(gameState, StateDefinitions.GAME.name());
         gamePanel.setPlayer(player);
         gamePanel.initializeGameState(gameState);
+        gamePanel.setScaleFactor(SettingsState.SCALE_FACTORS_MAP.get("SNES"));
     }
 }

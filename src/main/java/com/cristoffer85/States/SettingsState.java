@@ -13,7 +13,7 @@ public class SettingsState extends StateDesign {
 
     private static final int BOTTOM_PANEL_OFFSET = 280;
     private static final String[] RESOLUTIONS = {"1920x1080", "1280x720", "960x540"};
-    private static final Map<String, Double> SCALE_FACTORS_MAP = new HashMap<>();
+    public static final Map<String, Double> SCALE_FACTORS_MAP = new HashMap<>();
 
     static {
         SCALE_FACTORS_MAP.put("SNES", 0.5);
