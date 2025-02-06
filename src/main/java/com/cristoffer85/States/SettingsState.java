@@ -38,6 +38,7 @@ public class SettingsState extends StateDesign {
 
         // Resolution dropdown
         JPanel resolutionPanel = new JPanel(new GridBagLayout());
+        resolutionPanel.setBackground(buttonPanel.getBackground());
         GridBagConstraints gbc = new GridBagConstraints();
         gbc.insets = new Insets(5, 5, 5, 5);
         gbc.anchor = GridBagConstraints.WEST;
@@ -66,6 +67,7 @@ public class SettingsState extends StateDesign {
 
         // Scale factor dropdown
         JPanel scaleFactorPanel = new JPanel(new GridBagLayout());
+        scaleFactorPanel.setBackground(buttonPanel.getBackground());
         JLabel scaleFactorLabel = new JLabel("Graphic scale:");
         gbc.gridx = 0;
         gbc.gridy = 0;
