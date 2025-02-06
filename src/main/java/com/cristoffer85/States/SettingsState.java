@@ -1,4 +1,5 @@
 package com.cristoffer85.States;
+
 import com.cristoffer85.States.StatesResources.StateDesign;
 import com.cristoffer85.States.StatesResources.StateDefinitions;
 import com.cristoffer85.Main.GamePanel;
@@ -53,31 +54,31 @@ public class SettingsState extends StateDesign {
     private JPanel createSettingsPanel() {
         JPanel settingsPanel = new JPanel(new GridBagLayout());
         settingsPanel.setBackground(BACKGROUND_COLOR);
-        GridBagConstraints gbc = createGbc();
+        GridBagConstraints gbc = createGrid();
 
-        addComponent(settingsPanel, createLabel("Fullscreen:"), gbc, 0, 0);
-        addComponent(settingsPanel, createFullscreenCheckbox(), gbc, 1, 0);
-
-        addComponent(settingsPanel, createLabel("Window size:"), gbc, 0, 1);
-        addComponent(settingsPanel, createResolutionDropdown(), gbc, 1, 1);
-
-        addComponent(settingsPanel, createLabel("Graphic scale:"), gbc, 0, 2);
-        addComponent(settingsPanel, createScaleFactorDropdown(), gbc, 1, 2);
+        JoinLabelAndComponentInColumn(settingsPanel, "Fullscreen:", createFullscreenCheckbox(), gbc, 0);
+        JoinLabelAndComponentInColumn(settingsPanel, "Window size:", createResolutionDropdown(), gbc, 1);
+        JoinLabelAndComponentInColumn(settingsPanel, "Graphic scale:", createScaleFactorDropdown(), gbc, 2);
 
         return settingsPanel;
     }
 
-    private GridBagConstraints createGbc() {
+    private void JoinLabelAndComponentInColumn(JPanel panel, String labelText, JComponent component, GridBagConstraints gbc, int row) {
+        addComponentToGrid(panel, createLabel(labelText), gbc, 0, row);
+        addComponentToGrid(panel, component, gbc, 1, row);
+    }
+
+    private void addComponentToGrid(JPanel panel, JComponent component, GridBagConstraints gbc, int x, int y) {
+        gbc.gridx = x;
+        gbc.gridy = y;
+        panel.add(component, gbc);
+    }
+
+    private GridBagConstraints createGrid() {
         GridBagConstraints gbc = new GridBagConstraints();
         gbc.insets = new Insets(5, 5, 5, 5);
         gbc.anchor = GridBagConstraints.WEST;
         return gbc;
-    }
-
-    private void addComponent(JPanel panel, JComponent component, GridBagConstraints gbc, int x, int y) {
-        gbc.gridx = x;
-        gbc.gridy = y;
-        panel.add(component, gbc);
     }
 
     private JLabel createLabel(String text) {
@@ -90,7 +91,7 @@ public class SettingsState extends StateDesign {
     private JCheckBox createFullscreenCheckbox() {
         JCheckBox checkbox = new JCheckBox();
         checkbox.setSelected(true);
-        checkbox.setBackground(BACKGROUND_COLOR); 
+        checkbox.setBackground(BACKGROUND_COLOR);
         checkbox.addActionListener(e -> setFullscreen(checkbox.isSelected()));
         return checkbox;
     }
