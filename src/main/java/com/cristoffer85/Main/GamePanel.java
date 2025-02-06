@@ -46,7 +46,7 @@ public class GamePanel extends JPanel {
         // ---------- Initialize different states ----------
         initialState = new InitialState(this);
         mainMenuState = new MainMenuState(this);
-        gameState = new GameState(player, 960, 540, 1); // Default values for 1920x1080 resolution, the scale is 2 by default for scaling the view up to "SNES" style
+        gameState = new GameState(player, 1920, 1080, 1); //
         pauseState = new PauseState(this);
         settingsState = new SettingsState(this); 
 
