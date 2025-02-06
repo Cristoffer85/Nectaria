@@ -20,25 +20,25 @@ public class GameState extends JPanel {
         this.baseWidth = baseWidth;
         this.baseHeight = baseHeight;
         this.scaleFactor = scaleFactor;
-        this.gameImage = new BufferedImage(baseWidth, baseHeight, BufferedImage.TYPE_INT_ARGB);
+        this.gameImage = new BufferedImage(baseWidth * scaleFactor, baseHeight * scaleFactor, BufferedImage.TYPE_INT_ARGB);
     }
 
     public void updateResolution(int width, int height) {
         this.baseWidth = width;
         this.baseHeight = height;
-        this.gameImage = new BufferedImage(baseWidth, baseHeight, BufferedImage.TYPE_INT_ARGB);
+        this.gameImage = new BufferedImage(baseWidth * scaleFactor, baseHeight * scaleFactor, BufferedImage.TYPE_INT_ARGB);
         revalidate();
         repaint();
     }
 
     private void paintGame(Graphics g) {
         // Calculate position for Camera following player, keeps player centered on map when not near map boundary
-        int cameraX = player.getX() - baseWidth / 2 + player.getSize() / 2;
-        int cameraY = player.getY() - baseHeight / 2 + player.getSize() / 2 + 24;
+        int cameraX = player.getX() - (baseWidth * scaleFactor) / 2 + player.getSize() / 2;
+        int cameraY = player.getY() - (baseHeight * scaleFactor) / 2 + player.getSize() / 2 + 24;
 
         // Clamp camera position to map boundaries, when player is near map boundary
-        int maxCameraX = Tile.getMapWidth() * Tile.getTileWidth() - baseWidth;
-        int maxCameraY = Tile.getMapHeight() * Tile.getTileHeight() - baseHeight;
+        int maxCameraX = Tile.getMapWidth() * Tile.getTileWidth() - (baseWidth * scaleFactor);
+        int maxCameraY = Tile.getMapHeight() * Tile.getTileHeight() - (baseHeight * scaleFactor);
         cameraX = Math.max(0, Math.min(cameraX, maxCameraX));
         cameraY = Math.max(0, Math.min(cameraY, maxCameraY));
 
@@ -60,7 +60,7 @@ public class GameState extends JPanel {
         g2d.dispose();
 
         // Draw the BufferedImage scaled up to the panel size
-        g.drawImage(gameImage, 0, 0, gameImage.getWidth(), gameImage.getHeight(), null);
+        g.drawImage(gameImage, 0, 0, gameImage.getWidth() / scaleFactor, gameImage.getHeight() / scaleFactor, null);
     }
 
     @Override
