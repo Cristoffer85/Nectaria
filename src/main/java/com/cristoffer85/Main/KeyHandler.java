@@ -46,7 +46,7 @@ public class KeyHandler extends KeyAdapter {
         return keysPressed.contains(keyBindings.get(action));
     }
 
-    // Specific individual key handling methods below
+    // Specific individual key handling methods below == IF pressing ESC/Pause when in game, pause the game - IF pressing ESC/Pause when in pause menu, resume the game. Sure theres another more beautiful way of doing this but it works for now.
     private void handlePause(KeyEvent e) {
         if (e.getKeyCode() == keyBindings.get("pause")) {
             if (gamePanel.getCurrentState() == StateDefinitions.GAME) {
