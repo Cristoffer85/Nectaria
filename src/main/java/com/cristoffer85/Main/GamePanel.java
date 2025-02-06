@@ -37,7 +37,7 @@ public class GamePanel extends JPanel {
         Obstacle.addObstacles();
 
         // Initialize key handler
-        keyHandler = new KeyHandler(this, settingsState);
+        keyHandler = new KeyHandler(this);
 
         // Initialize tilesheet and map
         Tile.loadTilesheet("/TileSheet.png", 64, 64);

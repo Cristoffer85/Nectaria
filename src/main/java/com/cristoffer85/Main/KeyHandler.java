@@ -1,6 +1,5 @@
 package com.cristoffer85.Main;
 
-import com.cristoffer85.States.SettingsState;
 import com.cristoffer85.States.StatesResources.StateDefinitions;
 
 import java.awt.event.KeyAdapter;
@@ -13,19 +12,14 @@ public class KeyHandler extends KeyAdapter {
     private final Set<Integer> keysPressed = new HashSet<>();
     private final Map<String, Integer> keyBindings;
     private final GamePanel gamePanel;
-    private final SettingsState settingsState;
 
-    public KeyHandler(GamePanel gamePanel, SettingsState settingsState) {
+    public KeyHandler(GamePanel gamePanel) {
         this.gamePanel = gamePanel;
-        this.settingsState = settingsState;
         keyBindings = Map.of(
             "moveLeft", KeyEvent.VK_A,
             "moveRight", KeyEvent.VK_D,
             "moveUp", KeyEvent.VK_W,
             "moveDown", KeyEvent.VK_S,
-            "resolution720p", KeyEvent.VK_F1,
-            "resolution1080p", KeyEvent.VK_F2,
-            "resolution1440p", KeyEvent.VK_F3,
             "pause", KeyEvent.VK_ESCAPE
         );
         initialize();
@@ -40,7 +34,6 @@ public class KeyHandler extends KeyAdapter {
     @Override
     public void keyPressed(KeyEvent e) {
         keysPressed.add(e.getKeyCode());
-        handleResolutionChange(e);
         handlePause(e);
     }
 
@@ -54,16 +47,6 @@ public class KeyHandler extends KeyAdapter {
     }
 
     // Specific individual key handling methods below
-    private void handleResolutionChange(KeyEvent e) {
-        if (e.getKeyCode() == keyBindings.get("resolution720p")) {
-            settingsState.changeResolution(1280, 720);
-        } else if (e.getKeyCode() == keyBindings.get("resolution1080p")) {
-            settingsState.changeResolution(1920, 1080);
-        } else if (e.getKeyCode() == keyBindings.get("resolution1440p")) {
-            settingsState.changeResolution(2560, 1440);
-        }
-    }
-
     private void handlePause(KeyEvent e) {
         if (e.getKeyCode() == keyBindings.get("pause")) {
             if (gamePanel.getCurrentState() == StateDefinitions.GAME) {

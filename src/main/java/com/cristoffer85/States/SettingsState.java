@@ -11,9 +11,6 @@ import java.awt.event.ActionListener;
 public class SettingsState extends StateDesign {
 
     private static final int BOTTOM_PANEL_OFFSET = 280;
-    private int baseWidth = 960;        // Default base resolution width
-    private int baseHeight = 540;       // Default base resolution height
-    private int scaleFactor = 2;        // Default scale factor
 
     private GamePanel gamePanel;
 
@@ -40,24 +37,12 @@ public class SettingsState extends StateDesign {
             String selectedResolution = (String) resolutionDropdown.getSelectedItem();
             if (selectedResolution != null) {
                 String[] dimensions = selectedResolution.split("x");
-                baseWidth = Integer.parseInt(dimensions[0]);
-                baseHeight = Integer.parseInt(dimensions[1]);
-                changeResolution();
+                int width = Integer.parseInt(dimensions[0]);
+                int height = Integer.parseInt(dimensions[1]);
+                changeResolution(width, height);
             }
         });
         panel.add(resolutionDropdown);
-        panel.add(Box.createVerticalStrut(20));
-
-        // Scale factor dropdown
-        String[] scaleFactors = {"1", "2", "3"};
-        JComboBox<String> scaleFactorDropdown = new JComboBox<>(scaleFactors);
-        scaleFactorDropdown.setMaximumSize(new Dimension(200, 30));
-        scaleFactorDropdown.setAlignmentX(Component.CENTER_ALIGNMENT);
-        scaleFactorDropdown.addActionListener(e -> {
-            scaleFactor = Integer.parseInt((String) scaleFactorDropdown.getSelectedItem());
-            changeResolution();
-        });
-        panel.add(scaleFactorDropdown);
         panel.add(Box.createVerticalStrut(20));
 
         return panel;
@@ -79,17 +64,11 @@ public class SettingsState extends StateDesign {
         return buttonPanel;
     }
 
-    private void changeResolution() {
+    public void changeResolution(int width, int height) {
         JFrame frame = (JFrame) SwingUtilities.getWindowAncestor(gamePanel);
-        frame.setSize(baseWidth * scaleFactor, baseHeight * scaleFactor);
+        frame.setSize(width * 2, height * 2); // Use the default scale factor of 2
         frame.setLocationRelativeTo(null);
         gamePanel.revalidate();
         gamePanel.repaint();
-    }
-
-    public void changeResolution(int width, int height) {
-        this.baseWidth = width;
-        this.baseHeight = height;
-        changeResolution();
     }
 }
