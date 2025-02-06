@@ -7,6 +7,8 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.HashMap;
+import java.util.Map;
 
 public class SettingsState extends StateDesign {
 
@@ -27,12 +29,29 @@ public class SettingsState extends StateDesign {
         JPanel panel = createVerticalPanel();
         panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
         addTitle(panel, "SETTINGS");
+        return panel;
+    }
+
+    private JPanel bottomPanel() {
+        JPanel buttonPanel = createVerticalPanel();
+        buttonPanel.setLayout(new BoxLayout(buttonPanel, BoxLayout.Y_AXIS));
 
         // Resolution dropdown
+        JPanel resolutionPanel = new JPanel(new GridBagLayout());
+        GridBagConstraints gbc = new GridBagConstraints();
+        gbc.insets = new Insets(5, 5, 5, 5);
+        gbc.anchor = GridBagConstraints.WEST;
+
+        JLabel resolutionLabel = new JLabel("Window size:");
+        gbc.gridx = 0;
+        gbc.gridy = 0;
+        resolutionPanel.add(resolutionLabel, gbc);
+
         String[] resolutions = {"960x540", "1280x720", "1920x1080"};
         JComboBox<String> resolutionDropdown = new JComboBox<>(resolutions);
         resolutionDropdown.setMaximumSize(new Dimension(200, 30));
-        resolutionDropdown.setAlignmentX(Component.CENTER_ALIGNMENT);
+        gbc.gridx = 1;
+        resolutionPanel.add(resolutionDropdown, gbc);
         resolutionDropdown.addActionListener(e -> {
             String selectedResolution = (String) resolutionDropdown.getSelectedItem();
             if (selectedResolution != null) {
@@ -42,27 +61,34 @@ public class SettingsState extends StateDesign {
                 changeResolution(width, height);
             }
         });
-        panel.add(resolutionDropdown);
-        panel.add(Box.createVerticalStrut(20));
+        buttonPanel.add(resolutionPanel);
+        buttonPanel.add(Box.createVerticalStrut(20));
 
         // Scale factor dropdown
-        String[] scaleFactors = {"0.5", "0.9", "1"};
-        JComboBox<String> scaleFactorDropdown = new JComboBox<>(scaleFactors);
+        JPanel scaleFactorPanel = new JPanel(new GridBagLayout());
+        JLabel scaleFactorLabel = new JLabel("Graphic scale:");
+        gbc.gridx = 0;
+        gbc.gridy = 0;
+        scaleFactorPanel.add(scaleFactorLabel, gbc);
+
+        Map<String, Double> scaleFactorsMap = new HashMap<>();
+        scaleFactorsMap.put("SNES", 0.5);
+        scaleFactorsMap.put("Small", 1.0);
+
+        String[] scaleFactorNames = scaleFactorsMap.keySet().toArray(new String[0]);
+        JComboBox<String> scaleFactorDropdown = new JComboBox<>(scaleFactorNames);
         scaleFactorDropdown.setMaximumSize(new Dimension(200, 30));
-        scaleFactorDropdown.setAlignmentX(Component.CENTER_ALIGNMENT);
+        gbc.gridx = 1;
+        scaleFactorPanel.add(scaleFactorDropdown, gbc);
         scaleFactorDropdown.addActionListener(e -> {
-            double scaleFactor = Double.parseDouble((String) scaleFactorDropdown.getSelectedItem());
-            gamePanel.setScaleFactor(scaleFactor);
+            String selectedScaleFactorName = (String) scaleFactorDropdown.getSelectedItem();
+            if (selectedScaleFactorName != null) {
+                double scaleFactor = scaleFactorsMap.get(selectedScaleFactorName);
+                gamePanel.setScaleFactor(scaleFactor);
+            }
         });
-        panel.add(scaleFactorDropdown);
-        panel.add(Box.createVerticalStrut(20));
-
-        return panel;
-    }
-
-    private JPanel bottomPanel() {
-        JPanel buttonPanel = createVerticalPanel();
-        buttonPanel.setLayout(new BoxLayout(buttonPanel, BoxLayout.Y_AXIS));
+        buttonPanel.add(scaleFactorPanel);
+        buttonPanel.add(Box.createVerticalStrut(20));
 
         JButton backButton = regularMenuButton("Back", new ActionListener() {
             @Override

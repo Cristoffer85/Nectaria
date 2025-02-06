@@ -13,7 +13,7 @@ public class GameState extends JPanel {
     private BufferedImage gameImage;
     private int baseWidth;
     private int baseHeight;
-    private double scaleFactor = 1.0; // Default scale
+    private double scaleFactor = 1.0; // Default scale == if lowering this game will be even bigger and will affect values in SettingsState.scaleFactors dropdown (0.5 and 1 there will be bigger view of game)
 
     public GameState(Player player, int baseWidth, int baseHeight) {
         this.player = player;
