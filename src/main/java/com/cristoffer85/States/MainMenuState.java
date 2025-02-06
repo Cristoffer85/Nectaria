@@ -2,12 +2,12 @@ package com.cristoffer85.States;
 
 import com.cristoffer85.Main.GamePanel;
 import com.cristoffer85.States.StatesResources.StateDefinitions;
-import com.cristoffer85.States.StatesResources.StateMenuDesign;
+import com.cristoffer85.States.StatesResources.StateDesign;
 
 import javax.swing.*;
 import java.awt.*;
 
-public class MainMenuState extends StateMenuDesign {
+public class MainMenuState extends StateDesign {
 
     private static final int BOTTOM_PANEL_OFFSET = 180;
 

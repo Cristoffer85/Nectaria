@@ -1,5 +1,5 @@
 package com.cristoffer85.States;
-import com.cristoffer85.States.StatesResources.StateMenuDesign;
+import com.cristoffer85.States.StatesResources.StateDesign;
 import com.cristoffer85.States.StatesResources.StateDefinitions;
 import com.cristoffer85.Main.GamePanel;
 
@@ -8,7 +8,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class SettingsState extends StateMenuDesign {
+public class SettingsState extends StateDesign {
 
     private static final int BOTTOM_PANEL_OFFSET = 280;
     private int baseWidth = 960;        // Default base resolution width

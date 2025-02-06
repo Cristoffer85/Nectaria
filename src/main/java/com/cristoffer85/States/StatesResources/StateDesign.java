@@ -5,7 +5,7 @@ import java.awt.*;
 import java.io.IOException;
 import java.awt.event.ActionListener;
 
-public class StateMenuDesign extends JPanel {
+public class StateDesign extends JPanel {
     protected static final Color BACKGROUND_COLOR = Color.ORANGE;
     protected static final int MIDDLE_PANEL_OFFSET = 36;
     protected static final Color BUTTON_COLOR = Color.ORANGE;

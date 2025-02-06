@@ -2,7 +2,7 @@ package com.cristoffer85.States;
 
 import com.cristoffer85.Main.GamePanel;
 import com.cristoffer85.States.StatesResources.StateDefinitions;
-import com.cristoffer85.States.StatesResources.StateMenuDesign;
+import com.cristoffer85.States.StatesResources.StateDesign;
 
 import javax.swing.*;
 import java.awt.*;
@@ -10,7 +10,7 @@ import java.awt.image.BufferedImage;
 
 public class PauseState extends JPanel {
     private Image gameStateImage;
-    private static final Font BUTTON_FONT = new StateMenuDesign().loadCustomFont("/Retro-pixelfont.ttf", 24f);
+    private static final Font BUTTON_FONT = new StateDesign().loadCustomFont("/Retro-pixelfont.ttf", 24f);
 
     public PauseState(GamePanel gamePanel) {
         setLayout(new GridBagLayout());
