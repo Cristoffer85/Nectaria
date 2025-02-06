@@ -66,7 +66,7 @@ public class SettingsState extends StateDesign {
 
     public void changeResolution(int width, int height) {
         JFrame frame = (JFrame) SwingUtilities.getWindowAncestor(gamePanel);
-        frame.setSize(width * 2, height * 2); // Use the default scale factor of 2
+        frame.setSize(width, height); // Set the frame size to the selected resolution
         frame.setLocationRelativeTo(null);
         gamePanel.revalidate();
         gamePanel.repaint();

@@ -108,4 +108,8 @@ public class GamePanel extends JPanel {
     public void resetGame() {
         SaveLoadReset.resetGame(this, 960, 540, 2, profileName); // Default values
     }
+
+    public void changeResolution(int width, int height) {
+        gameState.updateResolution(width, height);
+    }
 }

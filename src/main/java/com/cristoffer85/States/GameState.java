@@ -10,9 +10,9 @@ import java.awt.image.BufferedImage;
 
 public class GameState extends JPanel {
     private final Player player;
-    private final BufferedImage gameImage;
-    private final int baseWidth;
-    private final int baseHeight;
+    private BufferedImage gameImage;
+    private int baseWidth;
+    private int baseHeight;
     private final int scaleFactor;
 
     public GameState(Player player, int baseWidth, int baseHeight, int scaleFactor) {
@@ -21,6 +21,14 @@ public class GameState extends JPanel {
         this.baseHeight = baseHeight;
         this.scaleFactor = scaleFactor;
         this.gameImage = new BufferedImage(baseWidth, baseHeight, BufferedImage.TYPE_INT_ARGB);
+    }
+
+    public void updateResolution(int width, int height) {
+        this.baseWidth = width;
+        this.baseHeight = height;
+        this.gameImage = new BufferedImage(baseWidth, baseHeight, BufferedImage.TYPE_INT_ARGB);
+        revalidate();
+        repaint();
     }
 
     private void paintGame(Graphics g) {
@@ -52,7 +60,7 @@ public class GameState extends JPanel {
         g2d.dispose();
 
         // Draw the BufferedImage scaled up to the panel size
-        g.drawImage(gameImage, 0, 0, gameImage.getWidth() * scaleFactor, gameImage.getHeight() * scaleFactor, null);
+        g.drawImage(gameImage, 0, 0, gameImage.getWidth(), gameImage.getHeight(), null);
     }
 
     @Override
