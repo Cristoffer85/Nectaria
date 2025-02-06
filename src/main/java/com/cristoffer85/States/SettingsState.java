@@ -64,7 +64,7 @@ public class SettingsState extends StateDesign {
         gbc.gridy = 1;
         settingsPanel.add(resolutionLabel, gbc);
 
-        String[] resolutions = {"960x540", "1280x720", "1920x1080"};
+        String[] resolutions = {"1920x1080", "1280x720", "960x540"};
         JComboBox<String> resolutionDropdown = new JComboBox<>(resolutions);
         resolutionDropdown.setMaximumSize(new Dimension(200, 30));
         gbc.gridx = 1;
@@ -92,6 +92,7 @@ public class SettingsState extends StateDesign {
         String[] scaleFactorNames = scaleFactorsMap.keySet().toArray(new String[0]);
         JComboBox<String> scaleFactorDropdown = new JComboBox<>(scaleFactorNames);
         scaleFactorDropdown.setMaximumSize(new Dimension(200, 30));
+        scaleFactorDropdown.setSelectedItem("SNES");
         gbc.gridx = 1;
         settingsPanel.add(scaleFactorDropdown, gbc);
         scaleFactorDropdown.addActionListener(e -> {

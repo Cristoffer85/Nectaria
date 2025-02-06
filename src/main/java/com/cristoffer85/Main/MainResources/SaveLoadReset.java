@@ -35,11 +35,11 @@ public class SaveLoadReset {
         }
     }
 
-    public static void resetGame(GamePanel gamePanel, int baseWidth, int baseHeight, String profileName) {
+    public static void resetGame(GamePanel gamePanel, String profileName) {
         Player player = new Player(30, 30, 64, 6);
         Obstacle.addObstacles();
         Tile.tilesByMapSize("/MainWorld.txt");
-        GameState gameState = new GameState(player, baseWidth, baseHeight);
+        GameState gameState = new GameState(player, 1920, 1080);
         gamePanel.add(gameState, StateDefinitions.GAME.name());
         gamePanel.setPlayer(player);
         gamePanel.initializeGameState(gameState);

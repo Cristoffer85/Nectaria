@@ -46,7 +46,8 @@ public class GamePanel extends JPanel {
         // ---------- Initialize different states ----------
         initialState = new InitialState(this);
         mainMenuState = new MainMenuState(this);
-        gameState = new GameState(player, 960, 540); // Default values for 1920x1080 resolution, the scale is 2 by default for scaling the view up to "SNES" style
+        gameState = new GameState(player, 1920, 1080);              // Default values for 1920x1080 resolution
+        gameState.setScaleFactor(0.5);                                       // Default start scale factor .5 for 'SNES' style
         pauseState = new PauseState(this);
         settingsState = new SettingsState(this); 
 
@@ -106,7 +107,7 @@ public class GamePanel extends JPanel {
     }
 
     public void resetGame() {
-        SaveLoadReset.resetGame(this, 960, 540, profileName); // Default values
+        SaveLoadReset.resetGame(this, profileName);
     }
 
     public void changeResolution(int width, int height) {
