@@ -31,7 +31,7 @@ public class GamePanel extends JPanel {
 
     public GamePanel() {
         // Initialize player
-        player = new Player(30, 30, 64, 6);
+        player = new Player(30, 30, 64, 6);                            // Set player starting x, starting y, sprite size, moving speed
 
         // Initialize obstacles
         Obstacle.addObstacles();
@@ -40,13 +40,13 @@ public class GamePanel extends JPanel {
         keyHandler = new KeyHandler(this);
 
         // Initialize tilesheet and map
-        Tile.loadTilesheet("/TileSheet.png", 64, 64);
-        Tile.tilesByMapSize("/MainWorld.txt");
+        Tile.loadTilesheet("/TileSheet.png", 64, 64);          // Load TileSheet.png from file, set tile width and tile height. Map rendering will adjust to these values.
+        Tile.tilesByMapSize("/MainWorld.txt");                                      // Load map.txt from file. Set whatever size you want for the map in the text file. Right now current 128x128 tiles.                               
 
         // ---------- Initialize different states ----------
         initialState = new InitialState(this);
         mainMenuState = new MainMenuState(this);
-        gameState = new GameState(player, 960, 540, 2); // Default values
+        gameState = new GameState(player, 960, 540, 2); // Default values for 1920x1080 resolution, the scale is 2 by default for scaling the view up to "SNES" style
         pauseState = new PauseState(this);
         settingsState = new SettingsState(this); 
 
