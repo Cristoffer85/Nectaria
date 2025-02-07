@@ -11,7 +11,7 @@ public class StateDesign extends JPanel {
     protected static final Color BACKGROUND_COLOR = Color.ORANGE;
     protected static final int MIDDLE_PANEL_OFFSET = 36;
     protected static final Color BUTTON_COLOR = Color.ORANGE;
-    protected Font menuButtonFontAndSize = loadCustomFont("/Retro-pixelfont.ttf", 44f);
+    protected Font MENUBUTTON_FONTANDSIZE = loadCustomFont("/Retro-pixelfont.ttf", 44f);
     protected static final Font DEFAULT_FONT = new Font("Arial", Font.PLAIN, 12);
     protected static final Font SWITCH_USER_FONTANDSIZE = new Font("Arial", Font.PLAIN, 12);
     protected static final int MENUBUTTON_VERTICAL_SPACING = 20;
@@ -21,16 +21,7 @@ public class StateDesign extends JPanel {
     private JLabel logoLabel;
     private int originalLogoWidth;
     private int originalLogoHeight;
-    private final double logoInitialScaleFactor = 1.8;
-
-    public StateDesign() {
-        addComponentListener(new ComponentAdapter() {
-            @Override
-            public void componentResized(ComponentEvent e) {
-                adjustComponentSizes();
-            }
-        });
-    }
+    private final double logoInitialScale = 1.8;
 
     protected JPanel createVerticalPanel() {
         JPanel panel = new JPanel();
@@ -47,7 +38,7 @@ public class StateDesign extends JPanel {
     protected JButton regularMenuButton(String text, ActionListener action) {
         JButton button = new JButton(text);
         button.addActionListener(action);
-        button.setFont(menuButtonFontAndSize);
+        button.setFont(MENUBUTTON_FONTANDSIZE);
         button.setForeground(Color.BLACK);
         button.setBackground(BUTTON_COLOR);
         button.setAlignmentX(Component.CENTER_ALIGNMENT);
@@ -83,8 +74,8 @@ public class StateDesign extends JPanel {
             originalLogoWidth = logoImage.getWidth(null);
             originalLogoHeight = logoImage.getHeight(null);
 
-            int initialWidth = (int) (originalLogoWidth * logoInitialScaleFactor);
-            int initialHeight = (int) (originalLogoHeight * logoInitialScaleFactor);
+            int initialWidth = (int) (originalLogoWidth * logoInitialScale);
+            int initialHeight = (int) (originalLogoHeight * logoInitialScale);
             Image scaledImage = logoImage.getScaledInstance(initialWidth, initialHeight, Image.SCALE_SMOOTH);
             logoLabel = new JLabel(new ImageIcon(scaledImage));
 
@@ -101,7 +92,7 @@ public class StateDesign extends JPanel {
     protected void addTitle(JPanel panel, String title) {
         panel.add(Box.createVerticalGlue());
         titleLabel = new JLabel(title);
-        titleLabel.setFont(menuButtonFontAndSize);
+        titleLabel.setFont(MENUBUTTON_FONTANDSIZE);
         titleLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
         panel.add(titleLabel);
         panel.add(Box.createVerticalStrut(MIDDLE_PANEL_OFFSET));
@@ -109,11 +100,19 @@ public class StateDesign extends JPanel {
         panel.setBackground(BACKGROUND_COLOR);
     }
 
+    public StateDesign() {
+        addComponentListener(new ComponentAdapter() {
+            @Override
+            public void componentResized(ComponentEvent e) {
+                adjustComponentSizes();
+            }
+        });
+    }
 
     private void adjustComponentSizes() {
         Dimension size = getSize();
         float overallScaleFactor = Math.min(size.width / 1920f, size.height / 1080f);
-        Font scaledFont = menuButtonFontAndSize.deriveFont(44f * overallScaleFactor);
+        Font scaledFont = MENUBUTTON_FONTANDSIZE.deriveFont(44f * overallScaleFactor);
     
         for (Component component : getComponents()) {
             if (component instanceof JButton) {
@@ -127,7 +126,7 @@ public class StateDesign extends JPanel {
                         if (label.getIcon() != null && label == logoLabel) {
                             // Calculate a new scale factor for the logo.
                             // For example, only allow the logo to shrink but not enlarge beyond its initial size:
-                            double logoScale = overallScaleFactor < 1 ? overallScaleFactor : logoInitialScaleFactor;
+                            double logoScale = overallScaleFactor < 1 ? overallScaleFactor : logoInitialScale;
                             int width = (int) (originalLogoWidth * logoScale);
                             int height = (int) (originalLogoHeight * logoScale);
                             Image scaledImage = logoImage.getScaledInstance(width, height, Image.SCALE_SMOOTH);
@@ -142,6 +141,4 @@ public class StateDesign extends JPanel {
         revalidate();
         repaint();
     }
-    
-
 }

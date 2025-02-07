@@ -10,7 +10,7 @@ import java.awt.*;
 
 public class InitialState extends StateDesign {
 
-    private static final int BOTTOM_PANEL_OFFSET = 180;
+    private static final int BOTTOM_PANEL_OFFSET = 80;
 
     public InitialState(GamePanel gamePanel) {
         setLayout(new BorderLayout());

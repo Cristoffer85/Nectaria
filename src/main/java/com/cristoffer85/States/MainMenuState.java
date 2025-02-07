@@ -9,7 +9,7 @@ import java.awt.*;
 
 public class MainMenuState extends StateDesign {
 
-    private static final int BOTTOM_PANEL_OFFSET = 180;
+    private static final int BOTTOM_PANEL_OFFSET = 80;
 
     public MainMenuState(GamePanel gamePanel) {
         setLayout(new BorderLayout());
