@@ -21,7 +21,6 @@ public class StateDesign extends JPanel {
     private JLabel logoLabel;
     private int originalLogoWidth;
     private int originalLogoHeight;
-    private final double logoInitialScale = 1.8;
 
     protected JPanel createVerticalPanel() {
         JPanel panel = new JPanel();
@@ -74,11 +73,7 @@ public class StateDesign extends JPanel {
             originalLogoWidth = logoImage.getWidth(null);
             originalLogoHeight = logoImage.getHeight(null);
 
-            int initialWidth = (int) (originalLogoWidth * logoInitialScale);
-            int initialHeight = (int) (originalLogoHeight * logoInitialScale);
-            Image scaledImage = logoImage.getScaledInstance(initialWidth, initialHeight, Image.SCALE_SMOOTH);
-            logoLabel = new JLabel(new ImageIcon(scaledImage));
-
+            logoLabel = new JLabel(new ImageIcon(logoImage));
             logoLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
 
             logoPanel.add(Box.createVerticalStrut(100));
@@ -109,23 +104,20 @@ public class StateDesign extends JPanel {
         });
     }
 
-    // Giant method to adjust the sizes of all components in the panel, basically like css media queries, sort of understand it
     private void adjustComponentSizes() {
         Dimension size = getSize();
         float overallScaleFactor = Math.min(size.width / 1920f, size.height / 1080f);
         Font scaledFont = MENUBUTTON_FONTANDSIZE.deriveFont(44f * overallScaleFactor);
-    
-        double logoScale = logoInitialScale; // Default scale factor
-    
-        // Determine the appropriate logo scale factor based on the screen size
-        if (size.width >= 1920 && size.height >= 1080) {
-            logoScale = 2.0;
-        } else if (size.width >= 1280 && size.height >= 720) {
-            logoScale = 1.0;
-        } else if (size.width >= 960 && size.height >= 540) {
-            logoScale = 0.6;
-        }
-    
+
+        double logoScale = 1.0;
+
+        logoScale = switch (size.width) {
+            case 1920 -> (size.height >= 1080) ? 2.0 : logoScale;
+            case 1280 -> (size.height >= 720) ? 1.0 : logoScale;
+            case 960 -> (size.height >= 540) ? 0.5 : logoScale;
+            default -> logoScale;
+        };
+        
         for (Component component : getComponents()) {
             if (component instanceof JButton) {
                 JButton button = (JButton) component;
