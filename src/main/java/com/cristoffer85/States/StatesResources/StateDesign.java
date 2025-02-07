@@ -5,9 +5,17 @@ import java.awt.*;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 import java.awt.event.ActionListener;
 
 public class StateDesign extends JPanel {
+    protected Image logoImage;
+    private JLabel titleLabel;
+    private JLabel logoLabel;
+    private int originalLogoWidth;
+    private int originalLogoHeight;
+
     protected static final Color BACKGROUND_COLOR = Color.ORANGE;
     protected static final int MIDDLE_PANEL_OFFSET = 36;
     protected static final Color BUTTON_COLOR = Color.ORANGE;
@@ -16,11 +24,20 @@ public class StateDesign extends JPanel {
     protected static final Font SWITCH_USER_FONTANDSIZE = new Font("Arial", Font.PLAIN, 12);
     protected static final int MENUBUTTON_VERTICAL_SPACING = 20;
 
-    protected Image logoImage;
-    private JLabel titleLabel;
-    private JLabel logoLabel;
-    private int originalLogoWidth;
-    private int originalLogoHeight;
+    // --------------------------------- Scaling -----------------------------------
+    private static final Map<Dimension, Double> LOGO_SCALE = new HashMap<>();
+    private static final Map<Dimension, Float> MENUBUTTON_FONTSIZE = new HashMap<>();
+
+    static {
+        LOGO_SCALE.put(new Dimension(1920, 1080), 2.0);
+        LOGO_SCALE.put(new Dimension(1280, 720), 1.0);
+        LOGO_SCALE.put(new Dimension(960, 540), 0.7);
+
+        MENUBUTTON_FONTSIZE.put(new Dimension(1920, 1080), 44f * 1.0f);
+        MENUBUTTON_FONTSIZE.put(new Dimension(1280, 720), 44f * 0.5f);
+        MENUBUTTON_FONTSIZE.put(new Dimension(960, 540), 44f * 0.3f);
+    }
+    // ------------------------------------------------------------------------------
 
     protected JPanel createVerticalPanel() {
         JPanel panel = new JPanel();
@@ -107,34 +124,18 @@ public class StateDesign extends JPanel {
     private void adjustComponentSizes() {
         Dimension size = getSize();
         float overallScaleFactor = Math.min(size.width / 1920f, size.height / 1080f);
-        Font scaledFont = MENUBUTTON_FONTANDSIZE.deriveFont(44f * overallScaleFactor);
-
-        double logoScale = 1.0;
-
-        logoScale = switch (size.width) {
-            case 1920 -> (size.height >= 1080) ? 2.0 : logoScale;
-            case 1280 -> (size.height >= 720) ? 1.0 : logoScale;
-            case 960 -> (size.height >= 540) ? 0.5 : logoScale;
-            default -> logoScale;
-        };
-        
+    
+        double logoScale = LOGO_SCALE.getOrDefault(new Dimension(size.width, size.height), 1.0);
+        float buttonFontSize = MENUBUTTON_FONTSIZE.getOrDefault(new Dimension(size.width, size.height), 44f * overallScaleFactor);
+    
+        Font scaledFont = MENUBUTTON_FONTANDSIZE.deriveFont(buttonFontSize);
+    
         for (Component component : getComponents()) {
-            if (component instanceof JButton) {
-                JButton button = (JButton) component;
-                if (button.getFont().equals(SWITCH_USER_FONTANDSIZE)) {
-                    button.setFont(SWITCH_USER_FONTANDSIZE);
-                } else {
-                    button.setFont(scaledFont);
-                }
-            } else if (component instanceof JPanel) {
+            if (component instanceof JPanel) {
                 for (Component subComponent : ((JPanel) component).getComponents()) {
                     if (subComponent instanceof JButton) {
                         JButton button = (JButton) subComponent;
-                        if (button.getFont().equals(SWITCH_USER_FONTANDSIZE)) {
-                            button.setFont(SWITCH_USER_FONTANDSIZE);
-                        } else {
-                            button.setFont(scaledFont);
-                        }
+                        button.setFont(button.getFont().equals(SWITCH_USER_FONTANDSIZE) ? SWITCH_USER_FONTANDSIZE : scaledFont);
                     } else if (subComponent instanceof JLabel) {
                         JLabel label = (JLabel) subComponent;
                         if (label.getIcon() != null && label == logoLabel) {
