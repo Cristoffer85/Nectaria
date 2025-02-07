@@ -30,7 +30,7 @@ public class MainMenuState extends StateDesign {
     private JPanel middlePanel() {
         JPanel logoPanel = createVerticalPanel();
         logoPanel.setLayout(new BoxLayout(logoPanel, BoxLayout.Y_AXIS));
-        addLogo(logoPanel, 1.5);
+        addLogo(logoPanel);
         return logoPanel;
     }
 

@@ -24,7 +24,7 @@ public class InitialState extends StateDesign {
         JPanel logoPanel = createVerticalPanel();
         logoPanel.setLayout(new BoxLayout(logoPanel, BoxLayout.Y_AXIS));
         logoPanel.add(Box.createVerticalStrut(MIDDLE_PANEL_OFFSET));
-        addLogo(logoPanel, 1.5);
+        addLogo(logoPanel);
         return logoPanel;
     }
 
