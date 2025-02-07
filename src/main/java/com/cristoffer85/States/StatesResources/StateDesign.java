@@ -115,6 +115,17 @@ public class StateDesign extends JPanel {
         float overallScaleFactor = Math.min(size.width / 1920f, size.height / 1080f);
         Font scaledFont = MENUBUTTON_FONTANDSIZE.deriveFont(44f * overallScaleFactor);
     
+        double logoScale = logoInitialScale; // Default scale factor
+    
+        // Determine the appropriate logo scale factor based on the screen size
+        if (size.width >= 1920 && size.height >= 1080) {
+            logoScale = 2.0;
+        } else if (size.width >= 1280 && size.height >= 720) {
+            logoScale = 1.0;
+        } else if (size.width >= 960 && size.height >= 540) {
+            logoScale = 0.6;
+        }
+    
         for (Component component : getComponents()) {
             if (component instanceof JButton) {
                 JButton button = (JButton) component;
@@ -135,7 +146,6 @@ public class StateDesign extends JPanel {
                     } else if (subComponent instanceof JLabel) {
                         JLabel label = (JLabel) subComponent;
                         if (label.getIcon() != null && label == logoLabel) {
-                            double logoScale = overallScaleFactor < 1 ? overallScaleFactor : logoInitialScale;
                             int width = (int) (originalLogoWidth * logoScale);
                             int height = (int) (originalLogoHeight * logoScale);
                             Image scaledImage = logoImage.getScaledInstance(width, height, Image.SCALE_SMOOTH);
