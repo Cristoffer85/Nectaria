@@ -109,6 +109,7 @@ public class StateDesign extends JPanel {
         });
     }
 
+    // Giant method to adjust the sizes of all components in the panel, basically like css media queries, sort of understand it
     private void adjustComponentSizes() {
         Dimension size = getSize();
         float overallScaleFactor = Math.min(size.width / 1920f, size.height / 1080f);
@@ -116,16 +117,24 @@ public class StateDesign extends JPanel {
     
         for (Component component : getComponents()) {
             if (component instanceof JButton) {
-                component.setFont(scaledFont);
+                JButton button = (JButton) component;
+                if (button.getFont().equals(SWITCH_USER_FONTANDSIZE)) {
+                    button.setFont(SWITCH_USER_FONTANDSIZE);
+                } else {
+                    button.setFont(scaledFont);
+                }
             } else if (component instanceof JPanel) {
                 for (Component subComponent : ((JPanel) component).getComponents()) {
                     if (subComponent instanceof JButton) {
-                        subComponent.setFont(scaledFont);
+                        JButton button = (JButton) subComponent;
+                        if (button.getFont().equals(SWITCH_USER_FONTANDSIZE)) {
+                            button.setFont(SWITCH_USER_FONTANDSIZE);
+                        } else {
+                            button.setFont(scaledFont);
+                        }
                     } else if (subComponent instanceof JLabel) {
                         JLabel label = (JLabel) subComponent;
                         if (label.getIcon() != null && label == logoLabel) {
-                            // Calculate a new scale factor for the logo.
-                            // For example, only allow the logo to shrink but not enlarge beyond its initial size:
                             double logoScale = overallScaleFactor < 1 ? overallScaleFactor : logoInitialScale;
                             int width = (int) (originalLogoWidth * logoScale);
                             int height = (int) (originalLogoHeight * logoScale);

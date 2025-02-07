@@ -23,6 +23,7 @@ public class MainMenuState extends StateDesign {
     private JPanel topPanel(GamePanel gamePanel) {
         JPanel switchUserPanel = createCombinedVerticalAndHorizontalPanel(new FlowLayout(FlowLayout.RIGHT));
         JButton switchUserButton = switchUserButton("Switch User", e -> gamePanel.changeGameState(StateDefinitions.INITIAL_STATE));
+        switchUserButton.setFont(SWITCH_USER_FONTANDSIZE);
         switchUserPanel.add(switchUserButton);
         return switchUserPanel;
     }
