@@ -1,6 +1,7 @@
 1. Make Line2D collision smoother - Acc. stumbled on way to make collision better - working vertical and down right collision in new extra branch pushed - but not horizontal to left up, ?
 
-2. Make menus good visible in all 3 current window sizes
+2. Fix Bottom offset responsive in every current screensize, 
+3. Fix switch user button in mainmenustate responsive. Also other more boring Arial font.
 
 
 
