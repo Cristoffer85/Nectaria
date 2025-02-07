@@ -11,7 +11,8 @@ import java.util.Map;
 
 public class SettingsState extends StateDesign {
 
-    private static final int BOTTOM_PANEL_OFFSET = 280;
+    private static final int BOTTOM_PANEL_OFFSET = 80;
+    
     private static final String[] RESOLUTIONS = {"1920x1080", "1280x720", "960x540"};
     public static final Map<String, Double> SCALE_FACTORS_MAP = new HashMap<>();
 
@@ -88,12 +89,19 @@ public class SettingsState extends StateDesign {
         return label;
     }
 
-    private JCheckBox createFullscreenCheckbox() {
-        JCheckBox checkbox = new JCheckBox();
-        checkbox.setSelected(true);
-        checkbox.setBackground(BACKGROUND_COLOR);
-        checkbox.addActionListener(e -> setFullscreen(checkbox.isSelected()));
-        return checkbox;
+    private JComboBox<String> createScaleFactorDropdown() {
+        String[] scaleFactorNames = SCALE_FACTORS_MAP.keySet().toArray(new String[0]);
+        JComboBox<String> dropdown = new JComboBox<>(scaleFactorNames);
+        dropdown.setMaximumSize(new Dimension(200, 30));
+        dropdown.setSelectedItem("SNES");
+        dropdown.addActionListener(e -> {
+            String selectedScaleFactorName = (String) dropdown.getSelectedItem();
+            if (selectedScaleFactorName != null) {
+                double scaleFactor = SCALE_FACTORS_MAP.get(selectedScaleFactorName);
+                gamePanel.setScaleFactor(scaleFactor);
+            }
+        });
+        return dropdown;
     }
 
     private JComboBox<String> createResolutionDropdown() {
@@ -110,22 +118,7 @@ public class SettingsState extends StateDesign {
         });
         return dropdown;
     }
-
-    private JComboBox<String> createScaleFactorDropdown() {
-        String[] scaleFactorNames = SCALE_FACTORS_MAP.keySet().toArray(new String[0]);
-        JComboBox<String> dropdown = new JComboBox<>(scaleFactorNames);
-        dropdown.setMaximumSize(new Dimension(200, 30));
-        dropdown.setSelectedItem("SNES");
-        dropdown.addActionListener(e -> {
-            String selectedScaleFactorName = (String) dropdown.getSelectedItem();
-            if (selectedScaleFactorName != null) {
-                double scaleFactor = SCALE_FACTORS_MAP.get(selectedScaleFactorName);
-                gamePanel.setScaleFactor(scaleFactor);
-            }
-        });
-        return dropdown;
-    }
-
+    
     public void changeResolution(int width, int height) {
         JFrame frame = (JFrame) SwingUtilities.getWindowAncestor(gamePanel);
         frame.setSize(width, height);
@@ -133,6 +126,14 @@ public class SettingsState extends StateDesign {
         gamePanel.changeResolution(width, height);
         gamePanel.revalidate();
         gamePanel.repaint();
+    }
+
+    private JCheckBox createFullscreenCheckbox() {
+        JCheckBox checkbox = new JCheckBox();
+        checkbox.setSelected(true);
+        checkbox.setBackground(BACKGROUND_COLOR);
+        checkbox.addActionListener(e -> setFullscreen(checkbox.isSelected()));
+        return checkbox;
     }
 
     public void setFullscreen(boolean fullscreen) {
