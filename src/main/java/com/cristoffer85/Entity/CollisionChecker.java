@@ -89,7 +89,7 @@ public class CollisionChecker {
                 double cos = Math.cos(angle);
 
                 if (isHorizontal) {
-                    player.setVelocityY((int) (velocity * sin));
+                    player.setVelocityY((int) (-velocity * sin));        // -velocity flips the incorrect movement direction to the other diagonal angle being incorrect instead
                 } else {
                     player.setVelocityX((int) (velocity * cos));
                 }
