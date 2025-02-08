@@ -38,7 +38,7 @@ public class InitialState extends StateDesign {
         buttonPanel.add(Box.createVerticalStrut(MENUBUTTON_VERTICAL_SPACING));
 
         // Add an invisible space, the size of a button
-        Dimension buttonSize = new Dimension(200, 50);
+        Dimension buttonSize = new Dimension(200, 20);
         buttonPanel.add(new Box.Filler(buttonSize, buttonSize, buttonSize));
 
         buttonPanel.add(Box.createVerticalStrut(MENUBUTTON_VERTICAL_SPACING));

@@ -5,8 +5,6 @@ import java.awt.*;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.Map;
 import java.awt.event.ActionListener;
 
 public class StateDesign extends JPanel {
@@ -23,21 +21,6 @@ public class StateDesign extends JPanel {
     protected static final Font DEFAULT_FONT = new Font("Arial", Font.PLAIN, 12);
     protected static final Font SWITCH_USER_FONTANDSIZE = new Font("Arial", Font.PLAIN, 12);
     protected static final int MENUBUTTON_VERTICAL_SPACING = 20;
-
-    // --------------------------------- Scaling -----------------------------------
-    private static final Map<Dimension, Double> LOGO_SCALE = new HashMap<>();
-    private static final Map<Dimension, Float> MENUBUTTON_FONTSIZE = new HashMap<>();
-
-    static {
-        LOGO_SCALE.put(new Dimension(1920, 1080), 2.0);
-        LOGO_SCALE.put(new Dimension(1280, 720), 1.0);
-        LOGO_SCALE.put(new Dimension(960, 540), 0.7);
-
-        MENUBUTTON_FONTSIZE.put(new Dimension(1920, 1080), 44f * 1.0f);
-        MENUBUTTON_FONTSIZE.put(new Dimension(1280, 720), 44f * 0.5f);
-        MENUBUTTON_FONTSIZE.put(new Dimension(960, 540), 44f * 0.3f);
-    }
-    // ------------------------------------------------------------------------------
 
     protected JPanel createVerticalPanel() {
         JPanel panel = new JPanel();
@@ -116,41 +99,8 @@ public class StateDesign extends JPanel {
         addComponentListener(new ComponentAdapter() {
             @Override
             public void componentResized(ComponentEvent e) {
-                adjustComponentSizes();
+                MenuScaling.adjustComponentSizes(StateDesign.this, MENUBUTTON_FONTANDSIZE, SWITCH_USER_FONTANDSIZE, logoImage, logoLabel, originalLogoWidth, originalLogoHeight);
             }
         });
-    }
-
-    private void adjustComponentSizes() {
-        Dimension size = getSize();
-        float overallScaleFactor = Math.min(size.width / 1920f, size.height / 1080f);
-    
-        double logoScale = LOGO_SCALE.getOrDefault(new Dimension(size.width, size.height), 1.0);
-        float buttonFontSize = MENUBUTTON_FONTSIZE.getOrDefault(new Dimension(size.width, size.height), 44f * overallScaleFactor);
-    
-        Font scaledFont = MENUBUTTON_FONTANDSIZE.deriveFont(buttonFontSize);
-    
-        for (Component component : getComponents()) {
-            if (component instanceof JPanel) {
-                for (Component subComponent : ((JPanel) component).getComponents()) {
-                    if (subComponent instanceof JButton) {
-                        JButton button = (JButton) subComponent;
-                        button.setFont(button.getFont().equals(SWITCH_USER_FONTANDSIZE) ? SWITCH_USER_FONTANDSIZE : scaledFont);
-                    } else if (subComponent instanceof JLabel) {
-                        JLabel label = (JLabel) subComponent;
-                        if (label.getIcon() != null && label == logoLabel) {
-                            int width = (int) (originalLogoWidth * logoScale);
-                            int height = (int) (originalLogoHeight * logoScale);
-                            Image scaledImage = logoImage.getScaledInstance(width, height, Image.SCALE_SMOOTH);
-                            label.setIcon(new ImageIcon(scaledImage));
-                        } else {
-                            label.setFont(scaledFont);
-                        }
-                    }
-                }
-            }
-        }
-        revalidate();
-        repaint();
     }
 }
