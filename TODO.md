@@ -1,7 +1,8 @@
 1. Make Line2D collision smoother - Acc. stumbled on way to make collision better - working vertical and down right collision in new extra branch pushed - but not horizontal to left up, ?
 
-2. Fix Bottom offset responsive in every current screensize, 
-3. Fix switch user button in mainmenustate responsive. Also other more boring Arial font.
+2. Try to implement dyn4j collision in application which is a free to use both for private and commercial mode. Maybe will fix the diagonal collision and movement, while also allowing collision along other forms/circular/polygons/irregular forms etc
+
+3. Fix offset between menubuttons responsive on window size
 
 
 
