@@ -1,4 +1,9 @@
-1. Try to scrap original collision [vertical/horizontal] to [vector] collision instead. By learnings and realizations it will make the collision much much smoother and mor logic and easier for handling collisions.
+
+1. Try to scrap original -vertical/horizontal- collision, to [vector] collision instead. 
+   By learnings and realizations it will make the collision much much smoother and mor logic and easier for handling collisions.
+
+
+
 
 
     OTHERWISE:
