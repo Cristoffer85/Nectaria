@@ -84,21 +84,29 @@ public class CollisionChecker {
     private int checkDiagonalObstacleCollision(Rectangle projectedRect, List<Line2D> diagonalObstacles, int velocity, boolean isHorizontal) {
         for (Line2D diagonalObstacle : diagonalObstacles) {
             if (projectedRect.intersectsLine(diagonalObstacle)) {
-                double angle = Math.atan2(diagonalObstacle.getY2() - diagonalObstacle.getY1(), diagonalObstacle.getX2() - diagonalObstacle.getX1());
-                double sin = Math.sin(angle);
-                double cos = Math.cos(angle);
-
+                double dx = diagonalObstacle.getX2() - diagonalObstacle.getX1();
+                double dy = diagonalObstacle.getY2() - diagonalObstacle.getY1();
+                double length = Math.sqrt(dx * dx + dy * dy);
+                double normalX = -dy / length; // Perpendicular normal vector
+                double normalY = dx / length;
+    
+                double dotProduct = (player.getVelocityX() * normalX + player.getVelocityY() * normalY);
+                
+                int reflectedX = (int) (player.getVelocityX() - 2 * dotProduct * normalX);
+                int reflectedY = (int) (player.getVelocityY() - 2 * dotProduct * normalY);
+    
                 if (isHorizontal) {
-                    player.setVelocityY((int) (-velocity * sin));        // -velocity flips the incorrect movement direction to the other diagonal angle being incorrect instead
+                    player.setVelocityY(reflectedY);
                 } else {
-                    player.setVelocityX((int) (velocity * cos));
+                    player.setVelocityX(reflectedX);
                 }
-
+    
                 return isHorizontal ? player.getX() : player.getY();
             }
         }
         return Integer.MIN_VALUE;
     }
+    
 
     // Method to check tile collision, calculates the entire map and checks for collision with each tile
     private int checkTileCollision(Rectangle projectedRect, int velocity, boolean isHorizontal) {
