@@ -5,24 +5,35 @@ Use of @Lombok right now - In order to keep better overviewable logic of code, a
 Features right now include:
 
 ## Player
-- Correct collision and movement for player against both vertical and diagonal objects
+- Straight collision and movement for player against vertical/horizontal and diagonal objects. Next step to try and implement more better and solid collision handling of vectors instead, since other collision method is very tricky to optimize. Lots of un-understandable, interfering and not very logic code.
 - Sprite update, decided on how many number of sprites you want really
 - Acceleration/Deceleration of your player
-- Cameralogic moving the map under the player, while also "clamp" values near border of map, ensuring the map stops moving when player near border.
-- Tiles, straight collision
+- Cameralogic moving the map under the player, while also "clamp" values near border of map, ensuring the map stops moving when player near border. This applies responsive for any window size now choose.
+- Tiles, straight ordinary collision here as well. The vector collision will try to implement here as well.
 
 ## Common
 - Sprite and Tile logic read and based from complete Tile- and SpriteSheets, optimizing memory performance
 - Basic resolution implemented with scalefactor right now (Scalefactor can be altered, depending on your graphic preferences/view) best is no scaling at all i heard, but harder view on modern screens if not.
 
 ## Map
-- Map read from .txt-file with arrayvalues from tilesheet recalculated based on tilesize, meaning you could set individual tilesizes for your game by a few clicks
+- Map read from .txt-file with arrayvalues from tilesheet recalculated based on tilesize, meaning you could set individual tilesizes for your game by only a few clicks.
 
 ## States
-- Basic start implementation of different states (Have different states = Main menu-state, Game-state, Pause-state etc) implemented in what i would call a very easy and logic followed solution 
+- InitialState (Hero): when first starting game, that lets you create or choose profile
+- MainMenuState: The individual main menu for your character, that lets you choose between 
+        # switch user (back to initialstate)
+        # resume old game (save automatically on quit), 
+        # start new game
+        # settings
+        # exit game
+- SettingsState: Lets you choose between 
+        # 3 current modern window sizes
+        # Graphic mode (small or SNES)
+        # Fullscreen on or off
+- PauseState: When pressing esc in-game, freezes current gamestate picture semi-transparent and displays a menu center screen with basic alternatives
 
 ## Save/Load/Reset
-- Basic Save and Load implemented to save to a local savegame.dat file in root folder. Needs to be heavily refactored and niced up before adding ability to CRUD different individual players, where the savegame.dat each specific per user will be saved in a "Saved games" folder named by username instead.
+- Basic Save and Load implemented to save to a local 'profiles' folder where all current profile information is saved. Easier for making backups, and transferring between devices.
 
 
 
