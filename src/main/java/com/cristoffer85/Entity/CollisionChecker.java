@@ -82,53 +82,49 @@ public class CollisionChecker {
 
     // Method to check diagonal obstacle collision
     private int checkDiagonalObstacleCollision(Rectangle projectedRect, 
-                                             List<Line2D> diagonalObstacles, 
-                                             int velocity, 
-                                             boolean isHorizontal) {
+                                          List<Line2D> diagonalObstacles, 
+                                          int velocity, 
+                                          boolean isHorizontal) {
         for (Line2D diagonalObstacle : diagonalObstacles) {
             if (projectedRect.intersectsLine(diagonalObstacle)) {
-                // Calculate the line's vector components.
+                // Calculate slope vector
                 double dx = diagonalObstacle.getX2() - diagonalObstacle.getX1();
                 double dy = diagonalObstacle.getY2() - diagonalObstacle.getY1();
                 double length = Math.sqrt(dx * dx + dy * dy);
-                // Get the perpendicular normal vector.
+                // Compute perpendicular normal vector
                 double normalX = -dy / length;
                 double normalY = dx / length;
-                
-                // Reflect the player's velocity vector over the line's normal.
+
+                // Reflect the player's velocity
                 double dotProduct = (player.getVelocityX() * normalX + player.getVelocityY() * normalY);
                 int reflectedX = (int) (player.getVelocityX() - 2 * dotProduct * normalX);
                 int reflectedY = (int) (player.getVelocityY() - 2 * dotProduct * normalY);
-                
-                // Use the reflected velocity to adjust the player's velocity
-                // and compute a corrected position based on the line's endpoints.
+
+                // Apply reflection
                 if (isHorizontal) {
                     player.setVelocityY(reflectedY);
                     if (velocity > 0) { // Moving right
-                        // For moving right, use the leftmost x of the line.
                         double leftEdge = Math.min(diagonalObstacle.getX1(), diagonalObstacle.getX2());
                         return (int) (leftEdge - player.getCollisionBoxSize() - player.getCollisionBoxOffsetX());
                     } else { // Moving left
-                        // For moving left, use the rightmost x of the line.
                         double rightEdge = Math.max(diagonalObstacle.getX1(), diagonalObstacle.getX2());
-                        return (int) (rightEdge + player.getCollisionBoxOffsetX());
+                        return (int) (rightEdge + player.getCollisionBoxSize() - 62 + player.getCollisionBoxOffsetX());
                     }
                 } else {
                     player.setVelocityX(reflectedX);
                     if (velocity > 0) { // Moving down
-                        // For moving down, use the topmost y of the line.
                         double topEdge = Math.min(diagonalObstacle.getY1(), diagonalObstacle.getY2());
                         return (int) (topEdge - player.getCollisionBoxSize() - player.getCollisionBoxOffsetY());
                     } else { // Moving up
-                        // For moving up, use the bottommost y of the line.
                         double bottomEdge = Math.max(diagonalObstacle.getY1(), diagonalObstacle.getY2());
-                        return (int) (bottomEdge + player.getCollisionBoxOffsetY());
+                        return (int) (bottomEdge + player.getCollisionBoxSize() - 98 +player.getCollisionBoxOffsetY());
                     }
                 }
             }
         }
         return Integer.MIN_VALUE;
     }
+
 
     // Method to check tile collision, calculates the entire map and checks for collision with each tile
     private int checkTileCollision(Rectangle projectedRect, int velocity, boolean isHorizontal) {
