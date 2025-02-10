@@ -1,16 +1,16 @@
 
-1. Try to scrap original -vertical/horizontal- collision, to [vector] collision instead. 
-   By learnings and realizations it will make the collision much much smoother and mor logic and easier for handling collisions.
+1. Implement Map class, 
+    1.1 - start implementing transition between multiple maps
 
+2. Refactor gigantic CollisionChecker class into several smaller components based on 
+        i. Straight,
+        ii. Diagonal, 
+        iii. Boundary, 
+        iiii. Tiles,
 
+To easier distinguish what component does what and not, uhuh-ehe.. :S *nervous laugh* also for reminder for one-self to remember all of this and be able to explain it eventual further someday
 
-
-
-    OTHERWISE:
-    ----------
-    Make Line2D collision smoother - Acc. stumbled on way to make collision better - working vertical and down right collision in new extra branch pushed - but not horizontal to left up, ?
-
-2. Fix offset between menubuttons responsive on window size
+3. Fix offset between menubuttons responsive on window size
 
 
 

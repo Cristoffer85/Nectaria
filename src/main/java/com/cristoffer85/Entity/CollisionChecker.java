@@ -81,7 +81,6 @@ public class CollisionChecker {
     }
 
     // Method to check diagonal obstacle collision
-    // Method to check diagonal obstacle collision
     private int checkDiagonalObstacleCollision(Rectangle projectedRect, 
                                           List<Line2D> diagonalObstacles, 
                                           int velocity, 
@@ -126,7 +125,6 @@ public class CollisionChecker {
         return Integer.MIN_VALUE;
     }
     
-
     // Method to check tile collision, calculates the entire map and checks for collision with each tile
     private int checkTileCollision(Rectangle projectedRect, int velocity, boolean isHorizontal) {
         int tileWidth = Tile.getTileWidth();
