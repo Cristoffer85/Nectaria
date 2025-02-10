@@ -5,11 +5,12 @@ Use of @Lombok right now - In order to keep better overviewable logic of code, a
 Features right now include:
 
 ## Player
-- Straight collision and movement for player against vertical/horizontal and diagonal objects. Next step to try and implement more better and solid collision handling of vectors instead, since other collision method is very tricky to optimize. Lots of un-understandable, interfering and not very logic code.
+- Straight collision and movement for player against vertical and horizontal objects/boundaries/tiles. Using plain x, y movement/velocity calculation on grid.
+- Collision against slopes/diagonal with vector collision (first vector method in this program) working on checkDiagonalObstacleCollision. Will read and learn more about that.
+
 - Sprite update, decided on how many number of sprites you want really
 - Acceleration/Deceleration of your player
 - Cameralogic moving the map under the player, while also "clamp" values near border of map, ensuring the map stops moving when player near border. This applies responsive for any window size now choose.
-- Tiles, straight ordinary collision here as well. The vector collision will try to implement here as well.
 
 ## Common
 - Sprite and Tile logic read and based from complete Tile- and SpriteSheets, optimizing memory performance
