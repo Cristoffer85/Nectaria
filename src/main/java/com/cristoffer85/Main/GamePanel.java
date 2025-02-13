@@ -44,7 +44,7 @@ public class GamePanel extends JPanel {
         Tile.loadTilesheet("/TileSheet.png", 64, 64);          // Load TileSheet.png from file, set tile width and tile height. Map rendering will adjust to these values.
         
         // Initialize map handler and load initial map
-        mapHandler = new MapHandler("MainWorld");                                         // Load map.txt from file. Set whatever size you want for the map in the text file. Mainworld right now = 128x128 tiles.
+        mapHandler = new MapHandler("MainWorld");                             // Load map.txt from file. Set whatever size you want for the map in the text file. Mainworld right now = 128x128 tiles.
 
         // ---------- Initialize different states ----------
         initialState = new InitialState(this);
