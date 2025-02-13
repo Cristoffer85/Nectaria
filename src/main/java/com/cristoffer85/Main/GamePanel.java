@@ -65,12 +65,15 @@ public class GamePanel extends JPanel {
 
         // Main Game loop
         Timer timer = new Timer(16, e -> {
+
+                // Every timer tick (In GAME-state) Check if: Player move - Collide - Key press - Repaint 
                 StateDefinitions.GAME.name(); 
                 List<Rectangle> straightObstacles = Obstacle.getStraightObstacles();
                 List<Line2D> diagonalObstacles = Obstacle.getDiagonalObstacles();
                 player.move(keyHandler, straightObstacles, diagonalObstacles);
                 gameState.repaint();
-        });
+        
+            });
         timer.start();
     }
 
