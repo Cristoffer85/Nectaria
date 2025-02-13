@@ -61,6 +61,7 @@ public class Tile {
     private static void readMapRow(BufferedReader br) throws IOException {
         String line;
         int y = 0;
+        
         // Read each line of the map file
         while ((line = br.readLine()) != null) {
             readMapColumn(line, y);
@@ -69,6 +70,7 @@ public class Tile {
     }
     private static void readMapColumn(String line, int y) {
         String[] tokens = line.split(" ");
+
         // Read each tile id on row
         for (int x = 0; x < tokens.length; x++) {
             int tileId = Integer.parseInt(tokens[x]);
