@@ -5,7 +5,7 @@ import java.awt.*;
 import java.util.HashMap;
 import java.util.Map;
 
-public class MenuScaling {
+public class ResponsiveMenu {
     private static final Map<Dimension, Double> SCALE_LOGO = new HashMap<>();
     private static final Map<Dimension, Float> SCALE_MENUBUTTON = new HashMap<>();
 

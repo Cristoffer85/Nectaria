@@ -99,7 +99,7 @@ public class StateDesign extends JPanel {
         addComponentListener(new ComponentAdapter() {
             @Override
             public void componentResized(ComponentEvent e) {
-                MenuScaling.adjustComponentSizes(StateDesign.this, MENUBUTTON_FONTANDSIZE, SWITCH_USER_FONTANDSIZE, logoImage, logoLabel, originalLogoWidth, originalLogoHeight);
+                ResponsiveMenu.adjustComponentSizes(StateDesign.this, MENUBUTTON_FONTANDSIZE, SWITCH_USER_FONTANDSIZE, logoImage, logoLabel, originalLogoWidth, originalLogoHeight);
             }
         });
     }
