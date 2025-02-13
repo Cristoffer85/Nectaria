@@ -3,6 +3,7 @@ package com.cristoffer85.States;
 import com.cristoffer85.Entity.Obstacle;
 import com.cristoffer85.Entity.Player;
 import com.cristoffer85.Map.Tile;
+import com.cristoffer85.Main.EventHandler;
 
 import javax.swing.*;
 import java.awt.*;
@@ -14,11 +15,13 @@ public class GameState extends JPanel {
     private int baseWidth;
     private int baseHeight;
     private double scaleFactor = 1.0; // Default scale == if lowering this game will be even bigger and will affect values in SettingsState.scaleFactors dropdown (0.5 and 1 there will be bigger view of game)
+    private final EventHandler eventHandler;
 
-    public GameState(Player player, int baseWidth, int baseHeight) {
+    public GameState(Player player, int baseWidth, int baseHeight, EventHandler eventHandler) {
         this.player = player;
         this.baseWidth = baseWidth;
         this.baseHeight = baseHeight;
+        this.eventHandler = eventHandler;
         this.gameImage = new BufferedImage((int) (baseWidth * scaleFactor), (int) (baseHeight * scaleFactor), BufferedImage.TYPE_INT_ARGB);
     }
 
@@ -61,6 +64,9 @@ public class GameState extends JPanel {
 
         // Render player on top of obstacles
         player.paintPlayer(g2d, cameraX, cameraY);
+
+        // Draw event rectangles for testing
+        eventHandler.drawEventRectangles(g2d, cameraX, cameraY);
 
         // Dispose of the Graphics2D object
         g2d.dispose();

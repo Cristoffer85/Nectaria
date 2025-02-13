@@ -22,6 +22,7 @@ public class GamePanel extends JPanel {
     private Player player;
     private KeyHandler keyHandler;
     private MapHandler mapHandler;
+    private EventHandler eventHandler;
 
     private StateDefinitions currentState;
     private MainMenuState mainMenuState;
@@ -31,50 +32,53 @@ public class GamePanel extends JPanel {
     private SettingsState settingsState;
 
     public GamePanel() {
-        // Initialize player
+
+        // --------- Initializization of diverse game components ---------
+        // Player
         player = new Player(30, 30, 64, 6);                            // Set player starting x, starting y, sprite size, moving speed
-
-        // Initialize obstacles
+        // Obstacles
         Obstacle.addObstacles();
-
-        // Initialize key handler
+        // Keyhandler
         keyHandler = new KeyHandler(this);
-
-        // Initialize tilesheet and map
+        // Tilesheet
         Tile.loadTilesheet("/TileSheet.png", 64, 64);          // Load TileSheet.png from file, set tile width and tile height. Map rendering will adjust to these values.
-        
-        // Initialize map handler and load initial map
+        // MapHandler + initial map
         mapHandler = new MapHandler("MainWorld");                             // Load map.txt from file. Set whatever size you want for the map in the text file. Mainworld right now = 128x128 tiles.
+        // Event handler
+        eventHandler = new EventHandler(player);
+        // -----------------------------------------------------------------
 
-        // ---------- Initialize different states ----------
+        // --------- Initialize different states ---------------------------
         initialState = new InitialState(this);
         mainMenuState = new MainMenuState(this);
-        gameState = new GameState(player, 1920, 1080);              // Default values for 1920x1080 resolution
+        gameState = new GameState(player, 1920, 1080, eventHandler);              // Default values for 1920x1080 resolution
         gameState.setScaleFactor(0.5);                                       // Default start scale factor .5 for 'SNES' style
         pauseState = new PauseState(this);
         settingsState = new SettingsState(this); 
 
-        // ..and add them to a "card" layout...
+        // ..and add them to the "card" layout...
         setLayout(new CardLayout());
         add(initialState, StateDefinitions.INITIAL_STATE.name());
         add(mainMenuState, StateDefinitions.MAIN_MENU.name());
         add(gameState, StateDefinitions.GAME.name());
         add(pauseState, StateDefinitions.PAUSE_MENU.name());
         add(settingsState, StateDefinitions.SETTINGS_MENU.name());
-        //---------------------------------------------------
+        //------------------------------------------------------------------
 
-        // Main Game loop
+        // --------- Main Game loop ----------------------------------------
         Timer timer = new Timer(16, e -> {
 
                 // Every timer tick (In GAME-state) Check if: Player move - Collide - Key press - Repaint 
-                StateDefinitions.GAME.name(); 
-                List<Rectangle> straightObstacles = Obstacle.getStraightObstacles();
-                List<Line2D> diagonalObstacles = Obstacle.getDiagonalObstacles();
-                player.move(keyHandler, straightObstacles, diagonalObstacles);
-                gameState.repaint();
-
+                if (currentState == StateDefinitions.GAME) {
+                    List<Rectangle> straightObstacles = Obstacle.getStraightObstacles();
+                    List<Line2D> diagonalObstacles = Obstacle.getDiagonalObstacles();
+                    player.move(keyHandler, straightObstacles, diagonalObstacles);
+                    eventHandler.checkEvents();
+                    gameState.repaint();
+                }
             });
         timer.start();
+        //------------------------------------------------------------------
     }
 
     // ## Helper Methods ##
@@ -121,6 +125,7 @@ public class GamePanel extends JPanel {
     public void setScaleFactor(double scaleFactor) {
         gameState.setScaleFactor(scaleFactor);
     }
+
     public void loadMap(String mapName) {
         mapHandler.loadMap(mapName);
     }
