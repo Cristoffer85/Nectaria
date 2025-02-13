@@ -7,14 +7,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class CRUDProfile implements Serializable {
-    private static final long serialVersionUID = 1L;
+    private final int playerX;
+    private final int playerY;
+    private final String currentMap;
 
-    private int playerX;
-    private int playerY;
-
-    public CRUDProfile(int playerX, int playerY) {
+    public CRUDProfile(int playerX, int playerY, String currentMap) {
         this.playerX = playerX;
         this.playerY = playerY;
+        this.currentMap = currentMap;
     }
 
     public int getPlayerX() {
@@ -23,6 +23,10 @@ public class CRUDProfile implements Serializable {
 
     public int getPlayerY() {
         return playerY;
+    }
+
+    public String getCurrentMap() {
+        return currentMap;
     }
 
     // CRUD operations for profiles

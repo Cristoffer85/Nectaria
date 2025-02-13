@@ -102,7 +102,7 @@ public class GamePanel extends JPanel {
     }
 
     public void saveGame() {
-        SaveLoadReset.saveGame(player, profileName);
+        SaveLoadReset.saveGame(player, profileName, mapHandler.getCurrentMap());
     }
 
     public void loadGame() {

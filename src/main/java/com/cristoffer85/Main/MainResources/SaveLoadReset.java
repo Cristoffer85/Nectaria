@@ -6,14 +6,13 @@ import com.cristoffer85.States.GameState;
 import com.cristoffer85.States.SettingsState;
 import com.cristoffer85.States.StatesResources.StateDefinitions;
 import com.cristoffer85.Main.GamePanel;
-import com.cristoffer85.Map.Tile;
 
 import java.io.*;
 
 public class SaveLoadReset {
 
-    public static void saveGame(Player player, String profileName) {
-        CRUDProfile saveData = new CRUDProfile(player.getX(), player.getY());
+    public static void saveGame(Player player, String profileName, String currentMap) {
+        CRUDProfile saveData = new CRUDProfile(player.getX(), player.getY(), currentMap);
         String filePath = "profiles/" + profileName + ".dat";
         try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(filePath))) {
             oos.writeObject(saveData);
@@ -29,6 +28,7 @@ public class SaveLoadReset {
             CRUDProfile saveData = (CRUDProfile) ois.readObject();
             player.setX(saveData.getPlayerX());
             player.setY(saveData.getPlayerY());
+            gamePanel.loadMap(saveData.getCurrentMap());
             System.out.println("Game loaded successfully from " + filePath);
             gamePanel.changeGameState(StateDefinitions.GAME);
         } catch (IOException | ClassNotFoundException e) {
@@ -39,7 +39,7 @@ public class SaveLoadReset {
     public static void resetGame(GamePanel gamePanel, String profileName) {
         Player player = new Player(30, 30, 64, 6);
         Obstacle.addObstacles();
-        Tile.tilesByMapSize("/MainWorld.txt");
+        gamePanel.loadMap("MainWorld");
         GameState gameState = new GameState(player, gamePanel.getWidth(), gamePanel.getHeight());
         gamePanel.add(gameState, StateDefinitions.GAME.name());
         gamePanel.setPlayer(player);
