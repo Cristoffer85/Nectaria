@@ -1,12 +1,12 @@
 package com.cristoffer85.Entity;
 
-import com.cristoffer85.Tile.TileManager;
-import com.cristoffer85.Tile.Tile;
-
 import java.awt.*;
 import java.awt.geom.Line2D;
 import java.util.List;
 import java.util.Map;
+
+import com.cristoffer85.Map.Tile;
+import com.cristoffer85.Map.TileManager;
 
 public class CollisionChecker {
     private final Player player;

@@ -6,7 +6,7 @@ import com.cristoffer85.States.GameState;
 import com.cristoffer85.States.SettingsState;
 import com.cristoffer85.States.StatesResources.StateDefinitions;
 import com.cristoffer85.Main.GamePanel;
-import com.cristoffer85.Tile.Tile;
+import com.cristoffer85.Map.Tile;
 
 import java.io.*;
 

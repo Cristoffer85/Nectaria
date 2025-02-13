@@ -1,4 +1,4 @@
-package com.cristoffer85.Tile;
+package com.cristoffer85.Map;
 
 import lombok.Getter;
 import java.awt.*;

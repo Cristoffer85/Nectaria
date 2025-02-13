@@ -2,7 +2,7 @@ package com.cristoffer85.States;
 
 import com.cristoffer85.Entity.Obstacle;
 import com.cristoffer85.Entity.Player;
-import com.cristoffer85.Tile.Tile;
+import com.cristoffer85.Map.Tile;
 
 import javax.swing.*;
 import java.awt.*;
