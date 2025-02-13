@@ -7,9 +7,10 @@ public class MapHandler {
     private final Map<String, String> mapPaths = new HashMap<>();
     private String currentMap;
 
-    public MapHandler() {
+    public MapHandler(String initialMap) {
         mapPaths.put("MainWorld", "/MainWorld.txt");
         mapPaths.put("SecondWorld", "/SecondWorld.txt");
+        loadMap(initialMap);
     }
 
     public void loadMap(String mapName) {
