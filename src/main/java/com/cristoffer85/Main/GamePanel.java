@@ -9,6 +9,7 @@ import com.cristoffer85.States.InitialState;
 import com.cristoffer85.States.PauseState;
 import com.cristoffer85.States.SettingsState;
 import com.cristoffer85.Main.MainResources.SaveLoadReset;
+import com.cristoffer85.Map.MapHandler;
 import com.cristoffer85.Map.Tile;
 
 import javax.swing.*;
@@ -17,17 +18,17 @@ import java.awt.geom.Line2D;
 import java.util.List;
 
 public class GamePanel extends JPanel {
+    private String profileName;
     private Player player;
     private KeyHandler keyHandler;
+    private MapHandler mapHandler;
 
+    private StateDefinitions currentState;
     private MainMenuState mainMenuState;
     private GameState gameState;
     private PauseState pauseState;
     private InitialState initialState;
     private SettingsState settingsState;
-
-    private String profileName;
-    private StateDefinitions currentState;
 
     public GamePanel() {
         // Initialize player
@@ -41,7 +42,9 @@ public class GamePanel extends JPanel {
 
         // Initialize tilesheet and map
         Tile.loadTilesheet("/TileSheet.png", 64, 64);          // Load TileSheet.png from file, set tile width and tile height. Map rendering will adjust to these values.
-        Tile.tilesByMapSize("/MainWorld.txt");                                      // Load map.txt from file. Set whatever size you want for the map in the text file. Right now current 128x128 tiles.                               
+        
+        mapHandler = new MapHandler();
+        mapHandler.loadMap("MainWorld");                                         // Load map.txt from file. Set whatever size you want for the map in the text file. Mainworld right now = 128x128 tiles.
 
         // ---------- Initialize different states ----------
         initialState = new InitialState(this);
@@ -116,5 +119,8 @@ public class GamePanel extends JPanel {
 
     public void setScaleFactor(double scaleFactor) {
         gameState.setScaleFactor(scaleFactor);
+    }
+    public void loadMap(String mapName) {
+        mapHandler.loadMap(mapName);
     }
 }
