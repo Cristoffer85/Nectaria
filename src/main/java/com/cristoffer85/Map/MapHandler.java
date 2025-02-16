@@ -8,6 +8,7 @@ public class MapHandler {
     private String currentMap;
 
     public MapHandler(String initialMap) {
+        // Add maps here
         mapPaths.put("MainWorld", "/MainWorld.txt");
         mapPaths.put("SecondWorld", "/SecondWorld.txt");
         loadMap(initialMap);
@@ -16,6 +17,7 @@ public class MapHandler {
     public void loadMap(String mapName) {
         String path = mapPaths.get(mapName);
         if (path != null) {
+            Tile.clearTilePositions(); // Clear previous tile positions
             Tile.tilesByMapSize(path);
             currentMap = mapName;
         } else {

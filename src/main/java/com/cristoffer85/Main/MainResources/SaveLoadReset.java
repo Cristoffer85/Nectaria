@@ -7,6 +7,7 @@ import com.cristoffer85.States.SettingsState;
 import com.cristoffer85.States.StatesResources.StateDefinitions;
 import com.cristoffer85.Main.GamePanel;
 import com.cristoffer85.Main.EventHandler;
+import com.cristoffer85.Map.MapHandler;
 
 import java.io.*;
 
@@ -40,8 +41,9 @@ public class SaveLoadReset {
     public static void resetGame(GamePanel gamePanel, String profileName) {
         Player player = new Player(30, 30, 64, 6);
         Obstacle.addObstacles();
+        MapHandler mapHandler = new MapHandler("MainWorld");
         gamePanel.loadMap("MainWorld");
-        EventHandler eventHandler = new EventHandler(player);
+        EventHandler eventHandler = new EventHandler(player, mapHandler);
         GameState gameState = new GameState(player, gamePanel.getWidth(), gamePanel.getHeight(), eventHandler);
         gamePanel.add(gameState, StateDefinitions.GAME.name());
         gamePanel.setPlayer(player);

@@ -5,13 +5,16 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.cristoffer85.Entity.Player.Player;
+import com.cristoffer85.Map.MapHandler;
 
 public class EventHandler {
     private final List<Rectangle> eventRectangles = new ArrayList<>();
     private final Player player;
+    private final MapHandler mapHandler;
 
-    public EventHandler(Player player) {
+    public EventHandler(Player player, MapHandler mapHandler) {
         this.player = player;
+        this.mapHandler = mapHandler;
         // Add test event rectangle
         eventRectangles.add(new Rectangle(100, 100, 32, 32)); // Example event rectangle
     }
@@ -26,8 +29,21 @@ public class EventHandler {
     }
 
     private void triggerEvent(Rectangle playerCollisionBox, Rectangle eventRect) {
-        // v v v -- Add event logic below here -- v v v
         
+        // Transfer player from MainWorld to SecondWorld
+        if (eventRect.equals(new Rectangle(100, 100, 32, 32))) {
+            mapHandler.loadMap("SecondWorld");
+            player.setX(50); 
+            player.setY(50);
+        }
+
+
+
+
+
+
+
+
 
 
         /* **** DEBUG - Print out the coordinates of the player's collision box and the event rectangle
