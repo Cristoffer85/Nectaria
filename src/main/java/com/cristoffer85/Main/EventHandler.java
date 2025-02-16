@@ -1,10 +1,10 @@
 package com.cristoffer85.Main;
 
-import com.cristoffer85.Entity.Player;
-
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
+
+import com.cristoffer85.Entity.Player.Player;
 
 public class EventHandler {
     private final List<Rectangle> eventRectangles = new ArrayList<>();

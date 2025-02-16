@@ -1,7 +1,7 @@
 package com.cristoffer85.States;
 
 import com.cristoffer85.Entity.Obstacle;
-import com.cristoffer85.Entity.Player;
+import com.cristoffer85.Entity.Player.Player;
 import com.cristoffer85.Map.Tile;
 import com.cristoffer85.Main.EventHandler;
 

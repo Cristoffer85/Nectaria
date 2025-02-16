@@ -1,12 +1,12 @@
-package com.cristoffer85.Entity.EntityResources;
+package com.cristoffer85.Entity.Player.PlayerResources;
 
-import com.cristoffer85.Entity.Player;
+import com.cristoffer85.Entity.Collision.CollisionChecker;
+import com.cristoffer85.Entity.Player.Player;
 import com.cristoffer85.Main.KeyHandler;
 import com.cristoffer85.Map.Tile;
 
 import java.awt.*;
 import java.awt.geom.Line2D;
-import com.cristoffer85.Entity.CollisionChecker;
 import java.util.List;
 
 public class PlayerMovement {

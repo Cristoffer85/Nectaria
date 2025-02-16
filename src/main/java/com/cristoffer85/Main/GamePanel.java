@@ -1,7 +1,7 @@
 package com.cristoffer85.Main;
 
 import com.cristoffer85.Entity.Obstacle;
-import com.cristoffer85.Entity.Player;
+import com.cristoffer85.Entity.Player.Player;
 import com.cristoffer85.States.MainMenuState;
 import com.cristoffer85.States.StatesResources.StateDefinitions;
 import com.cristoffer85.States.GameState;

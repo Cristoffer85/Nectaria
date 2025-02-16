@@ -1,12 +1,12 @@
-package com.cristoffer85.Entity;
+package com.cristoffer85.Entity.Player;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 
+import com.cristoffer85.Entity.Player.PlayerResources.PlayerMovement;
+import com.cristoffer85.Entity.Player.PlayerResources.PlayerSprite;
 import com.cristoffer85.Main.KeyHandler;
-import com.cristoffer85.Entity.EntityResources.PlayerSprite;
-import com.cristoffer85.Entity.EntityResources.PlayerMovement;
 
 import java.awt.*;
 import java.awt.geom.Line2D;

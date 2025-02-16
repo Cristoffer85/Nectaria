@@ -1,4 +1,4 @@
-package com.cristoffer85.Entity.EntityResources;
+package com.cristoffer85.Entity.Player.PlayerResources;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
