@@ -44,6 +44,7 @@ public class GamePanel extends JPanel {
         mapHandler = new MapHandler("MainWorld");                             // Load map.txt from file. Set whatever size you want for the map in the text file. Mainworld right now = 128x128 tiles.
         // Event handler
         eventHandler = new EventHandler(player, mapHandler);
+        mapHandler.setEventHandler(eventHandler);
         // -----------------------------------------------------------------
 
         // --------- Initialize different states ---------------------------

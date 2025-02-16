@@ -4,6 +4,7 @@ import com.cristoffer85.Entity.Obstacle;
 
 import java.util.HashMap;
 import java.util.Map;
+import com.cristoffer85.Main.EventHandler;
 
 /* MapHandler loads maps + also obstacles/objects for the game, so no calling for it is longer needed in either
    Gamepanel or SaveLoadReset. 
@@ -11,9 +12,10 @@ import java.util.Map;
    making it able to switch and have individual map sizes (whatever size you want really, the size of the map.txt file determines it)
  */
 
-public class MapHandler {
+ public class MapHandler {
     private final Map<String, String> mapPaths = new HashMap<>();
     private String currentMap;
+    private EventHandler eventHandler;
 
     public MapHandler(String initialMap) {
         mapPaths.put("MainWorld", "/MainWorld.txt");
@@ -28,6 +30,10 @@ public class MapHandler {
             Tile.tilesByMapSize(path);
             Obstacle.loadObstacles(mapName); // Load obstacles for the new map
             currentMap = mapName;
+            if (eventHandler != null) {
+                eventHandler.setupEventRectangles(mapName);
+            }
+            System.out.println("Map loaded: " + mapName);
         } else {
             throw new IllegalArgumentException("Map not found: " + mapName);
         }
@@ -35,5 +41,9 @@ public class MapHandler {
 
     public String getCurrentMap() {
         return currentMap;
+    }
+
+    public void setEventHandler(EventHandler eventHandler) {
+        this.eventHandler = eventHandler;
     }
 }

@@ -42,6 +42,7 @@ public class SaveLoadReset {
         MapHandler mapHandler = new MapHandler("MainWorld");
         gamePanel.loadMap("MainWorld");
         EventHandler eventHandler = new EventHandler(player, mapHandler);
+        mapHandler.setEventHandler(eventHandler);
         GameState gameState = new GameState(player, gamePanel.getWidth(), gamePanel.getHeight(), eventHandler);
         gamePanel.add(gameState, StateDefinitions.GAME.name());
         gamePanel.setPlayer(player);
