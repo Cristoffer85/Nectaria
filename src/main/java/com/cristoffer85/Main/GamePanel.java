@@ -36,8 +36,6 @@ public class GamePanel extends JPanel {
         // --------- Initializization of diverse game components ---------
         // Player
         player = new Player(30, 30, 64, 6);                            // Set player starting x, starting y, sprite size, moving speed
-        // Obstacles
-        Obstacle.addObstacles();
         // Keyhandler
         keyHandler = new KeyHandler(this);
         // Tilesheet

@@ -31,35 +31,43 @@ public class Obstacle {
         this.color = color;
     }
 
-    public static void addObstacles() {
-        // Straight obstacles
-        obstacles.add(new Obstacle(new Rectangle(300, 300, 50, 64), Color.RED));
-        obstacles.add(new Obstacle(new Rectangle(192, 192, 1, 64), Color.RED));
-        obstacles.add(new Obstacle(new Rectangle(600, 100, 64, 1), Color.RED));
+    public static void clearObstacles() {
+        obstacles.clear();
+        straightObstacles.clear();
+        diagonalObstacles.clear();
+    }
 
-        // Diagonal obstacles
-        obstacles.add(new Obstacle(new Line2D.Float(194, 193, 258, 257), Color.BLUE));
-        
-
-
-        
-        // ### Testing/debugging diagonal line2D:S ###
-        // Diagonal obstacles, down right
-        obstacles.add(new Obstacle(new Line2D.Float(594, 193, 658, 257), Color.BLUE));
-
-
-        // Diagonal obstacles, down left (The line collision that is bugging/not working 100% properly)
-        // -------------------------------------------------------------------------------
-        // When moving the player left against it player wants to move upward and gets stuck. 
-        // When moving right against the line it wants to move move downward but gets stuck.
-        obstacles.add(new Obstacle(new Line2D.Float(458, 193, 394, 257), Color.BLUE));
-        // ### ### ### ### ### ### ### ### ### ### ###
-
-
+    public static void loadObstacles(String mapName) {
+        clearObstacles();
+        if (mapName.equals("MainWorld")) {
+            addMainWorldObstacles();
+        } else if (mapName.equals("SecondWorld")) {
+            addSecondWorldObstacles();
+        }
         categorizeObstacles();
     }
 
-    // Divide obstacles into straight and diagonal obstacles, since Rectangle and Line2D are different types from different libraries
+    private static void addMainWorldObstacles() {
+        // Add obstacles for MainWorld
+        obstacles.add(new Obstacle(new Rectangle(300, 300, 50, 64), Color.RED));
+        obstacles.add(new Obstacle(new Rectangle(192, 192, 1, 64), Color.RED));
+        obstacles.add(new Obstacle(new Rectangle(600, 100, 64, 1), Color.RED));
+        obstacles.add(new Obstacle(new Line2D.Float(194, 193, 258, 257), Color.BLUE));
+        obstacles.add(new Obstacle(new Line2D.Float(594, 193, 658, 257), Color.BLUE));
+        obstacles.add(new Obstacle(new Line2D.Float(458, 193, 394, 257), Color.BLUE));
+    }
+
+    private static void addSecondWorldObstacles() {
+        /* Add obstacles for SecondWorld
+        obstacles.add(new Obstacle(new Rectangle(100, 100, 50, 64), Color.GREEN));
+        obstacles.add(new Obstacle(new Rectangle(200, 200, 1, 64), Color.GREEN));
+        obstacles.add(new Obstacle(new Rectangle(300, 300, 64, 1), Color.GREEN));
+        obstacles.add(new Obstacle(new Line2D.Float(100, 100, 150, 150), Color.YELLOW));
+        obstacles.add(new Obstacle(new Line2D.Float(200, 200, 250, 250), Color.YELLOW));
+        obstacles.add(new Obstacle(new Line2D.Float(300, 300, 350, 350), Color.YELLOW));
+        */
+    }
+
     private static void categorizeObstacles() {
         straightObstacles.clear();
         diagonalObstacles.clear();
@@ -72,7 +80,6 @@ public class Obstacle {
         }
     }
 
-    // Subdivide a Line2D into smaller segments for more precise collision detection
     private static void subdivideLine(Line2D line) {
         final double segmentLength = 0.5; // Smaller segment length for higher precision
         double x1 = line.getX1();
@@ -94,25 +101,17 @@ public class Obstacle {
     }
 
     public static void paintObstacles(Graphics2D g2d, int cameraX, int cameraY) {
-        // Ensure obstacles are added before painting
-        if (obstacles.isEmpty()) {
-            addObstacles();
-        }
-
-        // Render all straight obstacles with camera offset
         g2d.setColor(Color.RED);
         for (Rectangle obstacle : straightObstacles) {
             g2d.drawRect(obstacle.x - cameraX, obstacle.y - cameraY, obstacle.width, obstacle.height);
         }
 
-        // Render all diagonal obstacles with camera offset
         g2d.setColor(Color.BLUE);
         for (Line2D obstacle : diagonalObstacles) {
             g2d.drawLine((int) obstacle.getX1() - cameraX, (int) obstacle.getY1() - cameraY, (int) obstacle.getX2() - cameraX, (int) obstacle.getY2() - cameraY);
         }
     }
 
-    // Helper methods for other classes to access the obstacle data
     public static List<Obstacle> getObstacles() {
         return obstacles;
     }

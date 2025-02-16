@@ -1,6 +1,5 @@
 package com.cristoffer85.Main.MainResources;
 
-import com.cristoffer85.Entity.Obstacle;
 import com.cristoffer85.Entity.Player.Player;
 import com.cristoffer85.States.GameState;
 import com.cristoffer85.States.SettingsState;
@@ -40,7 +39,6 @@ public class SaveLoadReset {
 
     public static void resetGame(GamePanel gamePanel, String profileName) {
         Player player = new Player(30, 30, 64, 6);
-        Obstacle.addObstacles();
         MapHandler mapHandler = new MapHandler("MainWorld");
         gamePanel.loadMap("MainWorld");
         EventHandler eventHandler = new EventHandler(player, mapHandler);
