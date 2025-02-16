@@ -6,6 +6,14 @@ import java.awt.*;
 import java.awt.geom.Line2D;
 import java.util.List;
 
+/* Right now only class using vector math collision to calculate player's new position, in difference to the other classes.
+   
+   This class needs to be studied harder to more thouroughly understand how it works.
+   The class is used with the Line2D class, combined with both the projectedRect from ProjectedCollision, 
+   and also the Line2D itself, from Obstacle.java have had its rectangles in its line split to smaller rectangles. Thats what make it works  for now.
+   With that said as the tip study this specific vector class collision to understand it better.
+ */
+
 public class DiagonalObstacleCollision extends ProjectedCollision {
 
     public DiagonalObstacleCollision(Player player) {
