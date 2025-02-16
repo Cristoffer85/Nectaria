@@ -7,7 +7,7 @@ Major Bugsearch on this one.
 
 - The profile.dat files that cannot handle multiple saved event states? are the information for the save.dat files becoming too complex?
 
--
+- Game unable to save and handle independent state for multiple players - only one per time?
 
 
 
