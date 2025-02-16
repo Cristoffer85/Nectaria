@@ -1,3 +1,4 @@
+-------------------------------------------------------------------
 1. on VCS commit 7cd0e30b942b5a894e11d3727261cea44a6e494c
 
 Eventrect works just fine transitioning between maps with current player. Saving and going out of the game and creating a new user/profile breaks the eventrect for both players. No idea why. 
@@ -12,6 +13,7 @@ Major Bugsearch on this one.
 
 
 3. Fix offset between menubuttons responsive on window size
+-------------------------------------------------------------------
 
 
 
