@@ -10,9 +10,23 @@ When saved (calling the savegame method) all is just fine.
 The events themselvels which are game-critical work.
 
 
-
 3. Fix offset between menubuttons responsive on window size
 -------------------------------------------------------------------
+
+
+* Start, implement, in prioritized order from up and down:
+
+    1. Accessible and modifiable Inventory for player
+    2. Objects, pickable for player and store in inventory
+
+    3. Stats, viewable for player (Visible health on mainscreen)
+
+    4. Player able to attack. Attackanimation.
+
+    5. NPC + interactable
+    
+    6. Monster/Enemy, attackable
+
 
 
 
