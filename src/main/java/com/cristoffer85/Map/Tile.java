@@ -78,7 +78,7 @@ public class Tile {
     }
 
     private static void readMapColumn(String line, int y) {
-        String[] tokens = line.split(" ");
+        String[] tokens = line.split(",");
 
         // Read each tile id on row
         for (int x = 0; x < tokens.length; x++) {
