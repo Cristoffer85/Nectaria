@@ -1,14 +1,10 @@
 -------------------------------------------------------------------
-1. on VCS commit 7cd0e30b942b5a894e11d3727261cea44a6e494c
+1. on VCS commit a9cec1ab267727342f624a096969aad5487579ff
 
-Eventrect works just fine transitioning between maps with current player. Saving and going out of the game and creating a new user/profile breaks the eventrect for both players. No idea why. 
-Major Bugsearch on this one. 
+Events working just fine now for both current and new players, although: drawn eventrectangles from EventHandler stay at same place as first map while transitioning to the other. This only occur if game has NOT been saved yet. When saved (calling the savegame method) all is just fine.
 
-- Gamestate not being properly reset when have clicked create new user? - But why break for every other user as well? 
-
-- The profile.dat files that cannot handle multiple saved event states? are the information for the save.dat files becoming too complex?
-
-- Game unable to save and handle independent state for multiple players - only one per time?
+- Guessing something is odd between the eventHandler + mapHandler classes (the new events updated doesnt follow into the new map at first initialization) Will have to dive deeper there. The drawn out rectangles are mostly good for developer purposes (but someone also have to think about the poor developers as well, please!!) 
+The events themselvels which are game-critical work.
 
 
 
