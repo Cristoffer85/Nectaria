@@ -1,4 +1,4 @@
-package com.cristoffer85.Main.MainResources;
+package com.cristoffer85.Data;
 
 import com.cristoffer85.Entity.Player.Player;
 import com.cristoffer85.States.GameState;
@@ -41,7 +41,6 @@ public class SaveLoadReset {
         }
     }
     
-
     public static void resetGame(GamePanel gamePanel, String profileName) {
         Player player = new Player(30, 30, 64, 6);
         MapHandler mapHandler = new MapHandler("MainWorld");

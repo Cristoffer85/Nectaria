@@ -1,4 +1,4 @@
-package com.cristoffer85.Main.MainResources;
+package com.cristoffer85.Data;
 
 import java.io.*;
 import java.nio.file.Files;

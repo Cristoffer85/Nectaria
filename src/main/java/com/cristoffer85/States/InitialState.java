@@ -1,8 +1,8 @@
 package com.cristoffer85.States;
 
+import com.cristoffer85.Data.CRUDProfile;
 import com.cristoffer85.Main.GamePanel;
 import com.cristoffer85.States.StatesResources.StateDefinitions;
-import com.cristoffer85.Main.MainResources.CRUDProfile;
 import com.cristoffer85.States.StatesResources.StateDesign;
 
 import javax.swing.*;

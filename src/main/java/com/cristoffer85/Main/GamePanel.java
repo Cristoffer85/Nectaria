@@ -1,5 +1,6 @@
 package com.cristoffer85.Main;
 
+import com.cristoffer85.Data.SaveLoadReset;
 import com.cristoffer85.Entity.Obstacle;
 import com.cristoffer85.Entity.Player.Player;
 import com.cristoffer85.States.MainMenuState;
@@ -8,7 +9,6 @@ import com.cristoffer85.States.GameState;
 import com.cristoffer85.States.InitialState;
 import com.cristoffer85.States.PauseState;
 import com.cristoffer85.States.SettingsState;
-import com.cristoffer85.Main.MainResources.SaveLoadReset;
 import com.cristoffer85.Map.MapHandler;
 import com.cristoffer85.Map.Tile;
 
