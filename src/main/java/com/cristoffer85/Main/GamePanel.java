@@ -103,6 +103,9 @@ public class GamePanel extends JPanel {
 
     public void setPlayer(Player player) {
         this.player = player;
+        if (eventHandler != null) {
+            eventHandler.setPlayer(player);
+        }
     }
 
     public void saveGame() {
@@ -127,5 +130,13 @@ public class GamePanel extends JPanel {
 
     public void loadMap(String mapName) {
         mapHandler.loadMap(mapName);
+    }
+
+    public EventHandler getEventHandler() {
+        return eventHandler;
+    }
+
+    public void setEventHandler(EventHandler eventHandler) {
+        this.eventHandler = eventHandler;
     }
 }

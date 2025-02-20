@@ -58,3 +58,17 @@ on VCS commit - 7cd0e30b942b5a894e11d3727261cea44a6e494c
 
 To easier distinguish what component does what and not, uhuh-ehe.. :S *nervous laugh* also for reminder for one-self to remember all of this and be able to explain it eventual further someday 
 -------------------------------------------------------------------
+
+* Fix why Events disappear for current player + also no new events work for new players == the initialization+values for the current player was only available for the first created player, not new ones. There was no
+
+      public void setPlayer(Player player) {
+        this.player = player;
+        if (eventHandler != null) {
+            eventHandler.setPlayer(player);
+        }
+    }
+
+    Get/set for a new player. This caused all initial (at first game start) values for events for new players (as well as old ones) break and no events was anymore available.
+
+-------------------------------------------------------------------
+

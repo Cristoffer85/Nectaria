@@ -9,7 +9,7 @@ import java.util.List;
 
 public class EventHandler {
     private final List<Rectangle> eventRectangles = new ArrayList<>();
-    private final Player player;
+    private Player player;
     private final MapHandler mapHandler;
 
     public EventHandler(Player player, MapHandler mapHandler) {
@@ -63,5 +63,9 @@ public class EventHandler {
         for (Rectangle eventRect : eventRectangles) {
             g2d.drawRect(eventRect.x - cameraX, eventRect.y - cameraY, eventRect.width, eventRect.height);
         }
+    }
+
+    public void setPlayer(Player newPlayer) {
+        this.player = newPlayer;
     }
 }

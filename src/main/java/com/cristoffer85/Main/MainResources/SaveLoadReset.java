@@ -30,12 +30,17 @@ public class SaveLoadReset {
             player.setX(saveData.getPlayerX());
             player.setY(saveData.getPlayerY());
             gamePanel.loadMap(saveData.getCurrentMap());
+            // Om EventHandler finns och spelaren redan används där, uppdatera referensen:
+            if(gamePanel.getEventHandler() != null) {
+                gamePanel.getEventHandler().setPlayer(player);
+            }
             System.out.println("Game loaded successfully from " + filePath);
             gamePanel.changeGameState(StateDefinitions.GAME);
         } catch (IOException | ClassNotFoundException e) {
             e.printStackTrace();
         }
     }
+    
 
     public static void resetGame(GamePanel gamePanel, String profileName) {
         Player player = new Player(30, 30, 64, 6);
