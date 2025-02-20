@@ -15,20 +15,20 @@ public class TileManager {
 
     // COLLIDABLE TILES values go here (from array value from tilesheet)
     static {
-        collidableTileIds.add(1);   // Grass water top left corner
-        collidableTileIds.add(2);   // Grass water top center
-        collidableTileIds.add(3);   // Grass water top right corner
-        collidableTileIds.add(4);   // Grass water top left outer corner
-        collidableTileIds.add(5);   // Grass water top right outer corner
-        collidableTileIds.add(21);  // Grass water left center
-        collidableTileIds.add(23);  // Grass water right center
-        collidableTileIds.add(24);  // Grass water bottom left outer corner
-        collidableTileIds.add(25);  // Grass water bottom right outer corner
-        collidableTileIds.add(40);  // Water base
-        collidableTileIds.add(41);  // Grass water bottom left corner
-        collidableTileIds.add(42);  // Grass water bottom center
-        collidableTileIds.add(43);  // Grass water bottom right corner
-        collidableTileIds.add(60);  // Water waves
+        collidableTileIds.add(3);   // Water base
+        collidableTileIds.add(4);   // Water waves
+        collidableTileIds.add(5);   
+        collidableTileIds.add(6);   
+        collidableTileIds.add(7);   
+        collidableTileIds.add(8);  
+        collidableTileIds.add(9);  
+        collidableTileIds.add(10);  
+        collidableTileIds.add(11);  
+        collidableTileIds.add(12);  
+        collidableTileIds.add(13);  
+        collidableTileIds.add(14);  
+        collidableTileIds.add(15);  
+        collidableTileIds.add(16);  
     }
 
     public TileManager(BufferedImage image, int tileId, boolean collidable) {

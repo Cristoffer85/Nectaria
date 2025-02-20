@@ -45,7 +45,7 @@ public class Tile {
 
     private static void tileDefiner(int tileId, int col, int row) {
         BufferedImage tileImage = tilesheet.getSubimage(col * tileWidth, row * tileHeight, tileWidth, tileHeight);
-        boolean collidable = TileManager.getCollidableTileIds().contains(tileId);
+        boolean collidable = TileManager.getCollidableTileIds().contains(tileId + 1); // Also sets the collidable id:s value to start from 1 instead
         TileManager tile = new TileManager(tileImage, tileId, collidable);
         tileMap.put(tileId, tile);
     }
@@ -78,11 +78,11 @@ public class Tile {
     }
 
     private static void readMapColumn(String line, int y) {
-        String[] tokens = line.split(",");
+        String[] tokens = line.split(",");           // Also, changed this from space to comma, because of current map editor
 
         // Read each tile id on row
         for (int x = 0; x < tokens.length; x++) {
-            int tileId = Integer.parseInt(tokens[x]);
+            int tileId = Integer.parseInt(tokens[x]) -1;  // Array starts from 1 now, crazy huh! (Because of current map editor, and how the map numbers are saved apparently..)
             tilePositions.put(new Point(x, y), tileId);
         }
     }
