@@ -1,7 +1,10 @@
 -------------------------------------------------------------------
 1. on VCS commit a9cec1ab267727342f624a096969aad5487579ff
 
-Events working just fine now for both current and new players, although: drawn eventrectangles from EventHandler stay at same place as first map while transitioning to the other. This only occur if game has NOT been saved yet. When saved (calling the savegame method) all is just fine.
+Events working just fine now for both current and new players, 
+    although: drawn eventrectangles from EventHandler stay at same place as first map while transitioning to the other. This only occur if game has NOT been saved yet. 
+
+When saved (calling the savegame method) all is just fine.
 
 - Guessing something is odd between the eventHandler + mapHandler classes (the new events updated doesnt follow into the new map at first initialization) Will have to dive deeper there. The drawn out rectangles are mostly good for developer purposes (but someone also have to think about the poor developers as well, please!!) 
 The events themselvels which are game-critical work.
