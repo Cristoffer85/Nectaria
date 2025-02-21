@@ -36,6 +36,10 @@ public class GameState extends JPanel {
         objects.add(object);
     }
 
+    public void clearObjects() {
+        objects.clear();
+    }
+
     public void updateResolution(int width, int height) {
         this.baseWidth = width;
         this.baseHeight = height;

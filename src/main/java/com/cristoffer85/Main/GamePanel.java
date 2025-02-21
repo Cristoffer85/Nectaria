@@ -70,7 +70,8 @@ public class GamePanel extends JPanel {
         add(characterState, StateDefinitions.CHARACTER_STATE.name());
 
         // Initialize asset setter
-        new AssetSetter(gameState);
+        AssetSetter assetSetter = new AssetSetter(gameState);
+        mapHandler.setAssetSetter(assetSetter);
         //------------------------------------------------------------------
 
         // --------- Main Game loop ----------------------------------------

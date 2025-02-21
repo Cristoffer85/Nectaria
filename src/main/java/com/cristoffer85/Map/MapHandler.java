@@ -1,21 +1,17 @@
 package com.cristoffer85.Map;
 
 import com.cristoffer85.Entity.Obstacle;
+import com.cristoffer85.Main.AssetSetter;
+import com.cristoffer85.Main.EventHandler;
 
 import java.util.HashMap;
 import java.util.Map;
-import com.cristoffer85.Main.EventHandler;
 
-/* MapHandler loads maps + also obstacles/objects for the game, so no calling for it is longer needed in either
-   Gamepanel or SaveLoadReset. 
-   It also clears previous map data when loading a new map so the old one wont be rendered extra to it,
-   making it able to switch and have individual map sizes (whatever size you want really, the size of the map.txt file determines it)
- */
-
- public class MapHandler {
+public class MapHandler {
     private final Map<String, String> mapPaths = new HashMap<>();
     private String currentMap;
     private EventHandler eventHandler;
+    private AssetSetter assetSetter;
 
     public MapHandler(String initialMap) {
         mapPaths.put("MainWorld", "/MainWorld.txt");
@@ -33,6 +29,9 @@ import com.cristoffer85.Main.EventHandler;
             if (eventHandler != null) {
                 eventHandler.setupEventRectangles(mapName);
             }
+            if (assetSetter != null) {
+                assetSetter.loadObjectsForMap(mapName);
+            }
             System.out.println("Map loaded: " + mapName);
         } else {
             throw new IllegalArgumentException("Map not found: " + mapName);
@@ -45,5 +44,9 @@ import com.cristoffer85.Main.EventHandler;
 
     public void setEventHandler(EventHandler eventHandler) {
         this.eventHandler = eventHandler;
+    }
+
+    public void setAssetSetter(AssetSetter assetSetter) {
+        this.assetSetter = assetSetter;
     }
 }

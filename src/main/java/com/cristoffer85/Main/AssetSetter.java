@@ -5,30 +5,59 @@ import com.cristoffer85.Objects.LesserAxe;
 import com.cristoffer85.States.GameState;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class AssetSetter {
     private final GameState gameState;
-    private final List<GameObject> objects;
+    private final Map<String, List<GameObject>> objectsByMap;
 
     public AssetSetter(GameState gameState) {
         this.gameState = gameState;
-        this.objects = new ArrayList<>();
+        this.objectsByMap = new HashMap<>();
         placeObjects();
     }
 
     private void placeObjects() {
-        placeLesserAxe(100, 100);
-        placeLesserAxe(200, 200);
+        placeObjectsForMainWorld();
+        placeObjectsForSecondWorld();
     }
 
-    private void placeLesserAxe(int x, int y) {
-        LesserAxe lesserAxe = new LesserAxe(x, y);
-        objects.add(lesserAxe);
-        gameState.addObject(lesserAxe);
+    private void placeObjectsForMainWorld() {
+        List<GameObject> mainWorldObjects = new ArrayList<>();
+
+        mainWorldObjects.add(new LesserAxe(100, 100));
+        mainWorldObjects.add(new LesserAxe(200, 200));
+
+        // Place more objects here
+
+
+
+        objectsByMap.put("MainWorld", mainWorldObjects);
     }
 
-    public List<GameObject> getObjects() {
-        return objects;
+    private void placeObjectsForSecondWorld() {
+        List<GameObject> secondWorldObjects = new ArrayList<>();
+
+        secondWorldObjects.add(new LesserAxe(350, 300));
+        secondWorldObjects.add(new LesserAxe(400, 300));
+
+        // Place more objects here
+
+
+
+
+        objectsByMap.put("SecondWorld", secondWorldObjects);
+    }
+
+    public void loadObjectsForMap(String mapName) {
+        gameState.clearObjects();
+        List<GameObject> objects = objectsByMap.get(mapName);
+        if (objects != null) {
+            for (GameObject object : objects) {
+                gameState.addObject(object);
+            }
+        }
     }
 }
