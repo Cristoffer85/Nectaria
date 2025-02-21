@@ -35,7 +35,7 @@ public class GamePanel extends JPanel {
 
     public GamePanel() {
         // --------- Initializization of diverse game components ---------
-        // NOTE: Do NOT change order of below initializations. 
+        // NOTE: Do **NOT** change order of below initializations. 
         // It will mess up Events* and Assets* among two things.
         
         // Player
@@ -48,7 +48,7 @@ public class GamePanel extends JPanel {
         mapHandler = new MapHandler("MainWorld");                             // Load map.txt from file. Set whatever size you want for the map in the text file. Mainworld right now = 128x128 tiles.
         // Event handler
         eventHandler = new EventHandler(player, mapHandler);
-        // Sets up events per individual map and player
+        // Sets up individual events per map
         mapHandler.setEventHandler(eventHandler);
 
         // --------- Different states ---------------------------
@@ -69,7 +69,7 @@ public class GamePanel extends JPanel {
         add(settingsState, StateDefinitions.SETTINGS_MENU.name());
         add(characterState, StateDefinitions.CHARACTER_STATE.name());
 
-        // Initialize asset setter
+        // Sets up individual assets per map (after gameState is created)
         AssetSetter assetSetter = new AssetSetter(gameState);
         mapHandler.setAssetSetter(assetSetter);
         //------------------------------------------------------------------
