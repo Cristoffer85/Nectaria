@@ -10,7 +10,11 @@ import com.cristoffer85.Main.KeyHandler;
 
 import java.awt.*;
 import java.awt.geom.Line2D;
+import java.awt.image.BufferedImage;
+import java.io.IOException;
 import java.util.List;
+
+import javax.imageio.ImageIO;
 
 @Getter
 @Setter
@@ -41,6 +45,12 @@ public class Player {
     private int strength;
     private int dexterity;
 
+    // ## Heart sprites ##
+    private BufferedImage heartSheet;
+    private BufferedImage fullHeart;
+    private BufferedImage halfHeart;
+    private BufferedImage emptyHeart;
+
     public Player(int x, int y, int size, int moveSpeed) {
         this.x = x;
         this.y = y;
@@ -62,9 +72,19 @@ public class Player {
         this.deceleration = 1;
 
         // Initialize player stats
-        this.health = 6;
+        this.health = 5;
         this.strength = 10;
         this.dexterity = 10;
+
+        // Load heart sprites
+        try {
+            heartSheet = ImageIO.read(getClass().getResourceAsStream("/objects/PlayerHearts.png"));
+            fullHeart = heartSheet.getSubimage(128, 0, 64, 64);
+            halfHeart = heartSheet.getSubimage(64, 0, 64, 64);
+            emptyHeart = heartSheet.getSubimage(0, 0, 64, 64);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
         // Initialize player sprite: /Path - Width - Height - Rows - Columns - Frames per Direction update - Frame Delay
         playerSprite = new PlayerSprite("/TestCharx9.png", 64, 64, 4, 9, 9, 1);
@@ -86,5 +106,25 @@ public class Player {
         // Determine direction of movement and render the sprite
         int direction = playerSprite.determineDirection(velocityX, velocityY, lastDirection);
         playerSprite.render(g, renderX, renderY, size, direction, isMoving);
+    }
+
+    public void paintHearts(Graphics g) {
+        int maxHealth = 6;
+        int heartsToDraw = maxHealth / 2;
+        int currentHealth = health;
+
+        for (int i = 0; i < heartsToDraw; i++) {
+            if (currentHealth >= 2) {
+
+                // First Integer value is X position on screen, second is Spacing between hearts, Third is Y position on screen
+                g.drawImage(fullHeart, -10 + (i * 34), -10, null);
+                currentHealth -= 2;
+            } else if (currentHealth == 1) {
+                g.drawImage(halfHeart, -10 + (i * 34), -10, null);
+                currentHealth -= 1;
+            } else {
+                g.drawImage(emptyHeart, -10 + (i * 34), -10, null);
+            }
+        }
     }
 }

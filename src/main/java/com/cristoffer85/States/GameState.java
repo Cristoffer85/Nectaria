@@ -73,6 +73,9 @@ public class GameState extends JPanel {
 
         // Draw the BufferedImage scaled up to the panel size
         g.drawImage(gameImage, 0, 0, getWidth(), getHeight(), null);
+
+        // Draw player hearts
+        player.paintHearts(g);
     }
 
     @Override
