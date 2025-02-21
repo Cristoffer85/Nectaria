@@ -34,8 +34,10 @@ public class GamePanel extends JPanel {
     private CharacterState characterState;
 
     public GamePanel() {
-
-        // --------- Initializization of diverse game components. NOTE: Do NOT change order of below initializations. It will mess up events among one thing. ---------
+        // --------- Initializization of diverse game components ---------
+        // NOTE: Do NOT change order of below initializations. 
+        // It will mess up Events* and Assets* among two things.
+        
         // Player
         player = new Player(30, 30, 64, 6);                            // Set player starting x, starting y, sprite size, moving speed
         // Keyhandler
@@ -48,9 +50,8 @@ public class GamePanel extends JPanel {
         eventHandler = new EventHandler(player, mapHandler);
         // Sets up events per individual map and player
         mapHandler.setEventHandler(eventHandler);
-        // -----------------------------------------------------------------------------------------------------------------------------------------------------------
 
-        // --------- Initialize different states ---------------------------
+        // --------- Different states ---------------------------
         initialState = new InitialState(this);
         mainMenuState = new MainMenuState(this);
         gameState = new GameState(player, 1920, 1080, eventHandler);              // Default values for 1920x1080 resolution
@@ -67,6 +68,9 @@ public class GamePanel extends JPanel {
         add(pauseState, StateDefinitions.PAUSE_MENU.name());
         add(settingsState, StateDefinitions.SETTINGS_MENU.name());
         add(characterState, StateDefinitions.CHARACTER_STATE.name());
+
+        // Initialize asset setter
+        new AssetSetter(gameState);
         //------------------------------------------------------------------
 
         // --------- Main Game loop ----------------------------------------

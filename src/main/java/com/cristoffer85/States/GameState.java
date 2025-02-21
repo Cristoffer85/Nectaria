@@ -3,18 +3,24 @@ package com.cristoffer85.States;
 import com.cristoffer85.Entity.Obstacle;
 import com.cristoffer85.Entity.Player.Player;
 import com.cristoffer85.Map.Tile;
+import com.cristoffer85.Objects.GameObject;
 import com.cristoffer85.Main.EventHandler;
 
-import javax.swing.*;
-import java.awt.*;
+import javax.swing.JPanel;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.awt.Color;
 import java.awt.image.BufferedImage;
+import java.util.ArrayList;
+import java.util.List;
 
 public class GameState extends JPanel {
     private final Player player;
+    private final List<GameObject> objects;
     private BufferedImage gameImage;
     private int baseWidth;
     private int baseHeight;
-    private double scaleFactor = 1.0; // Default scale == if lowering this game will be even bigger and will affect values in SettingsState.scaleFactors dropdown (0.5 and 1 there will be bigger view of game)
+    private double scaleFactor = 1.0;
     private final EventHandler eventHandler;
 
     public GameState(Player player, int baseWidth, int baseHeight, EventHandler eventHandler) {
@@ -22,7 +28,12 @@ public class GameState extends JPanel {
         this.baseWidth = baseWidth;
         this.baseHeight = baseHeight;
         this.eventHandler = eventHandler;
+        this.objects = new ArrayList<>();
         this.gameImage = new BufferedImage((int) (baseWidth * scaleFactor), (int) (baseHeight * scaleFactor), BufferedImage.TYPE_INT_ARGB);
+    }
+
+    public void addObject(GameObject object) {
+        objects.add(object);
     }
 
     public void updateResolution(int width, int height) {
@@ -38,6 +49,12 @@ public class GameState extends JPanel {
         this.gameImage = new BufferedImage((int) (baseWidth * scaleFactor), (int) (baseHeight * scaleFactor), BufferedImage.TYPE_INT_ARGB);
         revalidate();
         repaint();
+    }
+
+    @Override
+    protected void paintComponent(Graphics g) {
+        super.paintComponent(g);
+        PaintGameState(g);
     }
 
     public void PaintGameState(Graphics g) {
@@ -68,6 +85,13 @@ public class GameState extends JPanel {
         // Draw event rectangles for testing
         eventHandler.drawEventRectangles(g2d, cameraX, cameraY);
 
+        // Draw all game objects with camera offset
+        for (GameObject object : objects) {
+            int objectX = object.getX() - cameraX;
+            int objectY = object.getY() - cameraY;
+            object.draw(g2d, objectX, objectY);
+        }
+
         // Dispose of the Graphics2D object
         g2d.dispose();
 
@@ -76,11 +100,5 @@ public class GameState extends JPanel {
 
         // Draw player hearts
         player.paintHearts(g);
-    }
-
-    @Override
-    protected void paintComponent(Graphics g) {
-        super.paintComponent(g);
-        PaintGameState(g);
     }
 }
