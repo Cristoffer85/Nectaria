@@ -57,7 +57,7 @@ public class GamePanel extends JPanel {
         gameState.setScaleFactor(0.5);                                       // Default start scale factor .5 for 'SNES' style
         pauseState = new PauseState(this);
         settingsState = new SettingsState(this); 
-        characterState = new CharacterState(this, gameState);
+        characterState = new CharacterState(this, gameState, player);
 
         // ..and add them to the "card" layout...
         setLayout(new CardLayout());

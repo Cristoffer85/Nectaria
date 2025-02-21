@@ -1,5 +1,6 @@
 package com.cristoffer85.States;
 
+import com.cristoffer85.Entity.Player.Player;
 import com.cristoffer85.Main.GamePanel;
 import com.cristoffer85.States.StatesResources.StateDesign;
 
@@ -11,9 +12,11 @@ import java.awt.RenderingHints;
 
 public class CharacterState extends StateDesign {
     private final GameState gameState;
+    private final Player player;
 
-    public CharacterState(GamePanel gamePanel, GameState gameState) {
+    public CharacterState(GamePanel gamePanel, GameState gameState, Player player) {
         this.gameState = gameState;
+        this.player = player;
     }
 
     @Override
@@ -39,5 +42,10 @@ public class CharacterState extends StateDesign {
         // Set the font and draw text inside the rectangle
         g2d.setFont(new Font("Arial", Font.PLAIN, 20));
         g2d.drawString("Character Stats", 75, 90);
+
+        // Draw player stats
+        g2d.drawString("Health: " + player.getHealth(), 75, 130);
+        g2d.drawString("Strength: " + player.getStrength(), 75, 160);
+        g2d.drawString("Dexterity: " + player.getDexterity(), 75, 190);
     }
 }

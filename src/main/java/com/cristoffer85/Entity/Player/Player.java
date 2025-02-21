@@ -36,6 +36,11 @@ public class Player {
     private int collisionBoxOffsetX;
     private int collisionBoxOffsetY;
 
+    // ## Player's stats ##
+    private int health;
+    private int strength;
+    private int dexterity;
+
     public Player(int x, int y, int size, int moveSpeed) {
         this.x = x;
         this.y = y;
@@ -55,6 +60,11 @@ public class Player {
         // Set acceleration and deceleration values
         this.acceleration = 1;
         this.deceleration = 1;
+
+        // Initialize player stats
+        this.health = 6;
+        this.strength = 10;
+        this.dexterity = 10;
 
         // Initialize player sprite: /Path - Width - Height - Rows - Columns - Frames per Direction update - Frame Delay
         playerSprite = new PlayerSprite("/TestCharx9.png", 64, 64, 4, 9, 9, 1);
