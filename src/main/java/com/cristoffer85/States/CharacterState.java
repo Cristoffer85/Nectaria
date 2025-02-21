@@ -23,6 +23,6 @@ public class CharacterState extends StateDesign {
         // Set the color to white
         g.setColor(Color.WHITE);
         // Draw a 100x100px white box at position (50, 50)
-        g.fillRect(50, 50, 100, 100);
+        g.fillRect(50, 50, 400, 400);
     }
 }

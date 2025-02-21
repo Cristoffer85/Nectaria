@@ -35,19 +35,20 @@ public class GamePanel extends JPanel {
 
     public GamePanel() {
 
-        // --------- Initializization of diverse game components ---------
+        // --------- Initializization of diverse game components. NOTE: Do NOT change order of below initializations. It will mess up events among one thing. ---------
         // Player
         player = new Player(30, 30, 64, 6);                            // Set player starting x, starting y, sprite size, moving speed
         // Keyhandler
         keyHandler = new KeyHandler(this);
         // Tilesheet
         Tile.loadTilesheet("/TileSheet.png", 64, 64);          // Load TileSheet.png from file, set tile width and tile height. Map rendering will adjust to these values.
-        // MapHandler + initial map
+        // Load initial map
         mapHandler = new MapHandler("MainWorld");                             // Load map.txt from file. Set whatever size you want for the map in the text file. Mainworld right now = 128x128 tiles.
-        mapHandler.setEventHandler(eventHandler);
         // Event handler
         eventHandler = new EventHandler(player, mapHandler);
-        // -----------------------------------------------------------------
+        // Sets up events per individual map and player
+        mapHandler.setEventHandler(eventHandler);
+        // -----------------------------------------------------------------------------------------------------------------------------------------------------------
 
         // --------- Initialize different states ---------------------------
         initialState = new InitialState(this);

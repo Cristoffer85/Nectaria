@@ -29,10 +29,10 @@ public class EventHandler {
 
     private void triggerEvent(Rectangle playerCollisionBox, Rectangle eventRect) {
         if (mapHandler.getCurrentMap().equals("MainWorld") && eventRect.equals(EVENT_RECTANGLES.get("MainWorld")))
-            switchMap("SecondWorld", 50, 50);
+            switchMap("SecondWorld", 150, 150);
 
         if (mapHandler.getCurrentMap().equals("SecondWorld") && eventRect.equals(EVENT_RECTANGLES.get("SecondWorld")))
-            switchMap("MainWorld", 100, 100);
+            switchMap("MainWorld", 200, 100);
 
         
 
