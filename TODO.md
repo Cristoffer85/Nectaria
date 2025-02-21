@@ -16,7 +16,7 @@ The events themselvels which are game-critical work.
 
 * Start, implement, in prioritized order from up and down:
 
-    1. Accessible and modifiable Inventory for player
+    1. modifiable Inventory for player
     2. Objects, pickable for player and store in inventory
 
     3. Stats, viewable for player (Visible health on mainscreen)
@@ -84,4 +84,4 @@ To easier distinguish what component does what and not, uhuh-ehe.. :S *nervous l
     Get/set for a new player. This caused all initial (at first game start) values for events for new players (as well as old ones) break and no events was anymore available.
 
 -------------------------------------------------------------------
-
+* Accessible Characterstate, stats for player. Visible render of current heart health to screen
