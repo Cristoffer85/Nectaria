@@ -26,9 +26,9 @@ import com.cristoffer85.Main.EventHandler;
     public void loadMap(String mapName) {
         String path = mapPaths.get(mapName);
         if (path != null) {
-            Tile.clearTilePositions(); // Clear previous tile positions
+            Tile.clearTilePositions();
             Tile.tilesByMapSize(path);
-            Obstacle.loadObstacles(mapName); // Load obstacles for the new map
+            Obstacle.loadObstacles(mapName);
             currentMap = mapName;
             if (eventHandler != null) {
                 eventHandler.setupEventRectangles(mapName);

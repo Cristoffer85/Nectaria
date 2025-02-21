@@ -25,7 +25,6 @@ public class KeyHandler extends KeyAdapter {
         initialize();
     }
 
-    // Initialize necessary key handling methods
     private void initialize() {
         gamePanel.addKeyListener(this);
         gamePanel.setFocusable(true);
