@@ -27,15 +27,6 @@ public class EventHandler {
         setupEventRectangles(mapHandler.getCurrentMap());
     }
 
-    public void checkEvents() {
-        Rectangle playerCollisionBox = new Rectangle(player.getX() + player.getCollisionBoxOffsetX(), player.getY() + player.getCollisionBoxOffsetY(), player.getCollisionBoxSize(), player.getCollisionBoxSize());
-        for (Rectangle eventRect : eventRectangles) {
-            if (playerCollisionBox.intersects(eventRect)) {
-                triggerEvent(playerCollisionBox, eventRect);
-            }
-        }
-    }
-
     private void triggerEvent(Rectangle playerCollisionBox, Rectangle eventRect) {
         if (mapHandler.getCurrentMap().equals("MainWorld") && eventRect.equals(EVENT_RECTANGLES.get("MainWorld")))
             switchMap("SecondWorld", 50, 50);
@@ -51,6 +42,15 @@ public class EventHandler {
         System.out.println("Player collision box: " + playerCollisionBox);
         System.out.println("Event rectangle: " + eventRect);
         */
+    }
+
+    public void checkEvents() {
+        Rectangle playerCollisionBox = new Rectangle(player.getX() + player.getCollisionBoxOffsetX(), player.getY() + player.getCollisionBoxOffsetY(), player.getCollisionBoxSize(), player.getCollisionBoxSize());
+        for (Rectangle eventRect : eventRectangles) {
+            if (playerCollisionBox.intersects(eventRect)) {
+                triggerEvent(playerCollisionBox, eventRect);
+            }
+        }
     }
 
     public void setupEventRectangles(String mapName) {
