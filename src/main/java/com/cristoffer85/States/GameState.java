@@ -40,7 +40,7 @@ public class GameState extends JPanel {
         repaint();
     }
 
-    private void paintGame(Graphics g) {
+    public void PaintGameState(Graphics g) {
         // Calculate position for Camera following player, keeps player centered on map when not near map boundary
         int cameraX = player.getX() - (int) (baseWidth * scaleFactor) / 2 + player.getSize() / 2;
         int cameraY = player.getY() - (int) (baseHeight * scaleFactor) / 2 + player.getSize() / 2 + 24;
@@ -78,6 +78,6 @@ public class GameState extends JPanel {
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
-        paintGame(g);
+        PaintGameState(g);
     }
 }
