@@ -16,8 +16,8 @@ The events themselvels which are game-critical work.
 
 * Start, implement, in prioritized order from up and down:
 
-    1. modifiable Inventory for player
-    2. Objects, pickable for player and store in inventory
+    1. Objects, pickable for player and store in inventory
+    2. Interactive Inventory for player
 
     3. Stats, viewable for player (Visible health on mainscreen)
 
