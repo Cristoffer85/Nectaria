@@ -20,7 +20,8 @@ public class KeyHandler extends KeyAdapter {
             "moveRight", KeyEvent.VK_D,
             "moveUp", KeyEvent.VK_W,
             "moveDown", KeyEvent.VK_S,
-            "pause", KeyEvent.VK_ESCAPE
+            "pause", KeyEvent.VK_ESCAPE,
+            "character", KeyEvent.VK_C
         );
         initialize();
     }
@@ -33,7 +34,8 @@ public class KeyHandler extends KeyAdapter {
     @Override
     public void keyPressed(KeyEvent e) {
         keysPressed.add(e.getKeyCode());
-        handlePause(e);
+        PauseState(e);
+        CharacterState(e);
     }
 
     @Override
@@ -45,12 +47,23 @@ public class KeyHandler extends KeyAdapter {
         return keysPressed.contains(keyBindings.get(action));
     }
 
-    // Specific individual key handling methods below == IF pressing ESC/Pause when in game, pause the game - IF pressing ESC/Pause when in pause menu, resume the game. Sure theres another more beautiful way of doing this but it works for now.
-    private void handlePause(KeyEvent e) {
+    // PauseState key toggling
+    private void PauseState(KeyEvent e) {
         if (e.getKeyCode() == keyBindings.get("pause")) {
             if (gamePanel.getCurrentState() == StateDefinitions.GAME) {
                 gamePanel.changeGameState(StateDefinitions.PAUSE_MENU);
             } else if (gamePanel.getCurrentState() == StateDefinitions.PAUSE_MENU) {
+                gamePanel.changeGameState(StateDefinitions.GAME);
+            }
+        }
+    }
+
+    // CharacterState key toggling
+    private void CharacterState(KeyEvent e) {
+        if (e.getKeyCode() == keyBindings.get("character")) {
+            if (gamePanel.getCurrentState() == StateDefinitions.GAME) {
+                gamePanel.changeGameState(StateDefinitions.CHARACTER_STATE);
+            } else if (gamePanel.getCurrentState() == StateDefinitions.CHARACTER_STATE) {
                 gamePanel.changeGameState(StateDefinitions.GAME);
             }
         }

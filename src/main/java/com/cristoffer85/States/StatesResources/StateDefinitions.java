@@ -5,5 +5,6 @@ public enum StateDefinitions {
     MAIN_MENU,
     GAME,
     PAUSE_MENU,
-    SETTINGS_MENU
+    SETTINGS_MENU,
+    CHARACTER_STATE
 }

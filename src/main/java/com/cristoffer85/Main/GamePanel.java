@@ -5,6 +5,7 @@ import com.cristoffer85.Entity.Obstacle;
 import com.cristoffer85.Entity.Player.Player;
 import com.cristoffer85.States.MainMenuState;
 import com.cristoffer85.States.StatesResources.StateDefinitions;
+import com.cristoffer85.States.CharacterState;
 import com.cristoffer85.States.GameState;
 import com.cristoffer85.States.InitialState;
 import com.cristoffer85.States.PauseState;
@@ -30,6 +31,7 @@ public class GamePanel extends JPanel {
     private PauseState pauseState;
     private InitialState initialState;
     private SettingsState settingsState;
+    private CharacterState characterState;
 
     public GamePanel() {
 
@@ -54,6 +56,7 @@ public class GamePanel extends JPanel {
         gameState.setScaleFactor(0.5);                                       // Default start scale factor .5 for 'SNES' style
         pauseState = new PauseState(this);
         settingsState = new SettingsState(this); 
+        characterState = new CharacterState(this);
 
         // ..and add them to the "card" layout...
         setLayout(new CardLayout());
@@ -62,6 +65,7 @@ public class GamePanel extends JPanel {
         add(gameState, StateDefinitions.GAME.name());
         add(pauseState, StateDefinitions.PAUSE_MENU.name());
         add(settingsState, StateDefinitions.SETTINGS_MENU.name());
+        add(characterState, StateDefinitions.CHARACTER_STATE.name());
         //------------------------------------------------------------------
 
         // --------- Main Game loop ----------------------------------------
