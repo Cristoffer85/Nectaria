@@ -17,7 +17,7 @@ public class StateDesign extends JPanel {
     protected static final Color BACKGROUND_COLOR = Color.ORANGE;
     protected static final int MIDDLE_PANEL_OFFSET = 36;
     protected static final Color BUTTON_COLOR = Color.ORANGE;
-    protected Font MENUBUTTON_FONTANDSIZE = loadCustomFont("/Retro-pixelfont.ttf", 44f);
+    protected Font MENUBUTTON_FONTANDSIZE = loadCustomFont("/font/Retro-pixelfont.ttf", 44f);
     protected static final Font DEFAULT_FONT = new Font("Arial", Font.PLAIN, 12);
     protected static final Font SWITCH_USER_FONTANDSIZE = new Font("Arial", Font.PLAIN, 12);
     protected static final int MENUBUTTON_VERTICAL_SPACING = 20;

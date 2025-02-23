@@ -10,7 +10,7 @@ import java.awt.image.BufferedImage;
 
 public class PauseState extends JPanel {
     private Image gameStateImage;
-    private static final Font BUTTON_FONT = new StateDesign().loadCustomFont("/Retro-pixelfont.ttf", 24f);
+    private static final Font BUTTON_FONT = new StateDesign().loadCustomFont("/font/Retro-pixelfont.ttf", 24f);
 
     public PauseState(GamePanel gamePanel) {
         setLayout(new GridBagLayout());
