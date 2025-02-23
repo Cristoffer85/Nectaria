@@ -15,7 +15,7 @@ public abstract class PROJECTEDCollision {
     If this not implemented == the collision will be very goofy/player will (sometimes) stop ca 1 pixel away from the obstacle sometimes. 
     Dont know why exactly but this class fixed that.
 
-    This is an abstract class so the rectangle and boundary collision subclasses can use it.
+    This is an abstract class so the respective subclasses (mostly classes who uses Rectangle) can use it.
     */
 
     public Rectangle calculateProjectedPosition(int projectedPosition, boolean isHorizontal) {
