@@ -40,6 +40,8 @@ public class SaveLoadResetGame {
         }
     }
     
+    //--//--//--//--//--//--//--//--//--//--//--//--//--//--//--//--//--//--//--//--//--//--//
+    // Something is wrong with this method, it does not reset events or objects properly......
     public static void resetGame(GamePanel gamePanel, String profileName) {
         Player player = new Player(30, 30, 64, 6);
         MapHandler mapHandler = new MapHandler("MainWorld");
@@ -52,4 +54,5 @@ public class SaveLoadResetGame {
         gamePanel.initializeGameState(gameState);
         gamePanel.setScaleFactor(SettingsState.SCALE_FACTORS_MAP.get("SNES"));
     }
+    //--//--//--//--//--//--//--//--//--//--//--//--//--//--//--//--//--//--//--//--//--//--//
 }

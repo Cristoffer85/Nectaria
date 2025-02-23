@@ -1,20 +1,20 @@
 -------------------------------------------------------------------
-1. on VCS commit a9cec1ab267727342f624a096969aad5487579ff
+# on VCS commit a9cec1ab267727342f624a096969aad5487579ff
 
 Events working just fine now for both current and new players, 
-    although: drawn eventrectangles from EventHandler stay at same place as first map while transitioning to the other. This only occur if game has NOT been saved yet. 
+    although: drawn eventrectangles and objects from EventHandler stay at same place as first map while transitioning to the other. 
+    This only occur if application has not been exited and restarted. After re-enter all is fine.
 
-When saved (calling the savegame method) all is just fine.
-
-- Guessing something is odd between the eventHandler + mapHandler classes (the new events updated doesnt follow into the new map at first initialization) Will have to dive deeper there. The drawn out rectangles are mostly good for developer purposes (but someone also have to think about the poor developers as well, please!!) 
-The events themselvels which are game-critical work.
-
-
-3. Fix offset between menubuttons responsive on window size
+* Problem isolated to the ResetGame() in SaveLoadResetGame. Somethings off in that method since that is the only method used when:
+        
+        - Creating new profile -> sets you directly into new game and error occurs
+        - Start new game, identical error occurs
+        - 
 -------------------------------------------------------------------
+# Fix offset between menubuttons responsive on window size
 
 
-* Start, implement, in prioritized order from up and down:
+# Start, implement, in prioritized order from up and down:
 
     1. Objects, pickable for player and store in inventory
     2. Interactive Inventory for player
