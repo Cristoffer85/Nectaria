@@ -149,4 +149,8 @@ public class GamePanel extends JPanel {
     public void setEventHandler(EventHandler eventHandler) {
         this.eventHandler = eventHandler;
     }
+
+    public CharacterState getCharacterState() {
+        return characterState;
+    }
 }

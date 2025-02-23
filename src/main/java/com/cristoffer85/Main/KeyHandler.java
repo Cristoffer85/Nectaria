@@ -1,6 +1,7 @@
 package com.cristoffer85.Main;
 
 import com.cristoffer85.States.StatesResources.StateDefinitions;
+import com.cristoffer85.States.CharacterState;
 
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
@@ -58,13 +59,25 @@ public class KeyHandler extends KeyAdapter {
         }
     }
 
-    // CharacterState key toggling
+    // CharacterState key toggling and inventory navigation
     private void CharacterState(KeyEvent e) {
         if (e.getKeyCode() == keyBindings.get("character")) {
             if (gamePanel.getCurrentState() == StateDefinitions.GAME) {
                 gamePanel.changeGameState(StateDefinitions.CHARACTER_STATE);
             } else if (gamePanel.getCurrentState() == StateDefinitions.CHARACTER_STATE) {
                 gamePanel.changeGameState(StateDefinitions.GAME);
+            }
+
+        } else if (gamePanel.getCurrentState() == StateDefinitions.CHARACTER_STATE) {
+            CharacterState characterState = gamePanel.getCharacterState();
+            if (e.getKeyCode() == keyBindings.get("moveLeft")) {
+                characterState.moveSelection(-1, 0);
+            } else if (e.getKeyCode() == keyBindings.get("moveRight")) {
+                characterState.moveSelection(1, 0);
+            } else if (e.getKeyCode() == keyBindings.get("moveUp")) {
+                characterState.moveSelection(0, -1);
+            } else if (e.getKeyCode() == keyBindings.get("moveDown")) {
+                characterState.moveSelection(0, 1);
             }
         }
     }
