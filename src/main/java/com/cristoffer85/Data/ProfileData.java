@@ -6,12 +6,12 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 
-public class CRUDProfile implements Serializable {
+public class ProfileData implements Serializable {
     private final int playerX;
     private final int playerY;
     private final String currentMap;
 
-    public CRUDProfile(int playerX, int playerY, String currentMap) {
+    public ProfileData(int playerX, int playerY, String currentMap) {
         this.playerX = playerX;
         this.playerY = playerY;
         this.currentMap = currentMap;

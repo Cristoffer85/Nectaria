@@ -1,6 +1,6 @@
 package com.cristoffer85.Main;
 
-import com.cristoffer85.Data.SaveLoadReset;
+import com.cristoffer85.Data.SaveLoadResetGame;
 import com.cristoffer85.Entity.Obstacle;
 import com.cristoffer85.Entity.Player.Player;
 import com.cristoffer85.States.MainMenuState;
@@ -119,15 +119,15 @@ public class GamePanel extends JPanel {
     }
 
     public void saveGame() {
-        SaveLoadReset.saveGame(player, profileName, mapHandler.getCurrentMap());
+        SaveLoadResetGame.saveGame(player, profileName, mapHandler.getCurrentMap());
     }
 
     public void loadGame() {
-        SaveLoadReset.loadGame(player, this, profileName);
+        SaveLoadResetGame.loadGame(player, this, profileName);
     }
 
     public void resetGame() {
-        SaveLoadReset.resetGame(this, profileName);
+        SaveLoadResetGame.resetGame(this, profileName);
     }
 
     public void changeResolution(int width, int height) {

@@ -10,10 +10,10 @@ import com.cristoffer85.Map.MapHandler;
 
 import java.io.*;
 
-public class SaveLoadReset {
+public class SaveLoadResetGame {
 
     public static void saveGame(Player player, String profileName, String currentMap) {
-        CRUDProfile saveData = new CRUDProfile(player.getX(), player.getY(), currentMap);
+        ProfileData saveData = new ProfileData(player.getX(), player.getY(), currentMap);
         String filePath = "profiles/" + profileName + ".dat";
         try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(filePath))) {
             oos.writeObject(saveData);
@@ -26,7 +26,7 @@ public class SaveLoadReset {
     public static void loadGame(Player player, GamePanel gamePanel, String profileName) {
         String filePath = "profiles/" + profileName + ".dat";
         try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(filePath))) {
-            CRUDProfile saveData = (CRUDProfile) ois.readObject();
+            ProfileData saveData = (ProfileData) ois.readObject();
             player.setX(saveData.getPlayerX());
             player.setY(saveData.getPlayerY());
             gamePanel.loadMap(saveData.getCurrentMap());

@@ -1,6 +1,6 @@
 package com.cristoffer85.States;
 
-import com.cristoffer85.Data.CRUDProfile;
+import com.cristoffer85.Data.ProfileData;
 import com.cristoffer85.Main.GamePanel;
 import com.cristoffer85.States.StatesResources.StateDefinitions;
 import com.cristoffer85.States.StatesResources.StateDesign;
@@ -52,7 +52,7 @@ public class InitialState extends StateDesign {
     private void createNewProfile(GamePanel gamePanel) {
         String profileName = JOptionPane.showInputDialog("Enter profile name:");
         if (profileName != null && !profileName.trim().isEmpty()) {
-            CRUDProfile.createProfile(profileName);
+            ProfileData.createProfile(profileName);
             gamePanel.setProfileName(profileName);
             gamePanel.resetGame();
             gamePanel.changeGameState(StateDefinitions.GAME);
@@ -60,7 +60,7 @@ public class InitialState extends StateDesign {
     }
 
     private void selectProfile(GamePanel gamePanel) {
-        String[] profiles = CRUDProfile.getCurrentProfiles();
+        String[] profiles = ProfileData.getCurrentProfiles();
         if (profiles.length > 0) {
             String selectedProfile = (String) JOptionPane.showInputDialog(
                     this,
