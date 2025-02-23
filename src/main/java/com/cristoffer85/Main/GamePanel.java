@@ -107,6 +107,10 @@ public class GamePanel extends JPanel {
         ((CardLayout) getLayout()).show(this, newState.name());
     }
 
+    public CharacterState getCharacterState() {
+        return characterState;
+    }
+
     public void setProfileName(String profileName) {
         this.profileName = profileName;
     }
@@ -130,6 +134,10 @@ public class GamePanel extends JPanel {
         SaveLoadResetGame.resetGame(this, profileName);
     }
 
+    public void loadMap(String mapName) {
+        mapHandler.loadMap(mapName);
+    }
+
     public void changeResolution(int width, int height) {
         gameState.updateResolution(width, height);
     }
@@ -138,19 +146,11 @@ public class GamePanel extends JPanel {
         gameState.setScaleFactor(scaleFactor);
     }
 
-    public void loadMap(String mapName) {
-        mapHandler.loadMap(mapName);
-    }
-
     public EventHandler getEventHandler() {
         return eventHandler;
     }
 
     public void setEventHandler(EventHandler eventHandler) {
         this.eventHandler = eventHandler;
-    }
-
-    public CharacterState getCharacterState() {
-        return characterState;
     }
 }
