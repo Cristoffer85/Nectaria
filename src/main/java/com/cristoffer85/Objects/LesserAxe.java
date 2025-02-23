@@ -5,7 +5,7 @@ import java.awt.image.BufferedImage;
 import java.io.IOException;
 import javax.imageio.ImageIO;
 
-public class LesserAxe implements GameObject {
+public class LesserAxe implements GameObjects {
     private int x, y;
     private int width, height;
     private BufferedImage image;

@@ -3,7 +3,7 @@ package com.cristoffer85.States;
 import com.cristoffer85.Entity.Obstacle;
 import com.cristoffer85.Entity.Player.Player;
 import com.cristoffer85.Map.Tile;
-import com.cristoffer85.Objects.GameObject;
+import com.cristoffer85.Objects.GameObjects;
 import com.cristoffer85.Main.EventHandler;
 
 import javax.swing.JPanel;
@@ -16,7 +16,7 @@ import java.util.List;
 
 public class GameState extends JPanel {
     private final Player player;
-    private final List<GameObject> objects;
+    private final List<GameObjects> objects;
     private BufferedImage gameImage;
     private int baseWidth;
     private int baseHeight;
@@ -32,7 +32,7 @@ public class GameState extends JPanel {
         this.gameImage = new BufferedImage((int) (baseWidth * scaleFactor), (int) (baseHeight * scaleFactor), BufferedImage.TYPE_INT_ARGB);
     }
 
-    public void addObject(GameObject object) {
+    public void addObject(GameObjects object) {
         objects.add(object);
     }
 
@@ -90,7 +90,7 @@ public class GameState extends JPanel {
         eventHandler.drawEventRectangles(g2d, cameraX, cameraY);
 
         // Draw all game objects with camera offset
-        for (GameObject object : objects) {
+        for (GameObjects object : objects) {
             int objectX = object.getX() - cameraX;
             int objectY = object.getY() - cameraY;
             object.draw(g2d, objectX, objectY);

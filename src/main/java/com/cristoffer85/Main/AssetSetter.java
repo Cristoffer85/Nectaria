@@ -1,6 +1,6 @@
 package com.cristoffer85.Main;
 
-import com.cristoffer85.Objects.GameObject;
+import com.cristoffer85.Objects.GameObjects;
 import com.cristoffer85.Objects.LesserAxe;
 import com.cristoffer85.States.GameState;
 
@@ -11,7 +11,7 @@ import java.util.Map;
 
 public class AssetSetter {
     private final GameState gameState;
-    private final Map<String, List<GameObject>> objectsByMap;
+    private final Map<String, List<GameObjects>> objectsByMap;
 
     public AssetSetter(GameState gameState) {
         this.gameState = gameState;
@@ -25,10 +25,9 @@ public class AssetSetter {
     }
 
     private void placeObjectsForMainWorld() {
-        List<GameObject> mainWorldObjects = new ArrayList<>();
+        List<GameObjects> mainWorldObjects = new ArrayList<>();
 
-        mainWorldObjects.add(new LesserAxe(100, 100));
-        mainWorldObjects.add(new LesserAxe(200, 200));
+        mainWorldObjects.add(new LesserAxe(800, 200));
 
         // Place more objects here
 
@@ -38,7 +37,7 @@ public class AssetSetter {
     }
 
     private void placeObjectsForSecondWorld() {
-        List<GameObject> secondWorldObjects = new ArrayList<>();
+        List<GameObjects> secondWorldObjects = new ArrayList<>();
 
         secondWorldObjects.add(new LesserAxe(350, 300));
         secondWorldObjects.add(new LesserAxe(400, 300));
@@ -53,9 +52,9 @@ public class AssetSetter {
 
     public void loadObjectsForMap(String mapName) {
         gameState.clearObjects();
-        List<GameObject> objects = objectsByMap.get(mapName);
+        List<GameObjects> objects = objectsByMap.get(mapName);
         if (objects != null) {
-            for (GameObject object : objects) {
+            for (GameObjects object : objects) {
                 gameState.addObject(object);
             }
         }
