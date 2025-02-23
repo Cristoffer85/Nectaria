@@ -2,6 +2,7 @@ package com.cristoffer85.States;
 
 import com.cristoffer85.Entity.Player.Player;
 import com.cristoffer85.Main.GamePanel;
+import com.cristoffer85.Objects.GameObjects;
 import com.cristoffer85.States.StatesResources.StateDesign;
 
 import java.awt.Color;
@@ -9,6 +10,7 @@ import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.RenderingHints;
+import java.util.List;
 
 public class CharacterState extends StateDesign {
     private final GameState gameState;
@@ -110,6 +112,7 @@ public class CharacterState extends StateDesign {
         // Draw the inventory slots
         int slotSize = boxWidth / 5;
         int slotPadding = 10;
+        int itemSize = slotSize - 20; // Make the item a little smaller
 
         // Sets the rows of inventory to 6
         for (int i = 0; i < 6; i++) {
@@ -118,6 +121,20 @@ public class CharacterState extends StateDesign {
             for (int j = 0; j < 4; j++) {
                 int slotX = boxX + 25 + (slotSize + slotPadding) * j;
                 int slotY = boxY + verticalSpacing * 2 + (slotSize + slotPadding) * i;
+
+                // Draw the item in the inventory slot if it exists
+                int inventoryIndex = i * 4 + j;
+                List<GameObjects> inventory = player.getInventory();
+                if (inventoryIndex < inventory.size()) {
+                    GameObjects item = inventory.get(inventoryIndex);
+                    // Calculate the offset to center the item within the slot
+                    int offsetX = (slotSize - itemSize) / 2;
+                    int offsetY = (slotSize - itemSize) / 2;
+                    g2d.drawImage(item.getImage(), slotX + offsetX, slotY + offsetY, itemSize, itemSize, null);
+                }
+
+                // Draw the slot rectangle
+                g2d.setColor(Color.WHITE);
                 g2d.drawRect(slotX, slotY, slotSize, slotSize);
 
                 // Highlight the selected slot

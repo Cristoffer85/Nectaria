@@ -69,4 +69,9 @@ public class LesserAxe implements GameObjects {
     public Rectangle getCollisionRectangle() {
         return collisionRectangle;
     }
+
+    @Override
+    public BufferedImage getImage() {
+        return image;
+    }
 }

@@ -13,6 +13,7 @@ import java.awt.*;
 import java.awt.geom.Line2D;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.imageio.ImageIO;
@@ -52,11 +53,15 @@ public class Player {
     private BufferedImage halfHeart;
     private BufferedImage emptyHeart;
 
+    // ## Inventory ##
+    private List<GameObjects> inventory;
+
     public Player(int x, int y, int size, int moveSpeed) {
         this.x = x;
         this.y = y;
         this.size = size;
         this.moveSpeed = moveSpeed;
+        this.inventory = new ArrayList<>();
 
         initializePlayer();
         playerMovement = new PlayerMovement(this, acceleration, deceleration);
@@ -127,5 +132,9 @@ public class Player {
                 g.drawImage(emptyHeart, -10 + (i * 34), -10, null);
             }
         }
+    }
+
+    public void addToInventory(GameObjects object) {
+        inventory.add(object);
     }
 }

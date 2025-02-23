@@ -13,6 +13,7 @@ import com.cristoffer85.Entity.Player.Player;
 import com.cristoffer85.Objects.GameObjects;
 
 public class CollisionChecker {
+    private final Player player;
     private final BoundaryCollision boundaryCollision;
     private final StraightObstacleCollision straightObstacleCollision;
     private final DiagonalObstacleCollision diagonalObstacleCollision;
@@ -20,6 +21,7 @@ public class CollisionChecker {
     private final ObjectCollision objectCollision;
 
     public CollisionChecker(Player player) {
+        this.player = player;
         this.boundaryCollision = new BoundaryCollision(player);
         this.straightObstacleCollision = new StraightObstacleCollision(player);
         this.diagonalObstacleCollision = new DiagonalObstacleCollision(player);
@@ -51,9 +53,10 @@ public class CollisionChecker {
             return tileCollisionResult;
         }
 
-        int objectCollisionResult = objectCollision.checkObjectCollision(projectedRect, velocity, gameObjects, isHorizontal);
-        if (objectCollisionResult != Integer.MIN_VALUE) {
-            return objectCollisionResult;
+        GameObjects collidedObject = objectCollision.checkObjectCollision(projectedRect, gameObjects);
+        if (collidedObject != null) {
+            gameObjects.remove(collidedObject);
+            player.addToInventory(collidedObject);
         }
 
         return projectedPosition;

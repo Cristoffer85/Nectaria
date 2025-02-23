@@ -1,5 +1,6 @@
 package com.cristoffer85.Objects;
 
+import java.awt.image.BufferedImage;
 import java.awt.Graphics;
 import java.awt.Rectangle;
 
@@ -10,4 +11,5 @@ public interface GameObjects {
     int getWidth();
     int getHeight();
     Rectangle getCollisionRectangle();
+    BufferedImage getImage();
 }

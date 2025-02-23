@@ -12,26 +12,12 @@ public class ObjectCollision extends PROJECTEDCollision {
         super(player);
     }
 
-    public int checkObjectCollision(Rectangle projectedRect, int velocity, List<GameObjects> gameObjects, boolean isHorizontal) {
+    public GameObjects checkObjectCollision(Rectangle projectedRect, List<GameObjects> gameObjects) {
         for (GameObjects gameObject : gameObjects) {
             if (projectedRect.intersects(gameObject.getCollisionRectangle())) {
-                int collisionBoxSize = player.getCollisionBoxSize();
-                int collisionBoxOffsetX = player.getCollisionBoxOffsetX();
-                int collisionBoxOffsetY = player.getCollisionBoxOffsetY();
-
-                Rectangle objectRect = gameObject.getCollisionRectangle();
-
-                if (isHorizontal) {
-                    return velocity > 0
-                        ? objectRect.x - collisionBoxSize - collisionBoxOffsetX
-                        : objectRect.x + objectRect.width - collisionBoxOffsetX;
-                } else {
-                    return velocity > 0
-                        ? objectRect.y - collisionBoxSize - collisionBoxOffsetY
-                        : objectRect.y + objectRect.height - collisionBoxOffsetY;
-                }
+                return gameObject;
             }
         }
-        return Integer.MIN_VALUE;
+        return null;
     }
 }
