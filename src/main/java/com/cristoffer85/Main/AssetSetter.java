@@ -21,7 +21,7 @@ public class AssetSetter {
 
     private void placeObjects() {
         placeObjectsForMainWorld();
-        placeObjectsForSecondWorld();
+        placeObjectsForDungeon1();
     }
 
     private void placeObjectsForMainWorld() {
@@ -36,18 +36,18 @@ public class AssetSetter {
         objectsByMap.put("MainWorld", mainWorldObjects);
     }
 
-    private void placeObjectsForSecondWorld() {
-        List<GameObjects> secondWorldObjects = new ArrayList<>();
+    private void placeObjectsForDungeon1() {
+        List<GameObjects> dungeon1Objects = new ArrayList<>();
 
-        secondWorldObjects.add(new LesserAxe(350, 300));
-        secondWorldObjects.add(new LesserAxe(400, 300));
+        dungeon1Objects.add(new LesserAxe(350, 300));
+        dungeon1Objects.add(new LesserAxe(400, 300));
 
         // Place more objects here
 
 
 
 
-        objectsByMap.put("SecondWorld", secondWorldObjects);
+        objectsByMap.put("Dungeon1", dungeon1Objects);
     }
 
     public void loadObjectsForMap(String mapName) {

@@ -18,7 +18,7 @@ public class EventHandler {
 
     static {
         EVENT_RECTANGLES.put("MainWorld", new Rectangle(100, 100, 32, 32));
-        EVENT_RECTANGLES.put("SecondWorld", new Rectangle(50, 50, 32, 32));
+        EVENT_RECTANGLES.put("Dungeon1", new Rectangle(50, 50, 32, 32));
     }
 
     public EventHandler(Player player, MapHandler mapHandler) {
@@ -29,9 +29,9 @@ public class EventHandler {
 
     private void triggerEvent(Rectangle playerCollisionBox, Rectangle eventRect) {
         if (mapHandler.getCurrentMap().equals("MainWorld") && eventRect.equals(EVENT_RECTANGLES.get("MainWorld")))
-            switchMap("SecondWorld", 150, 150);
+            switchMap("Dungeon1", 150, 150);
 
-        if (mapHandler.getCurrentMap().equals("SecondWorld") && eventRect.equals(EVENT_RECTANGLES.get("SecondWorld")))
+        if (mapHandler.getCurrentMap().equals("Dungeon1") && eventRect.equals(EVENT_RECTANGLES.get("Dungeon1")))
             switchMap("MainWorld", 200, 100);
 
         
@@ -72,7 +72,7 @@ public class EventHandler {
     }
 
     public void drawEventRectangles(Graphics2D g2d, int cameraX, int cameraY) {
-        g2d.setColor(Color.RED);
+        g2d.setColor(Color.BLACK);
         for (Rectangle eventRect : eventRectangles) {
             g2d.drawRect(eventRect.x - cameraX, eventRect.y - cameraY, eventRect.width, eventRect.height);
         }

@@ -88,7 +88,7 @@ public class Player {
         }
 
         // Initialize player sprite: /Path - Width - Height - Rows - Columns - Frames per Direction update - Frame Delay
-        playerSprite = new PlayerSprite("/TestCharx9.png", 64, 64, 4, 9, 9, 1);
+        playerSprite = new PlayerSprite("/PlayerSheet.png", 64, 64, 4, 9, 9, 1);
     }
 
     public void move(KeyHandler keyHandler, List<Rectangle> straightObstacles, List<Line2D> diagonalObstacles, List<GameObjects> gameObjects) {

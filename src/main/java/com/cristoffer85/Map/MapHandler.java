@@ -14,8 +14,8 @@ public class MapHandler {
     private AssetSetter assetSetter;
 
     public MapHandler(String initialMap) {
-        mapPaths.put("MainWorld", "/MainWorld.txt");
-        mapPaths.put("SecondWorld", "/SecondWorld.txt");
+        mapPaths.put("MainWorld", "/maps/MainWorld.txt");
+        mapPaths.put("Dungeon1", "/maps/Dungeon1.txt");
         loadMap(initialMap);
     }
 

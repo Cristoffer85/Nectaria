@@ -41,8 +41,8 @@ public class Obstacle {
         clearObstacles();
         if (mapName.equals("MainWorld")) {
             addMainWorldObstacles();
-        } else if (mapName.equals("SecondWorld")) {
-            addSecondWorldObstacles();
+        } else if (mapName.equals("Dungeon1")) {
+            addDungeon1Obstacles();
         }
         categorizeObstacles();
     }
@@ -57,8 +57,8 @@ public class Obstacle {
         obstacles.add(new Obstacle(new Line2D.Float(458, 193, 394, 257), Color.BLUE));
     }
 
-    private static void addSecondWorldObstacles() {
-        /* Add obstacles for SecondWorld
+    private static void addDungeon1Obstacles() {
+        /* Add obstacles for Dungeon1 obstacles
         obstacles.add(new Obstacle(new Rectangle(100, 100, 50, 64), Color.GREEN));
         obstacles.add(new Obstacle(new Rectangle(200, 200, 1, 64), Color.GREEN));
         obstacles.add(new Obstacle(new Rectangle(300, 300, 64, 1), Color.GREEN));
