@@ -2,7 +2,7 @@ package com.cristoffer85.Entity.Collision.CollisionResources;
 
 import com.cristoffer85.Entity.Player.Player;
 
-public class BoundaryCollision extends ProjectedCollision {
+public class BoundaryCollision extends PROJECTEDCollision {
 
     public BoundaryCollision(Player player) {
         super(player);

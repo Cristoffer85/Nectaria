@@ -7,7 +7,7 @@ import com.cristoffer85.Map.TileManager;
 import java.awt.*;
 import java.util.Map;
 
-public class TileCollision extends ProjectedCollision {
+public class TileCollision extends PROJECTEDCollision {
 
     public TileCollision(Player player) {
         super(player);

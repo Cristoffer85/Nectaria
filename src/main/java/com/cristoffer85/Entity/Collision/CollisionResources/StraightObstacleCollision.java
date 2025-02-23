@@ -5,7 +5,7 @@ import com.cristoffer85.Entity.Player.Player;
 import java.awt.*;
 import java.util.List;
 
-public class StraightObstacleCollision extends ProjectedCollision {
+public class StraightObstacleCollision extends PROJECTEDCollision {
 
     public StraightObstacleCollision(Player player) {
         super(player);

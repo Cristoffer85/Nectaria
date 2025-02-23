@@ -14,7 +14,7 @@ import java.util.List;
    With that said as the tip study this specific vector class collision to understand it better.
  */
 
-public class DiagonalObstacleCollision extends ProjectedCollision {
+public class DiagonalObstacleCollision extends PROJECTEDCollision {
 
     public DiagonalObstacleCollision(Player player) {
         super(player);

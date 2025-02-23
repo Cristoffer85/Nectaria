@@ -4,10 +4,10 @@ import com.cristoffer85.Entity.Player.Player;
 
 import java.awt.*;
 
-public abstract class ProjectedCollision {
+public abstract class PROJECTEDCollision {
     protected final Player player;
 
-    public ProjectedCollision(Player player) {
+    public PROJECTEDCollision(Player player) {
         this.player = player;
     }
 

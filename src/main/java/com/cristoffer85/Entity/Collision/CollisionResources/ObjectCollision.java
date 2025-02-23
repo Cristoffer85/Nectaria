@@ -6,7 +6,7 @@ import com.cristoffer85.Objects.GameObjects;
 import java.awt.*;
 import java.util.List;
 
-public class ObjectCollision extends ProjectedCollision {
+public class ObjectCollision extends PROJECTEDCollision {
 
     public ObjectCollision(Player player) {
         super(player);
