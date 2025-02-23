@@ -7,6 +7,7 @@ import lombok.Setter;
 import com.cristoffer85.Entity.Player.PlayerResources.PlayerMovement;
 import com.cristoffer85.Entity.Player.PlayerResources.PlayerSprite;
 import com.cristoffer85.Main.KeyHandler;
+import com.cristoffer85.Objects.GameObjects;
 
 import java.awt.*;
 import java.awt.geom.Line2D;
@@ -90,8 +91,8 @@ public class Player {
         playerSprite = new PlayerSprite("/TestCharx9.png", 64, 64, 4, 9, 9, 1);
     }
 
-    public void move(KeyHandler keyHandler, List<Rectangle> straightObstacles, List<Line2D> diagonalObstacles) {
-        playerMovement.move(keyHandler, straightObstacles, diagonalObstacles);
+    public void move(KeyHandler keyHandler, List<Rectangle> straightObstacles, List<Line2D> diagonalObstacles, List<GameObjects> gameObjects) {
+        playerMovement.move(keyHandler, straightObstacles, diagonalObstacles, gameObjects);
     }
 
     public void paintPlayer(Graphics g, int cameraX, int cameraY) {

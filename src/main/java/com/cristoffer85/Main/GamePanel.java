@@ -12,6 +12,7 @@ import com.cristoffer85.States.PauseState;
 import com.cristoffer85.States.SettingsState;
 import com.cristoffer85.Map.MapHandler;
 import com.cristoffer85.Map.Tile;
+import com.cristoffer85.Objects.GameObjects;
 
 import javax.swing.*;
 import java.awt.*;
@@ -81,7 +82,8 @@ public class GamePanel extends JPanel {
                 if (currentState == StateDefinitions.GAME) {
                     List<Rectangle> straightObstacles = Obstacle.getStraightObstacles();
                     List<Line2D> diagonalObstacles = Obstacle.getDiagonalObstacles();
-                    player.move(keyHandler, straightObstacles, diagonalObstacles);
+                    List<GameObjects> gameObjects = gameState.getObjects();
+                    player.move(keyHandler, straightObstacles, diagonalObstacles, gameObjects);
                     eventHandler.checkEvents();
                     gameState.repaint();
                 }

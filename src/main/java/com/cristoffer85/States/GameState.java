@@ -40,6 +40,10 @@ public class GameState extends JPanel {
         objects.clear();
     }
 
+    public List<GameObjects> getObjects() {
+        return objects;
+    }
+
     public void updateResolution(int width, int height) {
         this.baseWidth = width;
         this.baseHeight = height;
