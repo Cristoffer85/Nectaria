@@ -110,7 +110,11 @@ public class CharacterState extends StateDesign {
         // Draw the inventory slots
         int slotSize = boxWidth / 5;
         int slotPadding = 10;
+
+        // Sets the rows of inventory to 6
         for (int i = 0; i < 6; i++) {
+            
+            // Sets the columns of inventory to 4
             for (int j = 0; j < 4; j++) {
                 int slotX = boxX + 25 + (slotSize + slotPadding) * j;
                 int slotY = boxY + verticalSpacing * 2 + (slotSize + slotPadding) * i;
@@ -128,6 +132,8 @@ public class CharacterState extends StateDesign {
 
     public void moveSelection(int dx, int dy) {
         selectedSlotX = Math.max(0, Math.min(3, selectedSlotX + dx));
+        
+        // Set rows of inventory to 6 (starts at 0)
         selectedSlotY = Math.max(0, Math.min(5, selectedSlotY + dy));
         repaint();
     }

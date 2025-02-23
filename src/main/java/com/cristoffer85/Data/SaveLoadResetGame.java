@@ -30,7 +30,6 @@ public class SaveLoadResetGame {
             player.setX(saveData.getPlayerX());
             player.setY(saveData.getPlayerY());
             gamePanel.loadMap(saveData.getCurrentMap());
-            // Om EventHandler finns och spelaren redan används där, uppdatera referensen:
             if(gamePanel.getEventHandler() != null) {
                 gamePanel.getEventHandler().setPlayer(player);
             }
