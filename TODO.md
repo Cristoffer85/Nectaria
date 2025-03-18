@@ -1,16 +1,3 @@
--------------------------------------------------------------------
-# on VCS commit a9cec1ab267727342f624a096969aad5487579ff
-
-Events working just fine now for both current and new players, 
-    although: drawn eventrectangles and objects from EventHandler stay at same place as first map while transitioning to the other. 
-    This only occur if application has not been exited and restarted. After re-enter all is fine.
-
-* Problem isolated to the ResetGame() in SaveLoadResetGame. Somethings off in that method since that is the only method used when:
-        
-        - Creating new profile -> sets you directly into new game and error occurs
-        - Start new game, identical error occurs
-        - 
--------------------------------------------------------------------
 # Fix offset between menubuttons responsive on window size
 
 

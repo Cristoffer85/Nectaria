@@ -5,8 +5,10 @@ import com.cristoffer85.States.GameState;
 import com.cristoffer85.States.SettingsState;
 import com.cristoffer85.States.StatesResources.StateDefinitions;
 import com.cristoffer85.Main.GamePanel;
+import com.cristoffer85.Main.AssetSetter;
 import com.cristoffer85.Main.EventHandler;
 import com.cristoffer85.Map.MapHandler;
+import java.awt.Component;
 
 import java.io.*;
 
@@ -40,19 +42,40 @@ public class SaveLoadResetGame {
         }
     }
     
-    //--//--//--//--//--//--//--//--//--//--//--//--//--//--//--//--//--//--//--//--//--//--//
-    // Something is wrong with this method, it does not reset events or objects properly......
     public static void resetGame(GamePanel gamePanel, String profileName) {
-        Player player = new Player(30, 30, 64, 6);
-        MapHandler mapHandler = new MapHandler("MainWorld");
-        gamePanel.loadMap("MainWorld");
-        EventHandler eventHandler = new EventHandler(player, mapHandler);
-        mapHandler.setEventHandler(eventHandler);
-        GameState gameState = new GameState(player, gamePanel.getWidth(), gamePanel.getHeight(), eventHandler);
-        gamePanel.add(gameState, StateDefinitions.GAME.name());
-        gamePanel.setPlayer(player);
-        gamePanel.initializeGameState(gameState);
-        gamePanel.setScaleFactor(SettingsState.SCALE_FACTORS_MAP.get("SNES"));
+    // Create new game objects
+    Player newPlayer = new Player(30, 30, 64, 6);
+    MapHandler newMapHandler = new MapHandler("MainWorld");
+    newMapHandler.loadMap("MainWorld");
+    
+    // Create a new event handler and update references
+    EventHandler newEventHandler = new EventHandler(newPlayer, newMapHandler);
+    newMapHandler.setEventHandler(newEventHandler);
+    gamePanel.setEventHandler(newEventHandler);
+    
+    // Create a new game state with the new player and event handler
+    GameState newGameState = new GameState(newPlayer, gamePanel.getWidth(), gamePanel.getHeight(), newEventHandler);
+    
+    // Initialize the asset setter for the new game state and map handler
+    AssetSetter newAssetSetter = new AssetSetter(newGameState);
+    newMapHandler.setAssetSetter(newAssetSetter);
+    
+    // Remove any existing GameState component from the CardLayout to avoid duplicates
+    for (Component comp : gamePanel.getComponents()) {
+        if (comp instanceof GameState) {
+            gamePanel.remove(comp);
+        }
     }
-    //--//--//--//--//--//--//--//--//--//--//--//--//--//--//--//--//--//--//--//--//--//--//
+    
+    // Add the new game state to the panel under the proper name
+    gamePanel.add(newGameState, StateDefinitions.GAME.name());
+    gamePanel.setPlayer(newPlayer);
+    gamePanel.initializeGameState(newGameState);
+    
+    // Reset any additional parameters, such as scale factor
+    gamePanel.setScaleFactor(SettingsState.SCALE_FACTORS_MAP.get("SNES"));
+    
+    // Switch to the new game state view
+    gamePanel.changeGameState(StateDefinitions.GAME);
+    }
 }
