@@ -18,8 +18,8 @@ Events working just fine now for both current and new players,
 
     1. Objects, pickable for player and store in inventory
     2. Interactive Inventory for player
-
     3. Stats, viewable for player (Visible health on mainscreen)
+    Above sort of done ^ -------------------
 
     4. Player able to attack. Attackanimation.
 
